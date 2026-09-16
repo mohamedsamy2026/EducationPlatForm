@@ -1,13 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 
 import logoImg from "../assets/Logo/transparent-Logo.png";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
+
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navLinks = [
@@ -18,7 +24,8 @@ export default function Navbar() {
     { name: "تواصل معنا", href: "#footer" },
   ];
 
-  // تغيير شكل الـ Navbar عند الـ Scroll
+  /* تغيير شكل الـ Navbar عند الـ Scroll */
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
@@ -31,18 +38,24 @@ export default function Navbar() {
     };
   }, []);
 
-  // الانتقال للـ Sections
+  /* الانتقال للـ Sections */
   const handleScrollTo = (href) => {
     setIsOpen(false);
 
-    const element = document.querySelector(href);
+    if (location.pathname === "/") {
+      const element = document.querySelector(href);
 
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+
+      return;
     }
+
+    navigate(`/${href}`);
   };
 
   return (
@@ -59,8 +72,8 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
         <div className="h-20 lg:h-22 flex items-center justify-between">
-          
           {/* ================= Logo ================= */}
+
           <Link
             to="/"
             onClick={() => setIsOpen(false)}
@@ -82,11 +95,16 @@ export default function Navbar() {
           </Link>
 
           {/* ================= Desktop Links ================= */}
+
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleScrollTo(link.href);
+                }}
                 className="
                   relative
                   text-warm-white
@@ -107,11 +125,12 @@ export default function Navbar() {
                 "
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
 
           {/* ================= Auth Buttons ================= */}
+
           <div className="hidden lg:flex items-center gap-3">
             <Link
               to="/login"
@@ -152,6 +171,7 @@ export default function Navbar() {
           </div>
 
           {/* ================= Mobile Button ================= */}
+
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
@@ -174,6 +194,7 @@ export default function Navbar() {
         </div>
 
         {/* ================= Mobile Menu ================= */}
+
         <div
           className={`
             lg:hidden
@@ -197,12 +218,16 @@ export default function Navbar() {
             "
           >
             {/* Mobile Links */}
+
             <div className="space-y-1">
               {navLinks.map((link) => (
-                <button
+                <Link
                   key={link.name}
-                  type="button"
-                  onClick={() => handleScrollTo(link.href)}
+                  to={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleScrollTo(link.href);
+                  }}
                   className="
                     block
                     w-full
@@ -217,11 +242,12 @@ export default function Navbar() {
                   "
                 >
                   {link.name}
-                </button>
+                </Link>
               ))}
             </div>
 
             {/* Mobile Auth */}
+
             <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-white/10">
               <Link
                 to="/login"

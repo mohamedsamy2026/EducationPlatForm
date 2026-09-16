@@ -1,4 +1,5 @@
-// COMPONENTS
+import { useEffect } from "react";
+
 import Navbar from "../Components/Navbar";
 import HeroSection from "../Components/HeroSection";
 import AboutPlatform from "../Components/AboutPlatform";
@@ -7,6 +8,23 @@ import StudentOpinions from "../Components/StudentOpinions";
 import Footer from "../Components/Footer";
 
 export default function Home() {
+  useEffect(() => {
+    if (!window.location.hash) return;
+
+    const scrollToSection = () => {
+      const element = document.querySelector(window.location.hash);
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    };
+
+    setTimeout(scrollToSection, 100);
+  }, []);
+
   return (
     <div>
       <Navbar />

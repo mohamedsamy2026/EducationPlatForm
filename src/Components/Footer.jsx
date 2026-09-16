@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import MasterFooter from "../assets/Master/master no transparent.jpeg";
 
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 // Icons
 import {
   faFacebookF,
@@ -16,6 +19,26 @@ import {
 import { faEnvelope, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function Footer() {
+  // مهمه
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleFooterLink = (href) => {
+    if (location.pathname === "/") {
+      const element = document.querySelector(href);
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+
+      return;
+    }
+
+    navigate(`/${href}`);
+  };
   return (
     // Footer Start
     <footer
@@ -91,91 +114,108 @@ export default function Footer() {
           {/* Platform Info End */}
 
           {/* Quick Links Start */}
+
+          {/* Quick Links Start */}
           <div className="lg:col-span-3">
             <div className="mb-6 flex items-center gap-3">
               <span className="h-8 w-1 rounded-full bg-gold" />
-
               <h3 className="text-xl font-extrabold text-warm-white">
                 روابط سريعة
               </h3>
             </div>
 
             <div className="space-y-4">
-              <a
-                href="#heroSection"
+              <Link
+                to="#heroSection"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleFooterLink("#heroSection");
+                }}
                 className="
-                  group
-                  flex
-                  items-center
-                  gap-3
-                  text-sm
-                  font-semibold
-                  text-white/60
-                  transition-colors
-                  duration-200
-                  hover:text-gold
-                "
+        group
+        flex
+        items-center
+        gap-3
+        text-sm
+        font-semibold
+        text-white/60
+        transition-colors
+        duration-200
+        hover:text-gold
+      "
               >
                 <span className="h-1 w-1 rounded-full bg-white/30 transition-all duration-200 group-hover:w-2 group-hover:bg-gold" />
                 الرئيسية
-              </a>
+              </Link>
 
-              <a
-                href="#aboutPlatform"
+              <Link
+                to="#aboutPlatform"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleFooterLink("#aboutPlatform");
+                }}
                 className="
-                  group
-                  flex
-                  items-center
-                  gap-3
-                  text-sm
-                  font-semibold
-                  text-white/60
-                  transition-colors
-                  duration-200
-                  hover:text-gold
-                "
+        group
+        flex
+        items-center
+        gap-3
+        text-sm
+        font-semibold
+        text-white/60
+        transition-colors
+        duration-200
+        hover:text-gold
+      "
               >
                 <span className="h-1 w-1 rounded-full bg-white/30 transition-all duration-200 group-hover:w-2 group-hover:bg-gold" />
                 تعرّف على المنصة
-              </a>
+              </Link>
 
-              <a
-                href="#courses"
+              <Link
+                to="#courses"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleFooterLink("#courses");
+                }}
                 className="
-                  group
-                  flex
-                  items-center
-                  gap-3
-                  text-sm
-                  font-semibold
-                  text-white/60
-                  transition-colors
-                  duration-200
-                  hover:text-gold
-                "
+        group
+        flex
+        items-center
+        gap-3
+        text-sm
+        font-semibold
+        text-white/60
+        transition-colors
+        duration-200
+        hover:text-gold
+      "
               >
                 <span className="h-1 w-1 rounded-full bg-white/30 transition-all duration-200 group-hover:w-2 group-hover:bg-gold" />
                 الكورسات
-              </a>
+              </Link>
 
-              <a
-                href="#StudentOpinions"
+              <Link
+                to="#StudentOpinions"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleFooterLink("#StudentOpinions");
+                }}
                 className="
-                  group
-                  flex
-                  items-center
-                  gap-3
-                  text-sm
-                  font-semibold
-                  text-white/60
-                  transition-colors
-                  duration-200
-                  hover:text-gold
-                "
+        group
+        flex
+        items-center
+        gap-3
+        text-sm
+        font-semibold
+        text-white/60
+        transition-colors
+        duration-200
+        hover:text-gold
+      "
               >
                 <span className="h-1 w-1 rounded-full bg-white/30 transition-all duration-200 group-hover:w-2 group-hover:bg-gold" />
                 آراء الطلاب
-              </a>
+              </Link>
             </div>
           </div>
           {/* Quick Links End */}
@@ -185,9 +225,7 @@ export default function Footer() {
             <div className="mb-6 flex items-center gap-3">
               <span className="h-8 w-1 rounded-full bg-gold" />
 
-              <h3 className="text-xl font-extrabold text-warm-white">
-                تابعنا
-              </h3>
+              <h3 className="text-xl font-extrabold text-warm-white">تابعنا</h3>
             </div>
 
             <p className="mb-6 max-w-sm text-sm leading-7 text-white/60">
@@ -374,7 +412,8 @@ export default function Footer() {
               </div>
 
               <p className="mb-5 max-w-md text-sm leading-7 text-white/60">
-                لديك مشكلة تقنية في المنصه أو استفسار عن الحساب ؟ تواصل معنا وسنساعدك.
+                لديك مشكلة تقنية في المنصه أو استفسار عن الحساب ؟ تواصل معنا
+                وسنساعدك.
               </p>
 
               <div className="flex items-center gap-3">
@@ -493,8 +532,12 @@ export default function Footer() {
             الغازي في التاريخ - جميع الحقوق محفوظة © 2026
           </p>
 
-          <a
-            href="#heroSection"
+          <Link
+            to="#heroSection"
+            onClick={(e) => {
+              e.preventDefault();
+              handleFooterLink("#heroSection");
+            }}
             className="
               order-1
               flex
@@ -513,7 +556,7 @@ export default function Footer() {
             <span>العودة إلى الرئيسية</span>
 
             <FontAwesomeIcon icon={faArrowLeft} />
-          </a>
+          </Link>
         </div>
         {/* Bottom Footer End */}
       </div>

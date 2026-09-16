@@ -17,15 +17,7 @@ import Master1 from "../assets/Master/master 1.webp";
 import Master2 from "../assets/Master/master 2.webp";
 import Master3 from "../assets/Master/master 3.webp";
 
-/*
-|--------------------------------------------------------------------------
-| Mock Courses
-|--------------------------------------------------------------------------
-| دي بيانات مؤقتة للتصميم والتجربة.
-| لاحقًا عند الربط بـ Supabase هنستبدل مصدر البيانات فقط،
-| والـ UI نفسه يفضل شغال بدون الحاجة لإعادة تصميم الكارت.
-|--------------------------------------------------------------------------
-*/
+
 
 const courses = [
   {
@@ -36,6 +28,7 @@ const courses = [
     grade: "المرحلة الإعدادية",
     duration: "كورس شامل",
     image: Master1,
+    lessonsCount:"غير محدد"
   },
   {
     id: "history-secondary",
@@ -45,6 +38,8 @@ const courses = [
     grade: "المرحلة الثانوية",
     duration: "كورس شامل",
     image: Master2,
+    lessonsCount:"غير محدد"
+    
   },
   {
     id: "history-different-way",
@@ -54,6 +49,7 @@ const courses = [
     grade: "محتوى تعليمي",
     duration: "دروس متكاملة",
     image: Master3,
+    lessonsCount:"غير محدد"
   },
 ];
 
@@ -405,6 +401,7 @@ export default function Courses() {
 
                   <Link
                     to={`/courses/${course.id}`}
+                    state={{ course }}
                     className="
                       mt-auto
                       flex
