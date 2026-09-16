@@ -1,0 +1,39 @@
+/* Import TailwindCSS Start */
+@import "tailwindcss";
+/* Import TailwindCSS End */
+
+/* Smooth */
+html {
+  scroll-behavior: smooth;
+}
+
+/* الخط الريسي*/
+@import '@fontsource/cairo/400.css';
+@import '@fontsource/cairo/600.css';
+@import '@fontsource/cairo/700.css';
+@import '@fontsource/cairo/800.css';
+
+
+/* المتغيرات والألوان الأساسية */
+@theme {
+  --color-midnight: #0a1628;
+  --color-charcoal: #132238;
+  --color-navy: #1a2d4a;
+  --color-gold: #d4af37;
+  --color-gold-light: #e5c158;
+  --color-warm-white: #f5f0e8;
+  --color-muted-gray: #a8a29e;
+  --color-border-navy: #2a4a6b;
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+  --font-cairo: 'Cairo', sans-serif;
+}
+
+/* إعدادات عامة للـ Body */
+@layer base {
+  body {
+    font-family: var(--font-cairo);
+    color: var(--color-warm-white);
+    direction: rtl;
+  }
+}

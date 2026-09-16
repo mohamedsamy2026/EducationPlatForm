@@ -1,0 +1,28 @@
+// Import The Landing Page All
+import Home from "./Page/Home";
+
+// Components
+import Chat from "./Components/Chat";
+import Signup from "./Components/Signup";
+import Login from "./Components/Login";
+
+// Style App CSS
+import "./App.css";
+
+// Import React Router
+import { Routes, Route } from "react-router-dom";
+
+function App() {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/Login" element={<Login />} />
+      </Routes>
+      <Chat />
+    </>
+  );
+}
+
+export default App;
