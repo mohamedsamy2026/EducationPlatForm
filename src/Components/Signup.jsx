@@ -17,7 +17,7 @@ import {
 
 // Images
 import SignupHome from "../assets/Background/signup.jpg";
-import Master from "../assets/Master/Master.webp";
+import Master from "../assets/Master/master.webp";
 
 // React Router
 import { Link } from "react-router-dom";
