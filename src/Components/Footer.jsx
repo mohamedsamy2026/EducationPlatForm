@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MasterFooter from "../assets/Master/master no transparent.jpeg";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 // Icons
 import {

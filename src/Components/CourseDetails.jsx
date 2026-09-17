@@ -39,7 +39,9 @@ export default function CourseDetails() {
         dir="rtl"
         className="min-h-screen bg-midnight px-4 py-32 text-white"
       >
-        <div className="mx-auto max-w-4xl text-center">
+        <Navbar />
+
+        <div className="mx-auto max-w-4xl text-center my-5 mb-15">
           <h1 className="mb-4 text-3xl font-black text-white">
             الكورس غير موجود
           </h1>
@@ -54,6 +56,7 @@ export default function CourseDetails() {
             العودة للصفحة الرئيسية
           </Link>
         </div>
+        <Footer />
       </main>
     );
   }
@@ -104,7 +107,7 @@ export default function CourseDetails() {
 
               <button
                 type="button"
-                className="mt-8 inline-flex items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)]"
+                className="mt-8 sm:w-fit w-full inline-flex items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)]"
               >
                 <FontAwesomeIcon icon={faPlay} />
                 ابدأ الكورس
@@ -143,7 +146,7 @@ export default function CourseDetails() {
           </h2>
 
           <p className="mt-4 text-white/50">
-            {course.sections?.length || 0} أقسام تعليمية
+            {course.lessons?.length || 0} حصه
           </p>
         </div>
 

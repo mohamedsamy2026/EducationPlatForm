@@ -1,5 +1,7 @@
+// HooKs
 import { useEffect } from "react";
 
+// COMPONENTS
 import Navbar from "../Components/Navbar";
 import HeroSection from "../Components/HeroSection";
 import AboutPlatform from "../Components/AboutPlatform";
@@ -22,7 +24,7 @@ export default function Home() {
       }
     };
 
-    setTimeout(scrollToSection, 100);
+    setTimeout(scrollToSection, 50);
   }, []);
 
   return (
