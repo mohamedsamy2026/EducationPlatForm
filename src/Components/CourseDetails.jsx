@@ -8,6 +8,7 @@ import {
   faGraduationCap,
   faChalkboardTeacher,
   faChevronDown,
+  faVideo
 } from "@fortawesome/free-solid-svg-icons";
 
 import Navbar from "./Navbar";
@@ -101,7 +102,12 @@ export default function CourseDetails() {
                 <InfoItem
                   icon={faBookOpen}
                   title="الدروس"
-                  value={course.lessonsCount}
+                  value="كورس شامل"
+                />
+                <InfoItem
+                  icon={faVideo}
+                  title="حاله الفديوهات"
+                  value="مسجله"
                 />
               </div>
 
