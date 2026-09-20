@@ -19,24 +19,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // HOOKS
+import { Link } from "react-router-dom";
 
 export default function DashboardHome() {
-
   const courses = [
     {
-      id: 1,
+      id: "social-studies-preparatory",
       title: "الدراسات الاجتماعية للمرحلة الإعدادية",
       grade: "المرحلة الإعدادية",
       image: Master1,
     },
     {
-      id: 2,
+      id: "history-secondary",
       title: "التاريخ للمرحلة الثانوية",
       grade: "المرحلة الثانوية",
       image: Master2,
     },
     {
-      id: 3,
+      id: "history-different-way",
       title: "التاريخ بطريقة مختلفة",
       grade: "محتوى تعليمي",
       image: Master3,
@@ -120,13 +120,13 @@ export default function DashboardHome() {
                   </h2>
                 </div>
 
-                <button
-                  type="button"
-                  className="cursor-pointer hidden items-center gap-2 text-sm font-bold text-white/50 transition-colors hover:text-gold sm:flex"
+                <Link
+                  to="/courses"
+                  className="cursor-pointer hidden items-center gap-2 text-sm font-bold text-gray-300 transition-colors hover:text-gold sm:flex"
                 >
                   عرض الكل
                   <FontAwesomeIcon icon={faArrowLeft} />
-                </button>
+                </Link>
               </div>
 
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -159,13 +159,14 @@ export default function DashboardHome() {
                         {course.title}
                       </h3>
 
-                      <button
-                        type="button"
+                      <Link
+                        to={`/courses/${course.id}`}
+                        state={{ course }}
                         className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3 font-extrabold text-midnight transition-all duration-300 hover:bg-gold-light"
                       >
                         متابعة الكورس
                         <FontAwesomeIcon icon={faArrowLeft} />
-                      </button>
+                      </Link>
                     </div>
                   </article>
                 ))}
@@ -208,12 +209,12 @@ export default function DashboardHome() {
                         </p>
                       </div>
 
-                      <button
-                        type="button"
+                      <Link
+                        to="/exams"
                         className="shrink-0 rounded-lg bg-gold/10 px-3 py-2 text-xs font-bold text-gold transition-colors hover:bg-gold hover:text-midnight"
                       >
                         {exam.status}
-                      </button>
+                      </Link>
                     </div>
                   ))}
                 </div>
@@ -257,13 +258,13 @@ export default function DashboardHome() {
                   </div>
                 </div>
 
-                <button
-                  type="button"
+                <Link
+                  to="/exam-result"
                   className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-5 py-3 text-sm font-extrabold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
                 >
                   عرض النتيجة
                   <FontAwesomeIcon icon={faArrowLeft} />
-                </button>
+                </Link>
               </div>
             </section>
           </div>
