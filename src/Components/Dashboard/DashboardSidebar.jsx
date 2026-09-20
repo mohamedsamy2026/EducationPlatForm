@@ -24,7 +24,6 @@ export default function DashboardSidebar() {
       document.body.style.overflow = "unset";
     }
 
-    // تنظيف التأثير عند إغلاق المكون
     return () => {
       document.body.style.overflow = "unset";
     };
