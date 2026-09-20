@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 // Data
 import courses from "../date/courses";
-import DashboardEmptyState from "../Components/DashboardStudent/DashboardEmptyState";
+import DashboardEmptyState from "../Components/DashboardStudent/EmptyState";
 
 export default function Courses() {
   return (

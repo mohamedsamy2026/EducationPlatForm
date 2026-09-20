@@ -3,7 +3,9 @@ import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
 import DashboardSidebar from "../../Components/DashboardStudent/DashboardSidebar";
 import courses from "../../date/courses";
-import DashboardEmptyState from "../../Components/DashboardStudent/DashboardEmptyState";
+import DashboardEmptyState from "../../Components/DashboardStudent/EmptyState";
+import exams from "../../date/exams";
+import latestResult from "../../date/results";
 
 // IMGS
 import HeroImg from "../../assets/Background/dashbord student home.webp";
@@ -21,27 +23,6 @@ import {
 import { Link } from "react-router-dom";
 
 export default function DashboardHome() {
-  const exams = [
-    {
-      id: 1,
-      title: "اختبار الوحدة الأولى",
-      course: "الدراسات الاجتماعية",
-      status: "متاح الآن",
-    },
-    {
-      id: 2,
-      title: "اختبار الدرس الثاني",
-      course: "التاريخ",
-      status: "متاح الآن",
-    },
-  ];
-
-  const latestResult = {
-    title: "اختبار الوحدة الأولى",
-    score: 17,
-    total: 20,
-  };
-
   const percentage = Math.round(
     (latestResult.score / latestResult.total) * 100,
   );
