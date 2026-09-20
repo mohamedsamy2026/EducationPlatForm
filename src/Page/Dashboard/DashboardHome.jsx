@@ -1,13 +1,15 @@
+// COMPONENTS
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
 import DashboardSidebar from "../../Components/Dashboard/DashboardSidebar";
 
+// IMGS
 import HeroImg from "../../assets/Background/dashbord student home.webp";
-
 import Master1 from "../../assets/Master/master 1.webp";
 import Master2 from "../../assets/Master/master 2.webp";
 import Master3 from "../../assets/Master/master 3.webp";
 
+// ICONS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
@@ -16,7 +18,10 @@ import {
   faTrophy,
 } from "@fortawesome/free-solid-svg-icons";
 
+// HOOKS
+
 export default function DashboardHome() {
+
   const courses = [
     {
       id: 1,
@@ -60,28 +65,28 @@ export default function DashboardHome() {
   };
 
   const percentage = Math.round(
-    (latestResult.score / latestResult.total) * 100
+    (latestResult.score / latestResult.total) * 100,
   );
 
   return (
     <div dir="rtl" className="min-h-screen bg-midnight text-white">
       <Navbar />
 
-      <div className="flex w-full pt-20 lg:min-h-[calc(100vh-88px)] lg:pt-22">
+      <div className="flex w-full lg:min-h-screen">
         <DashboardSidebar />
 
         <main className="min-w-0 flex-1">
           {/* Welcome */}
-          <section className="relative overflow-hidden border-b border-white/10">
+          <section className="relative overflow-hidden border-b border-white/10 pt-20 lg:pt-24">
             <img
               src={HeroImg}
               alt="لوحة الطالب"
               className="absolute inset-0 h-full w-full object-cover"
             />
 
-            <div className="absolute inset-0 bg-[#061522]/70" />
+            <div className="absolute inset-0 bg-[#061522]/20" />
 
-            <div className="absolute inset-0 bg-gradient-to-l from-[#061522]/95 via-[#061522]/55 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-l from-[#061522]/53 via-[#061522]/53 to-transparent" />
 
             <div className="relative z-10 px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
               <div className="max-w-2xl">
@@ -222,9 +227,7 @@ export default function DashboardHome() {
                   </span>
 
                   <div>
-                    <p className="text-xs font-bold text-gold">
-                      آخر نتيجة
-                    </p>
+                    <p className="text-xs font-bold text-gold">آخر نتيجة</p>
 
                     <h2 className="mt-1 text-xl font-black text-white">
                       آخر امتحان

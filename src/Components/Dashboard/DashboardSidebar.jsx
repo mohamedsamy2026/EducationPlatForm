@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState , useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,17 +17,8 @@ export default function DashboardSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
 
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen]);
+  
 
   const navItems = [
     {
