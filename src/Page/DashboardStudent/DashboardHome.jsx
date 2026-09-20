@@ -1,13 +1,12 @@
 // COMPONENTS
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
-import DashboardSidebar from "../../Components/Dashboard/DashboardSidebar";
+import DashboardSidebar from "../../Components/DashboardStudent/DashboardSidebar";
 
 // IMGS
 import HeroImg from "../../assets/Background/dashbord student home.webp";
-import Master1 from "../../assets/Master/master 1.webp";
-import Master2 from "../../assets/Master/master 2.webp";
-import Master3 from "../../assets/Master/master 3.webp";
+
+import courses from "../../date/courses";
 
 // ICONS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,27 +21,6 @@ import {
 import { Link } from "react-router-dom";
 
 export default function DashboardHome() {
-  const courses = [
-    {
-      id: "social-studies-preparatory",
-      title: "الدراسات الاجتماعية للمرحلة الإعدادية",
-      grade: "المرحلة الإعدادية",
-      image: Master1,
-    },
-    {
-      id: "history-secondary",
-      title: "التاريخ للمرحلة الثانوية",
-      grade: "المرحلة الثانوية",
-      image: Master2,
-    },
-    {
-      id: "history-different-way",
-      title: "التاريخ بطريقة مختلفة",
-      grade: "محتوى تعليمي",
-      image: Master3,
-    },
-  ];
-
   const exams = [
     {
       id: 1,

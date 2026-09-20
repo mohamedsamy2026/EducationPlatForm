@@ -7,7 +7,7 @@ import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import CourseDetails from "./Components/CourseDetails";
 import ExamResult from "./Components/ExamResult";
-import DashboardHome from "./Page/Dashboard/DashboardHome";
+import DashboardHome from "./Page/DashboardStudent/DashboardHome";
 
 // Style App CSS
 import "./App.css";
@@ -24,7 +24,7 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/courses/:courseId" element={<CourseDetails />} />
         <Route path="/exam-result" element={<ExamResult />} />
-        <Route path="/dashboard" element={<DashboardHome />} />
+        <Route path="/dashboard-student" element={<DashboardHome />} />
       </Routes>
       <Chat />
     </>
