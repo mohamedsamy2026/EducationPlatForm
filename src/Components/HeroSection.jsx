@@ -20,7 +20,7 @@ export default function HeroSection() {
         />
 
         {/* Navy cinematic overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r lg:bg-gradient-to-l from-[#061522]/60" />
+        <div className="absolute inset-0 bg-gradient-to-r lg:bg-gradient-to-l from-[#061522]/80" />
 
         {/* Text readability overlay */}
         <div className="absolute inset-y-0 right-0 w-[60%] bg-gradient-to-l  via-[#061522]/20 to-transparent" />

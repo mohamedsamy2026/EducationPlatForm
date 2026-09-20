@@ -13,7 +13,8 @@ import {
   faUserTie,
   faGraduationCap,
   faSchool,
-  faArrowLeft
+  faArrowLeft,
+  faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Images
@@ -33,6 +34,7 @@ export default function Signup() {
     confirmPassword: "",
     stage: "",
     grade: "",
+    governorate: "",
   });
 
   const fields = [
@@ -104,6 +106,37 @@ export default function Signup() {
         { value: "third-secondary", label: "الصف الثالث الثانوي" },
       ],
     },
+  ];
+
+  const governorateOptions = [
+    { value: "", label: "اختر المحافظة" },
+    { value: "cairo", label: "القاهرة" },
+    { value: "giza", label: "الجيزة" },
+    { value: "alexandria", label: "الإسكندرية" },
+    { value: "qalyubia", label: "القليوبية" },
+    { value: "sharqia", label: "الشرقية" },
+    { value: "dakahlia", label: "الدقهلية" },
+    { value: "gharbia", label: "الغربية" },
+    { value: "monufia", label: "المنوفية" },
+    { value: "beheira", label: "البحيرة" },
+    { value: "kafr-el-sheikh", label: "كفر الشيخ" },
+    { value: "damietta", label: "دمياط" },
+    { value: "port-said", label: "بورسعيد" },
+    { value: "ismailia", label: "الإسماعيلية" },
+    { value: "suez", label: "السويس" },
+    { value: "north-sinai", label: "شمال سيناء" },
+    { value: "south-sinai", label: "جنوب سيناء" },
+    { value: "beni-suef", label: "بني سويف" },
+    { value: "faiyum", label: "الفيوم" },
+    { value: "minya", label: "المنيا" },
+    { value: "asyut", label: "أسيوط" },
+    { value: "sohag", label: "سوهاج" },
+    { value: "qena", label: "قنا" },
+    { value: "luxor", label: "الأقصر" },
+    { value: "aswan", label: "أسوان" },
+    { value: "red-sea", label: "البحر الأحمر" },
+    { value: "new-valley", label: "الوادي الجديد" },
+    { value: "matrouh", label: "مطروح" },
   ];
 
   const handleChange = (e) => {
@@ -193,7 +226,6 @@ export default function Signup() {
                     <h2 className="text-sm font-bold text-warm-white">
                       البيانات الشخصية
                     </h2>
-
                     <p className="mt-0.5 text-[11px] text-white/35">
                       أدخل بياناتك الأساسية
                     </p>
@@ -202,6 +234,7 @@ export default function Signup() {
                   <div className="h-px flex-1 bg-white/5" />
                 </div>
 
+                {/* الـ Grid الرئيسية للبيانات الشخصية */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {fields.map((field) => (
                     <div key={field.name}>
@@ -221,12 +254,42 @@ export default function Signup() {
                           value={formData[field.name]}
                           onChange={handleChange}
                           placeholder={field.placeholder}
-                          className="h-[3.1rem] w-full rounded-xl border border-white/10 bg-[#040c16]/50 px-4 pr-11 text-sm text-warm-white outline-none transition-all duration-300 placeholder:text-white/25 focus:border-gold/60 focus:bg-gold/[0.03] focus:shadow-[0_0_0_3px_rgba(212,175,55,0.06)] text-right
-                          "
+                          className="h-[3.1rem] w-full rounded-xl border border-white/10 bg-[#040c16]/50 px-4 pr-11 text-right text-sm text-warm-white outline-none transition-all duration-300 placeholder:text-white/25 focus:border-gold/60 focus:bg-gold/[0.03] focus:shadow-[0_0_0_3px_rgba(212,175,55,0.06)]"
                         />
                       </div>
                     </div>
                   ))}
+
+                  {/* ================= Governorate (تاخد الصف كله بشكل أنيق) ================= */}
+                  <div className="sm:col-span-2">
+                    <label className="mb-2 block text-xs font-semibold text-white/70">
+                      المحافظة
+                    </label>
+
+                    <div className="group relative">
+                      <FontAwesomeIcon
+                        icon={faLocationDot}
+                        className="absolute right-4 top-1/2 z-10 -translate-y-1/2 text-sm text-gold/70 transition-colors duration-300 group-focus-within:text-gold"
+                      />
+
+                      <select
+                        name="governorate"
+                        value={formData.governorate}
+                        onChange={handleChange}
+                        className="h-[3.1rem] w-full cursor-pointer appearance-none rounded-xl border border-white/10 bg-[#040c16]/50 px-4 pr-11 text-sm text-warm-white outline-none transition-all duration-300 focus:border-gold/60 focus:bg-gold/[0.03] focus:shadow-[0_0_0_3px_rgba(212,175,55,0.06)]"
+                      >
+                        {governorateOptions.map((option) => (
+                          <option
+                            key={option.value}
+                            value={option.value}
+                            className="bg-[#061220] text-warm-white"
+                          >
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
 
