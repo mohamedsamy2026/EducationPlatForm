@@ -122,7 +122,7 @@ export default function DashboardHome() {
 
                 <button
                   type="button"
-                  className="hidden items-center gap-2 text-sm font-bold text-white/50 transition-colors hover:text-gold sm:flex"
+                  className="cursor-pointer hidden items-center gap-2 text-sm font-bold text-white/50 transition-colors hover:text-gold sm:flex"
                 >
                   عرض الكل
                   <FontAwesomeIcon icon={faArrowLeft} />
