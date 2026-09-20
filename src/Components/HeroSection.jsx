@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import MasterImg from "../assets/Master/master.webp";
 
-import HeroImg from "../assets/Background/1.jpg";
+import HeroImg from "../assets/Background/dashbord student home.webp";
 
 export default function HeroSection() {
   return (
