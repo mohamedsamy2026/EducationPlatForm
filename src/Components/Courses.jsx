@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Icons
 import {
-  faGraduationCap,
   faClock,
   faBookOpen,
   faArrowLeft,
@@ -14,7 +13,7 @@ import { Link } from "react-router-dom";
 
 // Data
 import courses from "../date/courses";
-
+import DashboardEmptyState from "../Components/DashboardStudent/DashboardEmptyState";
 
 export default function Courses() {
   return (
@@ -416,49 +415,11 @@ export default function Courses() {
              Empty State
           ========================================================= */
 
-          <div
-            className="
-              mx-auto
-              max-w-2xl
-              rounded-2xl
-              border
-              border-white/10
-              bg-[#0c1a2b]/80
-              px-6
-              py-16
-              text-center
-              shadow-[0_20px_50px_rgba(0,0,0,0.20)]
-              backdrop-blur-sm
-            "
-          >
-            <div
-              className="
-                mx-auto
-                mb-5
-                flex
-                h-16
-                w-16
-                items-center
-                justify-center
-                rounded-2xl
-                border
-                border-gold/20
-                bg-gold/10
-                text-2xl
-                text-gold
-              "
-            >
-              <FontAwesomeIcon icon={faGraduationCap} />
-            </div>
-
-            <h3 className="mb-3 text-xl font-extrabold text-warm-white">
-              لا توجد كورسات حاليًا
-            </h3>
-
-            <p className="text-sm leading-7 text-white/50">
-              سيتم إضافة الكورسات التعليمية هنا قريبًا.
-            </p>
-          </div>
+          <DashboardEmptyState
+            icon={faBookOpen}
+            title="لا توجد كورسات متاحة حاليًا"
+            description="لم تتم إضافة أي كورسات تعليمية إلى المنصة بعد. يرجى العودة لاحقًا."
+          />
         )}
       </div>
 

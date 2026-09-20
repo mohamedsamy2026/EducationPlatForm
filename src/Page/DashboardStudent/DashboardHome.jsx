@@ -2,11 +2,11 @@
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
 import DashboardSidebar from "../../Components/DashboardStudent/DashboardSidebar";
+import courses from "../../date/courses";
+import DashboardEmptyState from "../../Components/DashboardStudent/DashboardEmptyState";
 
 // IMGS
 import HeroImg from "../../assets/Background/dashbord student home.webp";
-
-import courses from "../../date/courses";
 
 // ICONS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -107,48 +107,58 @@ export default function DashboardHome() {
                 </Link>
               </div>
 
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-                {courses.map((course) => (
-                  <article
-                    key={course.id}
-                    className="group overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a2b] shadow-[0_15px_45px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-gold/30"
-                  >
-                    <div className="relative aspect-video overflow-hidden">
-                      <img
-                        src={course.image}
-                        alt={course.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
+              {courses.length > 0 ? (
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+                  {courses.map((course) => (
+                    <article
+                      key={course.id}
+                      className="group overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a2b] shadow-[0_15px_45px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-gold/30"
+                    >
+                      <div className="relative aspect-video overflow-hidden">
+                        <img
+                          src={course.image}
+                          alt={course.title}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        />
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#071321]/80 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#071321]/80 to-transparent" />
 
-                      <span className="absolute bottom-4 right-4 rounded-lg border border-gold/20 bg-[#071321]/85 px-3 py-2 text-xs font-bold text-gold backdrop-blur-sm">
-                        {course.grade}
-                      </span>
-                    </div>
-
-                    <div className="p-5">
-                      <div className="mb-3 flex items-center gap-2 text-xs font-bold text-gold/70">
-                        <FontAwesomeIcon icon={faBookOpen} />
-                        كورس تعليمي
+                        <span className="absolute bottom-4 right-4 rounded-lg border border-gold/20 bg-[#071321]/85 px-3 py-2 text-xs font-bold text-gold backdrop-blur-sm">
+                          {course.grade}
+                        </span>
                       </div>
 
-                      <h3 className="min-h-[3.5rem] text-lg font-extrabold leading-7 text-white transition-colors group-hover:text-gold">
-                        {course.title}
-                      </h3>
+                      <div className="p-5">
+                        <div className="mb-3 flex items-center gap-2 text-xs font-bold text-gold/70">
+                          <FontAwesomeIcon icon={faBookOpen} />
+                          كورس تعليمي
+                        </div>
 
-                      <Link
-                        to={`/courses/${course.id}`}
-                        state={{ course }}
-                        className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3 font-extrabold text-midnight transition-all duration-300 hover:bg-gold-light"
-                      >
-                        متابعة الكورس
-                        <FontAwesomeIcon icon={faArrowLeft} />
-                      </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
+                        <h3 className="min-h-[3.5rem] text-lg font-extrabold leading-7 text-white transition-colors group-hover:text-gold">
+                          {course.title}
+                        </h3>
+
+                        <Link
+                          to={`/courses/${course.id}`}
+                          state={{ course }}
+                          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3 font-extrabold text-midnight transition-all duration-300 hover:bg-gold-light"
+                        >
+                          متابعة الكورس
+                          <FontAwesomeIcon icon={faArrowLeft} />
+                        </Link>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <DashboardEmptyState
+                  icon={faBookOpen}
+                  title="لم تشترك في أي كورس بعد"
+                  description="استكشف الكورسات المتاحة وابدأ رحلتك التعليمية."
+                  buttonText="استكشف الكورسات"
+                  buttonTo="/courses"
+                />
+              )}
             </section>
 
             {/* Exams + Latest Result */}
@@ -171,31 +181,41 @@ export default function DashboardHome() {
                   </div>
                 </div>
 
-                <div className="space-y-3">
-                  {exams.map((exam) => (
-                    <div
-                      key={exam.id}
-                      className="flex items-center justify-between gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-4"
-                    >
-                      <div>
-                        <h3 className="text-sm font-bold text-white">
-                          {exam.title}
-                        </h3>
-
-                        <p className="mt-1 text-xs text-white/40">
-                          {exam.course}
-                        </p>
-                      </div>
-
-                      <Link
-                        to="/exams"
-                        className="shrink-0 rounded-lg bg-gold/10 px-3 py-2 text-xs font-bold text-gold transition-colors hover:bg-gold hover:text-midnight"
+                {exams.length > 0 ? (
+                  <div className="space-y-3">
+                    {exams.map((exam) => (
+                      <div
+                        key={exam.id}
+                        className="flex items-center justify-between gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-4"
                       >
-                        {exam.status}
-                      </Link>
-                    </div>
-                  ))}
-                </div>
+                        <div>
+                          <h3 className="text-sm font-bold text-white">
+                            {exam.title}
+                          </h3>
+
+                          <p className="mt-1 text-xs text-white/40">
+                            {exam.course}
+                          </p>
+                        </div>
+
+                        <Link
+                          to="/exams"
+                          className="shrink-0 rounded-lg bg-gold/10 px-3 py-2 text-xs font-bold text-gold transition-colors hover:bg-gold hover:text-midnight"
+                        >
+                          {exam.status}
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <DashboardEmptyState
+                    icon={faClipboardCheck}
+                    title="لا توجد اختبارات متاحة حاليًا"
+                    description="اشترك في كورس لتظهر الاختبارات الخاصة بك."
+                    buttonText="استكشف الكورسات"
+                    buttonTo="/courses"
+                  />
+                )}
               </div>
 
               {/* Latest Result */}
@@ -214,35 +234,47 @@ export default function DashboardHome() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between gap-5">
-                  <div>
-                    <h3 className="text-lg font-black text-white">
-                      {latestResult.title}
-                    </h3>
+                {latestResult && latestResult.title ? (
+                  <>
+                    <div className="flex items-center justify-between gap-5">
+                      <div>
+                        <h3 className="text-lg font-black text-white">
+                          {latestResult.title}
+                        </h3>
 
-                    <p className="mt-2 text-sm text-white/45">
-                      آخر نتيجة مسجلة لك
-                    </p>
-                  </div>
+                        <p className="mt-2 text-sm text-white/45">
+                          آخر نتيجة مسجلة لك
+                        </p>
+                      </div>
 
-                  <div className="text-center">
-                    <p className="text-2xl font-black text-white">
-                      {latestResult.score}/{latestResult.total}
-                    </p>
+                      <div className="text-center">
+                        <p className="text-2xl font-black text-white">
+                          {latestResult.score}/{latestResult.total}
+                        </p>
 
-                    <p className="mt-1 text-sm font-bold text-gold">
-                      {percentage}%
-                    </p>
-                  </div>
-                </div>
+                        <p className="mt-1 text-sm font-bold text-gold">
+                          {percentage}%
+                        </p>
+                      </div>
+                    </div>
 
-                <Link
-                  to="/exam-result"
-                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-5 py-3 text-sm font-extrabold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
-                >
-                  عرض النتيجة
-                  <FontAwesomeIcon icon={faArrowLeft} />
-                </Link>
+                    <Link
+                      to="/exam-result"
+                      className="mt-14 flex w-full items-center justify-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-5 py-3 text-sm font-extrabold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
+                    >
+                      عرض النتيجة
+                      <FontAwesomeIcon icon={faArrowLeft} />
+                    </Link>
+                  </>
+                ) : (
+                  <DashboardEmptyState
+                    icon={faTrophy}
+                    title="لا توجد نتائج حتى الآن"
+                    description="بعد أداء أول اختبار ستظهر نتيجتك هنا."
+                    buttonText="استعرض الاختبارات"
+                    buttonTo="/exams"
+                  />
+                )}
               </div>
             </section>
           </div>
