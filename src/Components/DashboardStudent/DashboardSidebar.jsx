@@ -25,7 +25,7 @@ export default function DashboardSidebar() {
     },
     {
       name: "الكورسات",
-      path: "/courses",
+      path: "/dashboard-courses",
       icon: faBookOpen,
     },
     {
