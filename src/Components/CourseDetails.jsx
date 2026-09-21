@@ -189,6 +189,7 @@ export default function CourseDetails() {
           <p className="mt-4 text-white/50">{totalLessons} حصة</p>
         </div>
 
+        {/* لو مشترك */}
         {isEnrolled ? (
           courseSections.length > 0 ? (
             <div className="space-y-6">
@@ -198,12 +199,12 @@ export default function CourseDetails() {
                 return (
                   <div
                     key={section.id}
-                    className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-300 hover:border-gold/20"
+                    className="cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-300 hover:border-gold/20"
                   >
                     <button
                       type="button"
                       onClick={() => setOpenSection(isOpen ? null : index)}
-                      className="flex w-full items-center justify-between gap-4 p-5 text-right sm:p-6"
+                      className="cursor-pointer flex w-full items-center justify-between gap-4 p-5 text-right sm:p-6"
                     >
                       <div className="flex items-center gap-4">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 font-black text-gold">
@@ -229,25 +230,34 @@ export default function CourseDetails() {
                       />
                     </button>
 
-                    {isOpen && (
-                      <div className="border-t border-white/5 px-5 pb-5 sm:px-6 sm:pb-6">
-                        <div className="space-y-2 pt-4">
-                          {section.lessons.map((lesson) => (
-                            <div
-                              key={lesson.id}
-                              className="flex items-center gap-3 rounded-xl bg-white/[0.03] p-4 text-sm text-white/70"
-                            >
-                              <FontAwesomeIcon
-                                icon={faPlay}
-                                className="text-xs text-gold"
-                              />
+                    {/* الدروس */}
+                    <div
+                      className={`grid transition-all duration-300 ease-in-out ${
+                        isOpen
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="border-t border-white/5 px-5 pb-5 sm:px-6 sm:pb-6">
+                          <div className="space-y-6 pt-4">
+                            {section.lessons.map((lesson) => (
+                              <a
+                                key={lesson.id}
+                                className="flex items-center gap-3 rounded-xl bg-white/[0.03] p-5 text-sm text-white duration-300 hover:bg-white/[0.06]"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faPlay}
+                                  className="text-xs text-gold"
+                                />
 
-                              <span>{lesson.title}</span>
-                            </div>
-                          ))}
+                                <span>{lesson.title}</span>
+                              </a>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               })}
@@ -268,28 +278,31 @@ export default function CourseDetails() {
             </div>
           )
         ) : (
-          <div className="rounded-3xl border border-gold/20 bg-[radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.10),transparent_40%),#0c1a2b] px-6 py-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.20)] sm:px-10 sm:py-14">
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
-              <FontAwesomeIcon icon={faLock} />
+          // لو مش متشرك
+          <>
+            <div className="rounded-3xl border border-gold/20 bg-[radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.10),transparent_40%),#0c1a2b] px-6 py-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.20)] sm:px-10 sm:py-14">
+              <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
+                <FontAwesomeIcon icon={faLock} />
+              </div>
+
+              <h3 className="text-xl font-black text-white">
+                محتوى الكورس متاح للمشتركين فقط
+              </h3>
+
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-white/45">
+                اشترك في الكورس للوصول إلى الأقسام والدروس التعليمية ومتابعة
+                المحتوى كاملًا.
+              </p>
+
+              <Link
+                to="/"
+                className="mt-6 inline-flex items-center gap-3 rounded-xl bg-gold px-7 py-3.5 font-black text-midnight transition-all duration-300 hover:-translate-y-1 hover:bg-gold-light"
+              >
+                <FontAwesomeIcon icon={faBookOpen} />
+                اشترك في الكورس
+              </Link>
             </div>
-
-            <h3 className="text-xl font-black text-white">
-              محتوى الكورس متاح للمشتركين فقط
-            </h3>
-
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-white/45">
-              اشترك في الكورس للوصول إلى الأقسام والدروس التعليمية ومتابعة
-              المحتوى كاملًا.
-            </p>
-
-            <Link
-              to="/"
-              className="mt-6 inline-flex items-center gap-3 rounded-xl bg-gold px-7 py-3.5 font-black text-midnight transition-all duration-300 hover:-translate-y-1 hover:bg-gold-light"
-            >
-              <FontAwesomeIcon icon={faBookOpen} />
-              اشترك في الكورس
-            </Link>
-          </div>
+          </>
         )}
       </section>
 
