@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-
 import { useParams, Link } from "react-router-dom";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -12,12 +10,16 @@ import {
   faChalkboardTeacher,
   faChevronDown,
   faVideo,
+  faLock,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 import courses from "../date/courses";
+import students from "../date/students";
+import enrollments from "../date/enrollments";
+import lessons from "../date/lessons";
 
 export default function CourseDetails() {
   const { courseId } = useParams();
@@ -26,8 +28,29 @@ export default function CourseDetails() {
 
   const course = courses.find((course) => course.id === courseId);
 
+  const currentStudent = students[0];
+
+  const isEnrolled = currentStudent
+    ? enrollments.some(
+        (enrollment) =>
+          enrollment.studentId === currentStudent.id &&
+          enrollment.courseId === courseId &&
+          enrollment.status === "active",
+      )
+    : false;
+
+  const courseSections = lessons.filter(
+    (section) => section.courseId === courseId,
+  );
+
+  const totalLessons = courseSections.reduce(
+    (total, section) => total + section.lessons.length,
+    0,
+  );
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    setOpenSection(null);
   }, [courseId]);
 
   function InfoItem({ icon, title, value }) {
@@ -109,17 +132,26 @@ export default function CourseDetails() {
                   value="مستر محمد خالد"
                 />
 
-                <InfoItem icon={faBookOpen} title="الدروس" value="كورس شامل" />
+                <InfoItem
+                  icon={faBookOpen}
+                  title="الدروس"
+                  value={`${totalLessons} حصة`}
+                />
 
-                <InfoItem icon={faVideo} title="حاله الفديوهات" value="مسجله" />
+                <InfoItem
+                  icon={faVideo}
+                  title="حالة الفيديوهات"
+                  value="مسجلة"
+                />
               </div>
 
               <button
                 type="button"
                 className="mt-8 inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)] sm:w-fit"
               >
-                <FontAwesomeIcon icon={faPlay} />
-                ابدأ الكورس
+                <FontAwesomeIcon icon={isEnrolled ? faPlay : faBookOpen} />
+
+                {isEnrolled ? "متابعة الكورس" : "اشترك في الكورس"}
               </button>
             </div>
 
@@ -154,89 +186,111 @@ export default function CourseDetails() {
             ابدأ رحلتك التعليمية
           </h2>
 
-          <p className="mt-4 text-white/50">
-            {course.lessons?.length || 0} حصه
-          </p>
+          <p className="mt-4 text-white/50">{totalLessons} حصة</p>
         </div>
 
+        {isEnrolled ? (
+          courseSections.length > 0 ? (
+            <div className="space-y-6">
+              {courseSections.map((section, index) => {
+                const isOpen = openSection === index;
 
-        {/* مهمه جدا عرض الدروس */}
-        <div className="space-y-4">
-          {course.sections?.map((section, index) => {
-            const isOpen = openSection === index;
+                return (
+                  <div
+                    key={section.id}
+                    className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-300 hover:border-gold/20"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenSection(isOpen ? null : index)}
+                      className="flex w-full items-center justify-between gap-4 p-5 text-right sm:p-6"
+                    >
+                      <div className="flex items-center gap-4">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 font-black text-gold">
+                          {index + 1}
+                        </span>
 
-            return (
-              <div
-                key={index}
-                className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-300 hover:border-gold/20"
-              >
-                <button
-                  type="button"
-                  onClick={() => setOpenSection(isOpen ? null : index)}
-                  className="flex w-full items-center justify-between gap-4 p-5 text-right sm:p-6"
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 font-black text-gold">
-                      {index + 1}
-                    </span>
+                        <div>
+                          <h3 className="font-black text-white">
+                            {section.title}
+                          </h3>
 
-                    <div>
-                      <h3 className="font-black text-white">{section.title}</h3>
-
-                      <p className="mt-1 text-sm text-white/40">
-                        {section.lessons?.length || 0} دروس
-                      </p>
-                    </div>
-                  </div>
-
-                  <FontAwesomeIcon
-                    icon={faChevronDown}
-                    className={`text-gold transition-transform duration-300 ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-
-                {isOpen && (
-                  <div className="border-t border-white/5 px-5 pb-5 sm:px-6 sm:pb-6">
-                    <div className="space-y-2 pt-4">
-                      {section.lessons?.map((lesson, lessonIndex) => (
-                        <div
-                          key={lessonIndex}
-                          className="flex items-center gap-3 rounded-xl bg-white/[0.03] p-4 text-sm text-white/70"
-                        >
-                          <FontAwesomeIcon
-                            icon={faPlay}
-                            className="text-xs text-gold"
-                          />
-
-                          <span>{lesson.title || lesson}</span>
+                          <p className="mt-1 text-sm text-white/40">
+                            {section.lessons.length} دروس
+                          </p>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+
+                      <FontAwesomeIcon
+                        icon={faChevronDown}
+                        className={`text-gold transition-transform duration-300 ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {isOpen && (
+                      <div className="border-t border-white/5 px-5 pb-5 sm:px-6 sm:pb-6">
+                        <div className="space-y-2 pt-4">
+                          {section.lessons.map((lesson) => (
+                            <div
+                              key={lesson.id}
+                              className="flex items-center gap-3 rounded-xl bg-white/[0.03] p-4 text-sm text-white/70"
+                            >
+                              <FontAwesomeIcon
+                                icon={faPlay}
+                                className="text-xs text-gold"
+                              />
+
+                              <span>{lesson.title}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+                );
+              })}
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] px-6 py-12 text-center">
+              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
+                <FontAwesomeIcon icon={faBookOpen} />
               </div>
-            );
-          })}
-        </div>
 
-        {/* Bottom CTA */}
-        <div className="mt-14 overflow-hidden rounded-3xl border border-gold/20 bg-[radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.15),transparent_35%),linear-gradient(135deg,rgba(18,52,78,0.7),rgba(6,23,40,0.9))] p-8 text-center sm:p-10">
-          <h3 className="text-2xl font-black sm:text-3xl">جاهز تبدأ الكورس؟</h3>
+              <h3 className="text-lg font-black text-white">
+                لم يتم إضافة محتوى الكورس بعد
+              </h3>
 
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-white/50">
-            ابدأ الآن واستمتع بالمحتوى التعليمي المنظم.
-          </p>
+              <p className="mt-2 text-sm leading-7 text-white/45">
+                سيتم إضافة الدروس التعليمية إلى هذا الكورس قريبًا.
+              </p>
+            </div>
+          )
+        ) : (
+          <div className="rounded-3xl border border-gold/20 bg-[radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.10),transparent_40%),#0c1a2b] px-6 py-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.20)] sm:px-10 sm:py-14">
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
+              <FontAwesomeIcon icon={faLock} />
+            </div>
 
-          <button
-            type="button"
-            className="mt-7 inline-flex cursor-pointer items-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight transition-all duration-300 hover:-translate-y-1"
-          >
-            <FontAwesomeIcon icon={faPlay} />
-            ابدأ الكورس الآن
-          </button>
-        </div>
+            <h3 className="text-xl font-black text-white">
+              محتوى الكورس متاح للمشتركين فقط
+            </h3>
+
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-white/45">
+              اشترك في الكورس للوصول إلى الأقسام والدروس التعليمية ومتابعة
+              المحتوى كاملًا.
+            </p>
+
+            <Link
+              to="/"
+              className="mt-6 inline-flex items-center gap-3 rounded-xl bg-gold px-7 py-3.5 font-black text-midnight transition-all duration-300 hover:-translate-y-1 hover:bg-gold-light"
+            >
+              <FontAwesomeIcon icon={faBookOpen} />
+              اشترك في الكورس
+            </Link>
+          </div>
+        )}
       </section>
 
       <Footer />
