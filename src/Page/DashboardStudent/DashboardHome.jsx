@@ -2,10 +2,14 @@
 import Navbar from "../../Components/Navbar";
 import Footer from "../../Components/Footer";
 import DashboardSidebar from "../../Components/DashboardStudent/DashboardSidebar";
-import courses from "../../date/courses";
 import DashboardEmptyState from "../../Components/DashboardStudent/EmptyState";
+
+// DATA
+import courses from "../../date/courses";
 import exams from "../../date/exams";
-import latestResult from "../../date/results";
+import results from "../../date/results";
+import students from "../../date/students";
+import enrollments from "../../date/enrollments";
 
 // IMGS
 import HeroImg from "../../assets/Background/dashbord student home.webp";
@@ -23,9 +27,78 @@ import {
 import { Link } from "react-router-dom";
 
 export default function DashboardHome() {
-  const percentage = Math.round(
-    (latestResult[0].score / latestResult[0].total) * 100,
+  // MODIFIED: تحديد الطالب الحالي تجريبيًا
+  const currentStudent = students[0];
+
+  // MODIFIED: استخراج الكورسات المشترك فيها الطالب
+  const enrolledCourseIds = enrollments
+    .filter(
+      (enrollment) =>
+        enrollment.studentId === currentStudent?.id &&
+        enrollment.status === "active"
+    )
+    .map((enrollment) => enrollment.courseId);
+
+  // MODIFIED: عرض كورسات الطالب فقط بدل كل كورسات المنصة
+  const studentCourses = courses.filter((course) =>
+    enrolledCourseIds.includes(course.id)
   );
+
+  // MODIFIED: تحديد الاختبارات المتاحة للطالب فقط
+  const now = new Date();
+
+  const availableExams = exams
+    .filter((exam) =>
+      enrolledCourseIds.includes(exam.courseId)
+    )
+    .filter((exam) => {
+      const startDate = new Date(exam.startsAt);
+      const endDate = new Date(exam.endsAt);
+
+      return now >= startDate && now <= endDate;
+    })
+    .filter(
+      (exam) =>
+        !results.some(
+          (result) =>
+            result.studentId === currentStudent?.id &&
+            result.examId === exam.id
+        )
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.startsAt) - new Date(a.startsAt)
+    )
+    .slice(0, 3);
+
+  // MODIFIED: استخراج نتائج الطالب وترتيبها من الأحدث للأقدم
+  const studentResults = results
+    .filter(
+      (result) =>
+        result.studentId === currentStudent?.id
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.submittedAt) -
+        new Date(a.submittedAt)
+    );
+
+  // MODIFIED: أحدث نتيجة فقط
+  const latestResult = studentResults[0] || null;
+
+  // MODIFIED: حساب النسبة بشكل آمن
+  const percentage = latestResult
+    ? Math.round(
+        (latestResult.score / latestResult.total) * 100
+      )
+    : 0;
+
+  // MODIFIED: استخراج اسم الامتحان المرتبط بأحدث نتيجة
+  const latestResultExam = latestResult
+    ? exams.find(
+        (exam) => exam.id === latestResult.examId
+      )
+    : null;
 
   return (
     <div dir="rtl" className="min-h-screen bg-midnight text-white">
@@ -35,7 +108,6 @@ export default function DashboardHome() {
         <DashboardSidebar />
 
         <main className="min-w-0 flex-1">
-          {/* Welcome */}
           <section className="relative overflow-hidden border-b border-white/10 pt-20 lg:pt-24">
             <img
               src={HeroImg}
@@ -49,7 +121,7 @@ export default function DashboardHome() {
 
             <div className="relative z-10 px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
               <div className="max-w-2xl">
-                <span className="mb-5 md:mt-0 mt-8 inline-flex rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold">
+                <span className="mb-5 mt-8 inline-flex rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold md:mt-0">
                   لوحة الطالب
                 </span>
 
@@ -64,9 +136,7 @@ export default function DashboardHome() {
             </div>
           </section>
 
-          {/* Dashboard Content */}
           <div className="px-5 py-10 sm:px-8 lg:px-10 lg:py-14">
-            {/* My Courses */}
             <section>
               <div className="mb-6 flex items-end justify-between gap-4">
                 <div>
@@ -81,16 +151,17 @@ export default function DashboardHome() {
 
                 <Link
                   to="/courses"
-                  className="cursor-pointer hidden items-center gap-2 text-sm font-bold text-gray-300 transition-colors hover:text-gold sm:flex"
+                  className="hidden cursor-pointer items-center gap-2 text-sm font-bold text-gray-300 transition-colors hover:text-gold sm:flex"
                 >
                   عرض الكل
                   <FontAwesomeIcon icon={faArrowLeft} />
                 </Link>
               </div>
 
-              {courses.length > 0 ? (
+              {/* MODIFIED: استخدام كورسات الطالب بدل كل كورسات المنصة */}
+              {studentCourses.length > 0 ? (
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-                  {courses.map((course) => (
+                  {studentCourses.map((course) => (
                     <article
                       key={course.id}
                       className="group overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a2b] shadow-[0_15px_45px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-gold/30"
@@ -121,7 +192,6 @@ export default function DashboardHome() {
 
                         <Link
                           to={`/courses/${course.id}`}
-                          state={{ course }}
                           className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3 font-extrabold text-midnight transition-all duration-300 hover:bg-gold-light"
                         >
                           متابعة الكورس
@@ -137,14 +207,12 @@ export default function DashboardHome() {
                   title="لم تشترك في أي كورس بعد"
                   description="استكشف الكورسات المتاحة وابدأ رحلتك التعليمية."
                   buttonText="استكشف الكورسات"
-                  buttonTo="/dashboard-courses"
+                  buttonTo="/courses"
                 />
               )}
             </section>
 
-            {/* Exams + Latest Result */}
             <section className="mt-12 grid grid-cols-1 gap-6 xl:grid-cols-2">
-              {/* Exams */}
               <div className="rounded-2xl border border-white/10 bg-[#0c1a2b] p-6 shadow-[0_15px_45px_rgba(0,0,0,0.15)]">
                 <div className="mb-6 flex items-center gap-3">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold">
@@ -162,9 +230,10 @@ export default function DashboardHome() {
                   </div>
                 </div>
 
-                {exams.length > 0 ? (
+                 {/* MODIFIED: عرض آخر 3 اختبارات متاحة فقط */}
+                {availableExams.length > 0 ? (
                   <div className="space-y-3">
-                    {exams.map((exam) => (
+                    {availableExams.map((exam) => (
                       <div
                         key={exam.id}
                         className="flex items-center justify-between gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-4"
@@ -181,9 +250,9 @@ export default function DashboardHome() {
 
                         <Link
                           to="/exams"
-                          className="shrink-0 rounded-lg bg-gold/10 px-6 py-2.5  text-xs font-bold text-gold transition-colors hover:bg-gold hover:text-midnight"
+                          className="shrink-0 rounded-lg bg-gold/10 px-6 py-2.5 text-xs font-bold text-gold transition-colors hover:bg-gold hover:text-midnight"
                         >
-                          {exam.status}
+                          بدء الاختبار
                         </Link>
                       </div>
                     ))}
@@ -199,7 +268,6 @@ export default function DashboardHome() {
                 )}
               </div>
 
-              {/* Latest Result */}
               <div className="rounded-2xl border border-gold/15 bg-[radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.10),transparent_40%),#0c1a2b] p-6 shadow-[0_15px_45px_rgba(0,0,0,0.15)]">
                 <div className="mb-6 flex items-center gap-3">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold">
@@ -207,20 +275,23 @@ export default function DashboardHome() {
                   </span>
 
                   <div>
-                    <p className="text-xs font-bold text-gold">آخر نتيجة</p>
+                    <p className="text-xs font-bold text-gold">
+                      آخر نتيجة
+                    </p>
 
                     <h2 className="mt-1 text-xl font-black text-white">
                       آخر امتحان
                     </h2>
                   </div>
                 </div>
-
-                {latestResult && latestResult[0].title ? (
+                
+                 {/* MODIFIED: استخدام أحدث نتيجة فعلية بدل أول عنصر في results */}
+                {latestResult ? (
                   <>
                     <div className="flex items-center justify-between gap-5">
                       <div>
                         <h3 className="text-lg font-black text-white">
-                          {latestResult[0].title}
+                          {latestResultExam?.title || "امتحان غير معروف"}
                         </h3>
 
                         <p className="mt-2 text-sm text-white/45">
@@ -230,7 +301,7 @@ export default function DashboardHome() {
 
                       <div className="text-center">
                         <p className="text-2xl font-black text-white">
-                          {latestResult[0].score}/{latestResult[0].total}
+                          {latestResult.score}/{latestResult.total}
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-gold">
