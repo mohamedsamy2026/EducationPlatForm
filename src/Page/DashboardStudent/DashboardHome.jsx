@@ -35,22 +35,20 @@ export default function DashboardHome() {
     .filter(
       (enrollment) =>
         enrollment.studentId === currentStudent?.id &&
-        enrollment.status === "active"
+        enrollment.status === "active",
     )
     .map((enrollment) => enrollment.courseId);
 
   // MODIFIED: عرض كورسات الطالب فقط بدل كل كورسات المنصة
   const studentCourses = courses.filter((course) =>
-    enrolledCourseIds.includes(course.id)
+    enrolledCourseIds.includes(course.id),
   );
 
   // MODIFIED: تحديد الاختبارات المتاحة للطالب فقط
   const now = new Date();
 
   const availableExams = exams
-    .filter((exam) =>
-      enrolledCourseIds.includes(exam.courseId)
-    )
+    .filter((exam) => enrolledCourseIds.includes(exam.courseId))
     .filter((exam) => {
       const startDate = new Date(exam.startsAt);
       const endDate = new Date(exam.endsAt);
@@ -62,42 +60,28 @@ export default function DashboardHome() {
         !results.some(
           (result) =>
             result.studentId === currentStudent?.id &&
-            result.examId === exam.id
-        )
+            result.examId === exam.id,
+        ),
     )
-    .sort(
-      (a, b) =>
-        new Date(b.startsAt) - new Date(a.startsAt)
-    )
+    .sort((a, b) => new Date(b.startsAt) - new Date(a.startsAt))
     .slice(0, 3);
 
   // MODIFIED: استخراج نتائج الطالب وترتيبها من الأحدث للأقدم
   const studentResults = results
-    .filter(
-      (result) =>
-        result.studentId === currentStudent?.id
-    )
-    .sort(
-      (a, b) =>
-        new Date(b.submittedAt) -
-        new Date(a.submittedAt)
-    );
+    .filter((result) => result.studentId === currentStudent?.id)
+    .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
 
   // MODIFIED: أحدث نتيجة فقط
   const latestResult = studentResults[0] || null;
 
   // MODIFIED: حساب النسبة بشكل آمن
   const percentage = latestResult
-    ? Math.round(
-        (latestResult.score / latestResult.total) * 100
-      )
+    ? Math.round((latestResult.score / latestResult.total) * 100)
     : 0;
 
   // MODIFIED: استخراج اسم الامتحان المرتبط بأحدث نتيجة
   const latestResultExam = latestResult
-    ? exams.find(
-        (exam) => exam.id === latestResult.examId
-      )
+    ? exams.find((exam) => exam.id === latestResult.examId)
     : null;
 
   return (
@@ -150,7 +134,7 @@ export default function DashboardHome() {
                 </div>
 
                 <Link
-                  to="/courses"
+                  to="/#courses"
                   className="hidden cursor-pointer items-center gap-2 text-sm font-bold text-gray-300 transition-colors hover:text-gold sm:flex"
                 >
                   عرض الكل
@@ -230,7 +214,7 @@ export default function DashboardHome() {
                   </div>
                 </div>
 
-                 {/* MODIFIED: عرض آخر 3 اختبارات متاحة فقط */}
+                {/* MODIFIED: عرض آخر 3 اختبارات متاحة فقط */}
                 {availableExams.length > 0 ? (
                   <div className="space-y-3">
                     {availableExams.map((exam) => (
@@ -275,17 +259,15 @@ export default function DashboardHome() {
                   </span>
 
                   <div>
-                    <p className="text-xs font-bold text-gold">
-                      آخر نتيجة
-                    </p>
+                    <p className="text-xs font-bold text-gold">آخر نتيجة</p>
 
                     <h2 className="mt-1 text-xl font-black text-white">
                       آخر امتحان
                     </h2>
                   </div>
                 </div>
-                
-                 {/* MODIFIED: استخدام أحدث نتيجة فعلية بدل أول عنصر في results */}
+
+                {/* MODIFIED: استخدام أحدث نتيجة فعلية بدل أول عنصر في results */}
                 {latestResult ? (
                   <>
                     <div className="flex items-center justify-between gap-5">
@@ -311,7 +293,7 @@ export default function DashboardHome() {
                     </div>
 
                     <Link
-                      to="/exam-result"
+                      to={`/exam-result/${latestResult.examId}`}
                       className="mt-14 flex w-full items-center justify-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-5 py-3 text-sm font-extrabold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
                     >
                       عرض النتيجة

@@ -363,7 +363,6 @@ export default function Courses() {
 
                   <Link
                     to={`/courses/${course.id}`}
-                    state={{ course }}
                     className="
                       mt-auto
                       flex

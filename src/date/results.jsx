@@ -12,7 +12,7 @@ const latestResult = [
     id: "result-6",
     studentId: "student-1", 
     examId: "exam-5",
-    score: 18,
+    score: 15,
     total: 20,
     submittedAt: "2026-09-21T15:00:00+03:00",
   },

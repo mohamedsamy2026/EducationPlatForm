@@ -145,14 +145,14 @@ export default function CourseDetails() {
                 />
               </div>
 
-              <button
-                type="button"
+              <Link
+                to="/"
                 className="mt-8 inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)] sm:w-fit"
               >
                 <FontAwesomeIcon icon={isEnrolled ? faPlay : faBookOpen} />
 
                 {isEnrolled ? "متابعة الكورس" : "اشترك في الكورس"}
-              </button>
+              </Link>
             </div>
 
             {/* Course Image */}
