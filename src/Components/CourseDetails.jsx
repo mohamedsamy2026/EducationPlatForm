@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+
+import { useParams, Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faArrowRight,
   faPlay,
@@ -8,20 +11,24 @@ import {
   faGraduationCap,
   faChalkboardTeacher,
   faChevronDown,
-  faVideo
+  faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+import courses from "../date/courses";
+
 export default function CourseDetails() {
-  const location = useLocation();
-  const course = location.state?.course;
+  const { courseId } = useParams();
+
   const [openSection, setOpenSection] = useState(null);
+
+  const course = courses.find((course) => course.id === courseId);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [courseId]);
 
   function InfoItem({ icon, title, value }) {
     return (
@@ -34,6 +41,7 @@ export default function CourseDetails() {
       </div>
     );
   }
+
   if (!course) {
     return (
       <main
@@ -42,7 +50,7 @@ export default function CourseDetails() {
       >
         <Navbar />
 
-        <div className="mx-auto max-w-4xl text-center my-5 mb-15">
+        <div className="mx-auto my-5 mb-15 max-w-4xl text-center">
           <h1 className="mb-4 text-3xl font-black text-white">
             الكورس غير موجود
           </h1>
@@ -57,6 +65,7 @@ export default function CourseDetails() {
             العودة للصفحة الرئيسية
           </Link>
         </div>
+
         <Footer />
       </main>
     );
@@ -65,12 +74,13 @@ export default function CourseDetails() {
   return (
     <main dir="rtl" className="min-h-screen bg-midnight text-white">
       <Navbar />
+
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(212,175,55,0.12),transparent_30%),radial-gradient(circle_at_15%_80%,rgba(18,52,78,0.35),transparent_35%)]" />
 
         <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
-          <div className="mt-20 md:mt-15 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="mt-20 grid items-center gap-10 md:mt-15 lg:grid-cols-2 lg:gap-16">
             {/* Course Info */}
             <div>
               <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-sm font-bold text-gold">
@@ -99,21 +109,14 @@ export default function CourseDetails() {
                   value="مستر محمد خالد"
                 />
 
-                <InfoItem
-                  icon={faBookOpen}
-                  title="الدروس"
-                  value="كورس شامل"
-                />
-                <InfoItem
-                  icon={faVideo}
-                  title="حاله الفديوهات"
-                  value="مسجله"
-                />
+                <InfoItem icon={faBookOpen} title="الدروس" value="كورس شامل" />
+
+                <InfoItem icon={faVideo} title="حاله الفديوهات" value="مسجله" />
               </div>
 
               <button
                 type="button"
-                className="mt-8 sm:w-fit w-full inline-flex items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)]"
+                className="mt-8 inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)] sm:w-fit"
               >
                 <FontAwesomeIcon icon={faPlay} />
                 ابدأ الكورس
@@ -156,6 +159,8 @@ export default function CourseDetails() {
           </p>
         </div>
 
+
+        {/* مهمه جدا عرض الدروس */}
         <div className="space-y-4">
           {course.sections?.map((section, index) => {
             const isOpen = openSection === index;
@@ -226,13 +231,14 @@ export default function CourseDetails() {
 
           <button
             type="button"
-            className="mt-7 inline-flex items-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight transition-all duration-300 hover:-translate-y-1"
+            className="mt-7 inline-flex cursor-pointer items-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight transition-all duration-300 hover:-translate-y-1"
           >
             <FontAwesomeIcon icon={faPlay} />
             ابدأ الكورس الآن
           </button>
         </div>
       </section>
+
       <Footer />
     </main>
   );

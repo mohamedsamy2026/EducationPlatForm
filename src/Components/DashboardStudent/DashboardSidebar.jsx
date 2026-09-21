@@ -20,7 +20,7 @@ export default function DashboardSidebar() {
   const navItems = [
     {
       name: "الرئيسية",
-      path: "/dashboard",
+      path: "/dashboard-student",
       icon: faHouse,
     },
     {
@@ -82,7 +82,7 @@ export default function DashboardSidebar() {
           fixed right-0 top-0 z-[101] h-screen w-72 flex-col bg-[#041d33] transition-transform
           ${isOpen ? "translate-x-0" : "translate-x-full"}
 
-          xl:sticky xl:top-0 xl:z-81 xl:w-64 xl:translate-x-0
+          xl:sticky xl:top-0 xl:z-81 xl:w-65 xl:translate-x-0
         `}
       >
         <div className="flex items-center justify-between border-b border-white/10 px-5 py-5 xl:justify-center">
@@ -129,7 +129,7 @@ export default function DashboardSidebar() {
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full cursor-pointer items-center gap-3 rounded-xl bg-red-400/20 px-4 py-3 text-sm font-bold duration-300 hover:gap-4 hover:bg-red-600/75"
+            className="flex w-full cursor-pointer items-center gap-3 rounded-xl bg-red-500/40 px-4 py-3 text-sm font-bold duration-300 hover:gap-4 hover:bg-red-600/75 lg:mb-0 mb-1"
           >
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-400/5">
               <FontAwesomeIcon icon={faRightFromBracket} className="text-sm" />

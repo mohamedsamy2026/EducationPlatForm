@@ -43,13 +43,13 @@ export default function DashboardHome() {
               className="absolute inset-0 h-full w-full object-cover"
             />
 
-            <div className="absolute inset-0 bg-[#061522]/20" />
+            <div className="absolute inset-0 bg-[#061522]/14" />
 
             <div className="absolute inset-0 bg-gradient-to-l from-[#061522]/53 via-[#061522]/53 to-transparent" />
 
             <div className="relative z-10 px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
               <div className="max-w-2xl">
-                <span className="my-6 inline-flex rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold">
+                <span className="mb-5 md:mt-0 mt-8 inline-flex rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold">
                   لوحة الطالب
                 </span>
 
@@ -57,7 +57,7 @@ export default function DashboardHome() {
                   مرحبًا محمد سامي
                 </h1>
 
-                <p className="mt-4 max-w-xl text-sm leading-8 text-white/65 sm:text-base">
+                <p className="mt-4 max-w-xl text-sm leading-8 text-white sm:text-base">
                   استمر في التعلم، وكل خطوة جديدة تقربك من هدفك.
                 </p>
               </div>
