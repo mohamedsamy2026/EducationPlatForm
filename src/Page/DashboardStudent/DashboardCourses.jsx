@@ -132,7 +132,7 @@ export default function DashboardCourses() {
                                 isEnrolled
                                   ? "bg-gold text-midnight shadow-[0_8px_25px_rgba(212,175,55,0.10)] hover:gap-5 hover:bg-gold-light hover:shadow-[0_12px_30px_rgba(212,175,55,0.20)]"
                                   : "border border-gold/25 bg-gold/10 text-gold hover:bg-gold hover:text-midnight"
-                              }`}   
+                              }`}
                             >
                               <span>
                                 {isEnrolled ? "متابعة الكورس" : "عرض الكورس"}
