@@ -9,6 +9,7 @@ import CourseDetails from "./Components/CourseDetails";
 import ExamResult from "./Components/ExamResult";
 import DashboardHome from "./Page/DashboardStudent/DashboardHome";
 import DashboardCourses from "./Page/DashboardStudent/DashboardCourses";
+import DashboardExams from "./Page/DashboardStudent/DashboardExams";
 
 // Style App CSS
 import "./App.css";
@@ -27,6 +28,7 @@ function App() {
         <Route path="/exam-result" element={<ExamResult />} />
         <Route path="/dashboard-student" element={<DashboardHome />} />
         <Route path="/dashboard-courses" element={<DashboardCourses />} />
+        <Route path="/dashboard-exams" element={<DashboardExams />} />
       </Routes>
       <Chat />
     </>

@@ -30,22 +30,22 @@ export default function DashboardSidebar() {
     },
     {
       name: "الاختبارات",
-      path: "/exams",
+      path: "/dashboard-exams",
       icon: faClipboardCheck,
     },
     {
       name: "النتائج",
-      path: "/results",
+      path: "/dashboard-results",
       icon: faChartLine,
     },
     {
       name: "الملف الشخصي",
-      path: "/profile",
+      path: "/dashboard-profile",
       icon: faUser,
     },
     {
       name: "الدعم",
-      path: "/support",
+      path: "/dashboard-support",
       icon: faHeadset,
     },
   ];
