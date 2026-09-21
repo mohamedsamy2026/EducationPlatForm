@@ -137,7 +137,7 @@ export default function DashboardHome() {
                   title="لم تشترك في أي كورس بعد"
                   description="استكشف الكورسات المتاحة وابدأ رحلتك التعليمية."
                   buttonText="استكشف الكورسات"
-                  buttonTo="/courses"
+                  buttonTo="/dashboard-courses"
                 />
               )}
             </section>
