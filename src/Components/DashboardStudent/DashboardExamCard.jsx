@@ -39,13 +39,9 @@ export default function DashboardExamCard({
               {exam.title}
             </h3>
 
-            <p className="mt-1 text-xs text-white/40">
-              {courseTitle}
-            </p>
+            <p className="mt-1 text-xs text-white/40">{courseTitle}</p>
 
-            <p className="mt-1 text-xs text-white/35">
-              {exam.sectionTitle}
-            </p>
+            <p className="mt-1 text-xs text-white/35">{exam.sectionTitle}</p>
           </div>
         </div>
 
@@ -89,9 +85,7 @@ export default function DashboardExamCard({
       {status === "completed" && result && (
         <div className="mt-4 flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3">
           <div>
-            <p className="text-xs text-white/40">
-              النتيجة
-            </p>
+            <p className="text-xs text-white/40">النتيجة</p>
 
             <p className="mt-1 text-base font-black text-white">
               {result.score}/{result.total}
@@ -99,9 +93,7 @@ export default function DashboardExamCard({
           </div>
 
           <div className="text-left">
-            <p className="text-lg font-black text-gold">
-              {percentage}%
-            </p>
+            <p className="text-lg font-black text-gold">{percentage}%</p>
           </div>
         </div>
       )}
