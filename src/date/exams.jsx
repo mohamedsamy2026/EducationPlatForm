@@ -8,6 +8,7 @@ const exams = [
     totalQuestions: 20,
     startsAt: "2026-09-01T00:00:00+03:00",
     endsAt: "2026-10-15T23:59:59+03:00",
+    status: "متاح",
   },
 
   {
@@ -19,6 +20,7 @@ const exams = [
     totalQuestions: 20,
     startsAt: "2026-09-01T00:00:00+03:00",
     endsAt: "2026-10-20T23:59:59+03:00",
+    status: "متاح",
   },
 
   {
@@ -30,6 +32,29 @@ const exams = [
     totalQuestions: 10,
     startsAt: "2026-08-01T00:00:00+03:00",
     endsAt: "2026-08-31T23:59:59+03:00",
+    status: "متاح",
+  },
+  {
+    id: "exam-4",
+    title: "اختبار المراجعة السابقة",
+    courseId: "social-studies-preparatory",
+    sectionTitle: "مراجعة عامة",
+    durationMinutes: 20,
+    totalQuestions: 10,
+    startsAt: "2026-09-01T00:00:00+03:00",
+    endsAt: "2026-10-20T23:59:59+03:00",
+    status: "متاح",
+  },
+  {
+    id: "exam-5",
+    title: "اختبار المراجعة السابقة",
+    courseId: "social-studies-preparatory",
+    sectionTitle: "مراجعة عامة",
+    durationMinutes: 20,
+    totalQuestions: 10,
+    startsAt: "2026-08-01T00:00:00+03:00",
+    endsAt: "2026-08-31T23:59:59+03:00",
+    status: "متاح",
   },
 ];
 

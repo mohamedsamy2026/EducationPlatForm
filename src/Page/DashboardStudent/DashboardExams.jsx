@@ -14,9 +14,7 @@ import courses from "../../date/courses";
 
 // ICONS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faClipboardCheck,
-} from "@fortawesome/free-solid-svg-icons";
+import { faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default function DashboardExams() {
   const currentStudent = students[0];
@@ -25,19 +23,16 @@ export default function DashboardExams() {
     .filter(
       (enrollment) =>
         enrollment.studentId === currentStudent?.id &&
-        enrollment.status === "active"
+        enrollment.status === "active",
     )
     .map((enrollment) => enrollment.courseId);
 
   const studentExams = exams
-    .filter((exam) =>
-      enrolledCourseIds.includes(exam.courseId)
-    )
+    .filter((exam) => enrolledCourseIds.includes(exam.courseId))
     .map((exam) => {
       const result = results.find(
         (result) =>
-          result.studentId === currentStudent?.id &&
-          result.examId === exam.id
+          result.studentId === currentStudent?.id && result.examId === exam.id,
       );
 
       let status = "available";
@@ -54,9 +49,7 @@ export default function DashboardExams() {
         return null;
       }
 
-      const course = courses.find(
-        (course) => course.id === exam.courseId
-      );
+      const course = courses.find((course) => course.id === exam.courseId);
 
       return {
         exam,
@@ -68,22 +61,17 @@ export default function DashboardExams() {
     .filter(Boolean);
 
   const availableExams = studentExams.filter(
-    (item) => item.status === "available"
+    (item) => item.status === "available",
   );
 
   const completedExams = studentExams.filter(
-    (item) => item.status === "completed"
+    (item) => item.status === "completed",
   );
 
-  const expiredExams = studentExams.filter(
-    (item) => item.status === "expired"
-  );
+  const expiredExams = studentExams.filter((item) => item.status === "expired");
 
   return (
-    <div
-      dir="rtl"
-      className="min-h-screen bg-midnight text-white"
-    >
+    <div dir="rtl" className="min-h-screen bg-midnight text-white">
       <Navbar />
 
       <div className="flex w-full lg:min-h-screen">
@@ -104,7 +92,8 @@ export default function DashboardExams() {
                 </h1>
 
                 <p className="mt-4 max-w-xl text-sm leading-8 text-white/55 sm:text-base">
-                  تابع اختبارات الكورسات المشترك فيها واعرف نتائجك بعد كل اختبار.
+                  تابع اختبارات الكورسات المشترك فيها واعرف نتائجك بعد كل
+                  اختبار.
                 </p>
               </div>
             </div>
@@ -114,11 +103,9 @@ export default function DashboardExams() {
           <section className="relative overflow-hidden px-5 py-12 sm:px-8 lg:px-10 lg:py-16">
             <div className="pointer-events-none absolute right-1/2 top-20 h-80 w-80 translate-x-1/2 rounded-full bg-gold/5 blur-[130px]" />
 
-            <div className="relative z-10 mx-auto max-w-7xl">
-
+            <div className="relative z-10 max-w-7xl mx-auto">
               {studentExams.length > 0 ? (
                 <div className="space-y-12">
-
                   {/* Available Exams */}
                   {availableExams.length > 0 && (
                     <section>
@@ -199,7 +186,6 @@ export default function DashboardExams() {
                       </div>
                     </section>
                   )}
-
                 </div>
               ) : (
                 <DashboardEmptyState
@@ -207,10 +193,9 @@ export default function DashboardExams() {
                   title="لا توجد اختبارات متاحة حاليًا."
                   description="ستظهر هنا الاختبارات الخاصة بالكورسات التي اشتركت فيها."
                   buttonText="استكشف الكورسات"
-                  buttonTo="/courses"
+                  buttonTo="/dashboard-courses"
                 />
               )}
-
             </div>
           </section>
         </main>

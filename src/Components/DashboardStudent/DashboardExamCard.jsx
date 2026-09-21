@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faClipboardCheck,
   faBookOpen,
@@ -99,18 +98,18 @@ export default function DashboardExamCard({
       )}
 
       {status === "available" && (
-        <button
-          type="button"
+        <Link
+          to="/"
           className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3.5 text-sm font-extrabold text-midnight transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-light"
         >
           بدء الاختبار
           <FontAwesomeIcon icon={faArrowLeft} />
-        </button>
+        </Link>
       )}
 
       {status === "completed" && (
         <Link
-          to="/exam-result"
+          to="/"
           className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-5 py-3.5 text-sm font-extrabold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
         >
           عرض النتيجة

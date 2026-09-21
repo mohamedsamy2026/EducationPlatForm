@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 
 export default function DashboardHome() {
   const percentage = Math.round(
-    (latestResult.score / latestResult.total) * 100,
+    (latestResult[0].score / latestResult[0].total) * 100,
   );
 
   return (
@@ -175,13 +175,13 @@ export default function DashboardHome() {
                           </h3>
 
                           <p className="mt-1 text-xs text-white/40">
-                            {exam.course}
+                            {exam.sectionTitle}
                           </p>
                         </div>
 
                         <Link
                           to="/exams"
-                          className="shrink-0 rounded-lg bg-gold/10 px-3 py-2 text-xs font-bold text-gold transition-colors hover:bg-gold hover:text-midnight"
+                          className="shrink-0 rounded-lg bg-gold/10 px-6 py-2.5  text-xs font-bold text-gold transition-colors hover:bg-gold hover:text-midnight"
                         >
                           {exam.status}
                         </Link>
@@ -215,12 +215,12 @@ export default function DashboardHome() {
                   </div>
                 </div>
 
-                {latestResult && latestResult.title ? (
+                {latestResult && latestResult[0].title ? (
                   <>
                     <div className="flex items-center justify-between gap-5">
                       <div>
                         <h3 className="text-lg font-black text-white">
-                          {latestResult.title}
+                          {latestResult[0].title}
                         </h3>
 
                         <p className="mt-2 text-sm text-white/45">
@@ -230,7 +230,7 @@ export default function DashboardHome() {
 
                       <div className="text-center">
                         <p className="text-2xl font-black text-white">
-                          {latestResult.score}/{latestResult.total}
+                          {latestResult[0].score}/{latestResult[0].total}
                         </p>
 
                         <p className="mt-1 text-sm font-bold text-gold">
