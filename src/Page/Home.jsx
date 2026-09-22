@@ -11,8 +11,7 @@ import Footer from "../Components/Footer";
 
 export default function Home() {
   useEffect(() => {
-    // 1. إضافة Smooth Scroll للـ html عند فتح صفحة الهوم
-    document.documentElement.classList.add("scroll-smooth");
+   
 
     if (!window.location.hash) return;
 
@@ -28,10 +27,7 @@ export default function Home() {
     };
 
     setTimeout(scrollToSection, 70);
-    // 2. مسح الكلاس عند الخروج من صفحة الهوم (Cleanup)
-    return () => {
-      document.documentElement.classList.remove("scroll-smooth");
-    };
+
   }, []);
 
   return (
