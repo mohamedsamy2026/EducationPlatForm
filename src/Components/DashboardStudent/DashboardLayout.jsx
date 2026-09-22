@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import DashboardSidebar from "./DashboardSidebar";
+import Chat from "../Chat";
 
 export default function DashboardLayout() {
   return (
@@ -15,6 +16,7 @@ export default function DashboardLayout() {
           <Outlet />
         </main>
       </div>
+      <Chat />
 
       <Footer />
     </div>

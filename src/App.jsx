@@ -1,7 +1,6 @@
 // COMPONENTS
 import Home from "./Page/Home";
 
-import Chat from "./Components/Chat";
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import CourseDetails from "./Components/CourseDetails";
@@ -43,7 +42,6 @@ export default function App() {
         </Route>
       </Routes>
 
-      <Chat />
     </>
   );
 }

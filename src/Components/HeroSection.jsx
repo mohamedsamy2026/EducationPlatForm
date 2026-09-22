@@ -24,17 +24,12 @@ export default function HeroSection() {
         {/* Navy cinematic overlay */}
         <div className="absolute inset-0 bg-gradient-to-l lg:bg-gradient-to-r from-[#061522]/20" />
 
-    
-
-
         {/* Bottom fade */}
         <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-midnight via-midnight/20 to-transparent" />
         {/* Subtle gold glow مهمه */}
         <div className="absolute -left-32 bottom-10 w-96 h-96 rounded-full bg-gold/10 blur-[120px]" />
       </div>
       {/* Background End */}
-
-      
 
       {/* Decorative Elements Start */}
       <div className="absolute top-1/2 right-0 w-px h-32 bg-gradient-to-b from-transparent via-gold/60 to-transparent opacity-60" />
@@ -61,7 +56,6 @@ export default function HeroSection() {
               </span>
             </h1>
 
-
             {/* Gold separator */}
             <div className="flex items-center justify-start gap-3 mb-6">
               <div className="w-20 h-px bg-gradient-to-r from-gold to-transparent" />
@@ -79,17 +73,18 @@ export default function HeroSection() {
             </p>
 
             {/* ================= Buttons ================= */}
-            <div className="flex flex-col sm:flex-row justify-start sm:items-center gap-3">
+            <div className="flex flex-col sm:flex-row justify-start sm:items-center gap-6">
               <Link
                 to="/signup"
-                className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl bg-gold text-midnight font-extrabold text-base shadow-[0_10px_30px_rgba(212,175,55,0.20)] transition-all duration-300 hover:bg-gold-light hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(212,175,55,0.30)]"
+                className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl bg-gold text-midnight font-extrabold text-base shadow-[0_10px_30px_rgba(212,175,55,0.20)] transition-transform duration-150 hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_15px_35px_rgba(212,175,55,0.30)]"
               >
                 ابدأ التعلم
               </Link>
 
+              {/* الزر الثانوي: شاهد الكورسات (نسخة متناسقة وواضحة جداً) */}
               <a
                 href="#courses"
-                className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm text-white font-bold text-base transition-all duration-300 hover:border-gold/60 hover:bg-gold/10 hover:text-gold"
+                className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl border border-gold/40 bg-[#061522]/60 backdrop-blur-md text-white font-extrabold text-base transition-colors duration-150 hover:border-gold hover:bg-gold/15 hover:text-gold shadow-[0_10px_25px_rgba(0,0,0,0.3)]"
               >
                 شاهد الكورسات
               </a>
@@ -105,9 +100,10 @@ export default function HeroSection() {
 
               <span className="w-1 h-1 rounded-full bg-gold/70" />
 
-              <span className="text-gray-300 font-bold">تجربة تعليمية مختلفة</span>
+              <span className="text-gray-300 font-bold">
+                تجربة تعليمية مختلفة
+              </span>
             </div>
-
           </div>
 
           {/* Text End */}
