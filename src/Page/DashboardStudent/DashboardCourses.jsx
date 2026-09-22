@@ -32,10 +32,12 @@ export default function DashboardCourses() {
 
         <main className="min-w-0 flex-1">
           {/* Page Header */}
-          <section className="border-b border-white/10 bg-midnight pt-20 lg:pt-24">
+          <section className="relative overflow-hidden border-b border-white/10 bg-[#091726] pt-20 lg:pt-24">
+            <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold/10 blur-[100px]" />
+            <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/55 blur-[110px]" />
             <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-10 lg:py-16">
               <div className="max-w-2xl">
-                <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold">
+                <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold lg:mt-3 mt-12">
                   <FontAwesomeIcon icon={faBookOpen} />
                   رحلتك التعليمية
                 </span>

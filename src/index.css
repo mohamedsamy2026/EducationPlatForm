@@ -3,9 +3,9 @@
 /* Import TailwindCSS End */
 
 /* Smooth */
-html {
+/* html {
   scroll-behavior: smooth;
-}
+} */
 
 /* الخط الريسي*/
 @import '@fontsource/cairo/400.css';

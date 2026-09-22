@@ -64,14 +64,15 @@ export default function DashboardResults() {
         <DashboardSidebar />
 
         <main className="min-w-0 flex-1">
-          <section className="relative overflow-hidden border-b border-white/10 bg-[#081522] pt-20 lg:pt-24">
+          <section className="relative overflow-hidden border-b border-white/10 bg-[#091726] pt-20 lg:pt-24">
+          
             <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold/10 blur-[100px]" />
-            <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/50 blur-[110px]" />
+            <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/55 blur-[110px]" />
 
             <div className="relative z-10 px-5 py-12 sm:px-8 sm:py-14 lg:px-10 lg:py-16">
               <div className="mx-auto max-w-7xl">
                 <div className="max-w-2xl">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold lg:mt-3 mt-12">
                     <FontAwesomeIcon icon={faClipboardCheck} />
                     سجل النتائج
                   </span>
@@ -95,6 +96,7 @@ export default function DashboardResults() {
                 {/* Latest Result */}
                 <section>
                   <div className="mb-6 flex items-center gap-3">
+                    
                     <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold">
                       <FontAwesomeIcon icon={faTrophy} />
                     </span>
@@ -109,9 +111,12 @@ export default function DashboardResults() {
                   </div>
 
                   <div className="relative overflow-hidden rounded-2xl border border-gold/15 bg-[radial-gradient(circle_at_85%_15%,rgba(212,175,55,0.12),transparent_38%),#0c1a2b] p-6 shadow-[0_18px_50px_rgba(0,0,0,0.18)] sm:p-8">
+                  
+                  
                     <div className="absolute -left-16 -top-16 h-40 w-40 rounded-full bg-gold/5 blur-3xl" />
 
                     <div className="relative z-10 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+                     
                       <div>
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="rounded-lg border border-gold/20 bg-gold/10 px-3 py-2 text-xs font-bold text-gold">

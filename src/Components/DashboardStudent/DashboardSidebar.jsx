@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState  } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -44,7 +44,7 @@ export default function DashboardSidebar() {
       icon: faUser,
     },
     {
-      name: "الدعم",
+      name: "الدعم",  
       path: "/dashboard-support",
       icon: faHeadset,
     },
