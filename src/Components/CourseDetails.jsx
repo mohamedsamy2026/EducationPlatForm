@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -48,10 +48,7 @@ export default function CourseDetails() {
     0,
   );
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    setOpenSection(null);
-  }, [courseId]);
+
 
   function InfoItem({ icon, title, value }) {
     return (

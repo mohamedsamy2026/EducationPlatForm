@@ -11,10 +11,6 @@ import Footer from "../Components/Footer";
 
 export default function Home() {
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-    });
     if (!window.location.hash) return;
 
     const scrollToSection = () => {

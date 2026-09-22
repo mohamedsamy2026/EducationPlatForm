@@ -10,8 +10,16 @@ const latestResult = [
   },
   {
     id: "result-6",
-    studentId: "student-1", 
+    studentId: "student-1",
     examId: "exam-5",
+    score: 15,
+    total: 20,
+    submittedAt: "2026-09-21T15:00:00+03:00",
+  },
+  {
+    id: "result-7",
+    studentId: "student-1",
+    examId: "exam-7",
     score: 15,
     total: 20,
     submittedAt: "2026-09-21T15:00:00+03:00",

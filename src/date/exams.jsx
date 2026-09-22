@@ -56,6 +56,17 @@ const exams = [
     endsAt: "2026-08-31T23:59:59+03:00",
     status: "متاح",
   },
+  {
+    id: "exam-7",
+    title: "اختبار علي الوحده الاولي",
+    courseId: "social-studies-preparatory",
+    sectionTitle: "مراجعة عامة",
+    durationMinutes: 20,
+    totalQuestions: 10,
+    startsAt: "2026-08-01T00:00:00+03:00",
+    endsAt: "2026-08-31T23:59:59+03:00",
+    status: "متاح",
+  },
 ];
 
 export default exams;

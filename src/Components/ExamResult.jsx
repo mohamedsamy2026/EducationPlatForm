@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 
 import { useParams, Link } from "react-router-dom";
 
@@ -94,9 +93,7 @@ export default function ExamResult() {
 
   const message = getResultMessage(percentage);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [examId]);
+
 
   return (
     <section dir="rtl" className="relative min-h-screen overflow-hidden">

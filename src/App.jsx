@@ -10,6 +10,8 @@ import ExamResult from "./Components/ExamResult";
 import DashboardHome from "./Page/DashboardStudent/DashboardHome";
 import DashboardCourses from "./Page/DashboardStudent/DashboardCourses";
 import DashboardExams from "./Page/DashboardStudent/DashboardExams";
+import DashboardResults from "./Page/DashboardStudent/DashboardResults";
+import ScrollToTop from "./Components/ScrollToTop";
 
 // Style App CSS
 import "./App.css";
@@ -20,6 +22,7 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -29,6 +32,7 @@ function App() {
         <Route path="/dashboard-student" element={<DashboardHome />} />
         <Route path="/dashboard-courses" element={<DashboardCourses />} />
         <Route path="/dashboard-exams" element={<DashboardExams />} />
+        <Route path="/dashboard-results" element={<DashboardResults />} />
       </Routes>
       <Chat />
     </>

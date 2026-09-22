@@ -21,6 +21,8 @@ export default function HeroSection() {
 
         {/* Navy cinematic overlay */}
         <div className="absolute inset-0 bg-gradient-to-r lg:bg-gradient-to-l from-[#061522]/80" />
+        {/* Navy cinematic overlay */}
+        <div className="absolute inset-0 bg-gradient-to-l lg:bg-gradient-to-r from-[#061522]/20" />
 
     
 

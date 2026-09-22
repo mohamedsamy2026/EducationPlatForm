@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -79,7 +79,7 @@ export default function DashboardSidebar() {
 
       <aside
         className={`
-          fixed right-0 top-0 z-[101] h-screen w-72 flex-col bg-[#041d33] transition-transform
+          fixed right-0 top-0 z-[101] h-screen w-72 flex-col bg-[#0A1828] border-l border-white/10 transition-transform
           ${isOpen ? "translate-x-0" : "translate-x-full"}
 
           xl:sticky xl:top-0 xl:z-81 xl:w-65 xl:translate-x-0
@@ -129,9 +129,9 @@ export default function DashboardSidebar() {
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full cursor-pointer items-center gap-3 rounded-xl bg-red-500/40 px-4 py-3 text-sm font-bold duration-300 hover:gap-4 hover:bg-red-600/75 lg:mb-0 mb-1"
+            className="flex w-full cursor-pointer items-center gap-3 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm font-bold text-red-400 transition-all duration-300 hover:bg-red-500/20 hover:text-red-300 lg:mb-0 mb-1"
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-400/5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-500/10 text-red-400">
               <FontAwesomeIcon icon={faRightFromBracket} className="text-sm" />
             </span>
 
