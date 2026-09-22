@@ -14,6 +14,7 @@ import DashboardExams from "./Page/DashboardStudent/DashboardExams";
 import DashboardResults from "./Page/DashboardStudent/DashboardResults";
 import DashboardProfile from "./Page/DashboardStudent/DashboardProfile";
 import DashboardSupport from "./Page/DashboardStudent/DashboardSupport";
+import ExamInterface from "./Page/DashboardStudent/ExamInterface";
 
 import "./App.css";
 
@@ -36,12 +37,12 @@ export default function App() {
           <Route index element={<DashboardHome />} />
           <Route path="courses" element={<DashboardCourses />} />
           <Route path="exams" element={<DashboardExams />} />
+          <Route path="exams/:examId" element={<ExamInterface />} />
           <Route path="results" element={<DashboardResults />} />
           <Route path="profile" element={<DashboardProfile />} />
           <Route path="support" element={<DashboardSupport />} />
         </Route>
       </Routes>
-
     </>
   );
 }

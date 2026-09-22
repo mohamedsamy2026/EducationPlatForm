@@ -226,7 +226,7 @@ export default function DashboardHome() {
                     </div>
 
                     <Link
-                      to="/dashboard-student/exams"
+                      to={`/dashboard-student/exams/${exam.id}`}
                       className="shrink-0 rounded-lg bg-gold/10 px-6 py-2.5 text-xs font-bold text-gold transition-colors hover:bg-gold hover:text-midnight"
                     >
                       بدء الاختبار
