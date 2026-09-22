@@ -142,12 +142,12 @@ export default function Login() {
               </div>
 
               {/* Login Button */}
-              <button
-                type="submit"
+              <Link
+                to="/dashboard-student"
                 className="mt-3 flex h-[3.25rem] w-full cursor-pointer items-center justify-center rounded-xl bg-gold font-extrabold text-midnight shadow-[0_12px_30px_rgba(212,175,55,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-light hover:shadow-[0_16px_35px_rgba(212,175,55,0.25)]"
               >
                 تسجيل الدخول
-              </button>
+              </Link>
             </form>
 
             {/* ================= Signup Navigation ================= */}
