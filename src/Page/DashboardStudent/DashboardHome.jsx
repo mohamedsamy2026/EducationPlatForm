@@ -9,7 +9,7 @@ import students from "../../date/students";
 import enrollments from "../../date/enrollments";
 
 // IMGS
-import HeroImg from "../../assets/Background/dashbord student home.webp";
+import HeroImg from "../../assets/Background/coureses.webp";
 
 // ICONS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -91,7 +91,7 @@ export default function DashboardHome() {
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        <div className="absolute inset-0 bg-[#061522]/14" />
+        <div className="absolute inset-0 bg-[#061522]/15" />
 
         <div className="absolute inset-0 bg-gradient-to-l from-[#061522]/53 via-[#061522]/53 to-transparent" />
 
