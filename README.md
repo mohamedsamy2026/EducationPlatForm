@@ -740,3 +740,102 @@ Each screen should be visually distinct and readable while clearly belonging to 
 8. Clean, production-ready UI appearance.
 
 The result must look like a real premium Egyptian educational platform called **"الغازي في التاريخ"**, not a generic AI-generated website.
+
+
+
+
+
+
+
+
+
+
+*****Folder Tree*****
+
+master/
+├── public/
+│   ├── Imgs-plan/
+│   │   ├── Plan.png
+│   │   ├── website 2.png
+│   │   └── website.png
+│   └── Imgs-websit/
+│       └── favacon.png
+├── src/
+│   ├── assets/
+│   │   ├── Background/
+│   │   │   ├── 1.jpg
+│   │   │   ├── coureses.webp
+│   │   │   ├── dashbord student 1.webp
+│   │   │   ├── dashbord student 2.webp
+│   │   │   ├── dashbord student home.webp
+│   │   │   ├── hero-bg.webp
+│   │   │   ├── Login.webp
+│   │   │   ├── Result Exam.jpg
+│   │   │   └── signup.jpg
+│   │   ├── Books/
+│   │   │   ├── book2.jpeg
+│   │   │   ├── book3.jpeg
+│   │   │   ├── book4 .jpeg
+│   │   │   └── book4 (1).jpeg
+│   │   ├── Logo/
+│   │   │   ├── logo.jpeg
+│   │   │   └── transparent-Logo.png
+│   │   └── Master/
+│   │       ├── master 1.webp
+│   │       ├── master 2.webp
+│   │       ├── master 3.webp
+│   │       ├── master no transparent.jpeg
+│   │       ├── Master transparent.png
+│   │       ├── master-home.png
+│   │       └── master.webp
+│   ├── Components/
+│   │   ├── Chat/
+│   │   │   └── ChatMessage.jsx
+│   │   ├── DashboardStudent/
+│   │   │   ├── DashboardExamCard.jsx
+│   │   │   ├── DashboardLayout.jsx
+│   │   │   ├── DashboardResultCard.jsx
+│   │   │   ├── DashboardSidebar.jsx
+│   │   │   └── EmptyState.jsx
+│   │   ├── AboutPlatform.jsx
+│   │   ├── Chat.jsx
+│   │   ├── CourseDetails.jsx
+│   │   ├── Courses.jsx
+│   │   ├── ExamResult.jsx
+│   │   ├── Footer.jsx
+│   │   ├── HeroSection.jsx
+│   │   ├── Login.jsx
+│   │   ├── Navbar.jsx
+│   │   ├── ScrollToTop.jsx
+│   │   ├── Signup.jsx
+│   │   └── StudentOpinions.jsx
+│   ├── date/
+│   │   ├── chatMessages.jsx
+│   │   ├── courses.jsx
+│   │   ├── enrollments.jsx
+│   │   ├── exams.jsx
+│   │   ├── lessons.jsx
+│   │   ├── results.jsx
+│   │   └── students.jsx
+│   ├── Page/
+│   │   ├── DashboardStudent/
+│   │   │   ├── DashboardCourses.jsx
+│   │   │   ├── DashboardExams.jsx
+│   │   │   ├── DashboardHome.jsx
+│   │   │   ├── DashboardProfile.jsx
+│   │   │   ├── DashboardResults.jsx
+│   │   │   └── DashboardSupport.jsx
+│   │   └── Home.jsx
+│   ├── services/
+│   │   └── chatService.jsx
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+└── vite.config.js
