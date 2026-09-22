@@ -9,7 +9,7 @@ export default function ExamQuestionCard({
   selectedAnswer,
   onAnswerChange,
 }) {
-  const renderMultipleChoice = () => {
+  const renderMultipleChoice = () => {  
     return (
       <div className="mt-6 grid grid-cols-1 gap-3">
         {question.options?.map((option, index) => {
@@ -22,6 +22,7 @@ export default function ExamQuestionCard({
               type="button"
               onClick={() => onAnswerChange(index)}
               className={`
+                cursor-pointer
                 group
                 flex
                 w-full
@@ -194,7 +195,8 @@ export default function ExamQuestionCard({
             bg-white/[0.03]
             px-12
             py-4
-            text-sm
+            text-md
+            font-bold
             leading-8
             text-white
             outline-none

@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function ExamTimer({
-  durationMinutes,
-  onTimeUp,
-}) {
+export default function ExamTimer({ durationMinutes, onTimeUp }) {
   const [remainingSeconds, setRemainingSeconds] = useState(
     Math.max(0, Math.floor(Number(durationMinutes) * 60)),
   );
@@ -15,21 +12,18 @@ export default function ExamTimer({
   const timeUpCalledRef = useRef(false);
 
   useEffect(() => {
-    const duration = Math.max(
-      0,
-      Math.floor(Number(durationMinutes) * 60),
-    );
+    const duration = Math.max(0, Math.floor(Number(durationMinutes) * 60));
 
     endTimeRef.current = Date.now() + duration * 1000;
+
     timeUpCalledRef.current = false;
+
     setRemainingSeconds(duration);
 
     const updateTimer = () => {
       const secondsLeft = Math.max(
         0,
-        Math.ceil(
-          (endTimeRef.current - Date.now()) / 1000,
-        ),
+        Math.ceil((endTimeRef.current - Date.now()) / 1000),
       );
 
       setRemainingSeconds(secondsLeft);
@@ -42,10 +36,7 @@ export default function ExamTimer({
 
     updateTimer();
 
-    const intervalId = window.setInterval(
-      updateTimer,
-      1000,
-    );
+    const intervalId = window.setInterval(updateTimer, 1000);
 
     return () => {
       window.clearInterval(intervalId);
@@ -57,40 +48,37 @@ export default function ExamTimer({
 
   const formattedTime = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
-  const isCritical = remainingSeconds <= 60;
-  const isWarning =
-    remainingSeconds > 60 && remainingSeconds <= 300;
+  const isCritical = remainingSeconds <= 120;
+  const isWarning = remainingSeconds > 60 && remainingSeconds <= 300;
 
   return (
     <div
       className={`
-        inline-flex
-        items-center
-        gap-3
-        rounded-xl
-        border
-        px-4
-        py-3
-        text-sm
-        font-black
-        backdrop-blur-md
-        transition-colors
-        duration-300
-        ${
-          isCritical
-            ? "border-red-400/30 bg-red-500/10 text-red-300"
-            : isWarning
-              ? "border-gold/30 bg-gold/10 text-gold"
-              : "border-white/10 bg-white/[0.04] text-white"
-        }
-      `}
+    flex
+    flex-col
+    items-center
+    justify-center
+    w-36
+    h-36
+    rounded-full
+    border-2
+    backdrop-blur-md
+    transition-all
+    duration-300
+    shadow-lg
+    ${
+      isCritical
+        ? "border-red-500/50 bg-red-500/10 text-red-400 shadow-red-500/20"
+        : isWarning
+          ? "border-gold/50 bg-gold/10 text-gold shadow-gold/20"
+          : "border-white/20 bg-white/[0.04] text-white"
+    }
+  `}
       aria-label={`الوقت المتبقي ${formattedTime}`}
     >
-      <span className="text-xs font-bold text-white/40">
-        الوقت المتبقي
-      </span>
+      <span className="text-xs font-bold text-white/60">الوقت المتبقي</span>
 
-      <span className="tabular-nums tracking-wider">
+      <span className="text-2xl font-black tabular-nums tracking-wider">
         {formattedTime}
       </span>
     </div>

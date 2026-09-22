@@ -4,7 +4,7 @@ const exams = [
     title: "اختبار الوحدة الأولى",
     courseId: "social-studies-preparatory",
     sectionTitle: "الوحدة الأولى",
-    durationMinutes: 30,
+    durationMinutes: 2 ,
     totalQuestions: 20,
     startsAt: "2026-09-01T00:00:00+03:00",
     endsAt: "2026-10-15T23:59:59+03:00",
