@@ -150,27 +150,29 @@ export default function ExamInterface() {
   // Empty
   if (!exam || examQuestions.length === 0) {
     return (
-      <div className="flex min-h-[70vh] items-center justify-center px-5 py-16 sm:px-8">
-        <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#0c1a2b] p-8 text-center shadow-[0_18px_50px_rgba(0,0,0,0.16)]">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
-            <FontAwesomeIcon icon={faExclamationTriangle} />
+      <div className="min-h-screen bg-midnight">
+        <div className="flex min-h-[70vh] items-center justify-center px-5 py-16 sm:px-8">
+          <div className="w-full max-w-4xl rounded-2xl border border-white/10 bg-[#0c1a2b] p-8 text-center shadow-[0_18px_50px_rgba(0,0,0,0.16)]">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+            </div>
+
+            <h1 className="mt-5 text-2xl font-black text-white">
+              الاختبار غير متاح
+            </h1>
+
+            <p className="mt-3 text-sm leading-7 text-white/45">
+              لم نتمكن من العثور على الاختبار أو أسئلته حاليًا.
+            </p>
+
+            <Link
+              to="/dashboard-student/exams"
+              className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-extrabold text-midnight transition-all duration-300 hover:bg-gold-light"
+            >
+              العودة إلى الاختبارات
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </Link>
           </div>
-
-          <h1 className="mt-5 text-2xl font-black text-white">
-            الاختبار غير متاح
-          </h1>
-
-          <p className="mt-3 text-sm leading-7 text-white/45">
-            لم نتمكن من العثور على الاختبار أو أسئلته حاليًا.
-          </p>
-
-          <Link
-            to="/dashboard-student/exams"
-            className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-extrabold text-midnight transition-all duration-300 hover:bg-gold-light"
-          >
-            العودة إلى الاختبارات
-            <FontAwesomeIcon icon={faArrowLeft} />
-          </Link>
         </div>
       </div>
     );
@@ -218,7 +220,6 @@ export default function ExamInterface() {
         </div>
       </section>
       {/* Exam Header End */}
-
 
       {/* Exam Body Start */}
       <div className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
@@ -287,8 +288,6 @@ export default function ExamInterface() {
         </div>
       </div>
       {/* Exam Body End */}
-
-
 
       {/* Submit Confirmation */}
       {showSubmitConfirmation && (

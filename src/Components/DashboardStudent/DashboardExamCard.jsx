@@ -99,7 +99,7 @@ export default function DashboardExamCard({
 
       {status === "available" && (
         <Link
-          to="/"
+          to={`/dashboard-student/exams/${exam.id}`}
           className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3.5 text-sm font-extrabold text-midnight transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-light"
         >
           بدء الاختبار
