@@ -32,12 +32,13 @@ export default function App() {
         <Route path="/courses/:courseId" element={<CourseDetails />} />
         <Route path="/exam-result/:examId" element={<ExamResult />} />
 
+        <Route path="/dashboard-student/exams/:examId" element={<ExamInterface />} />
+
         {/* Dashboard Student */}
         <Route path="/dashboard-student" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
           <Route path="courses" element={<DashboardCourses />} />
           <Route path="exams" element={<DashboardExams />} />
-          <Route path="exams/:examId" element={<ExamInterface />} />
           <Route path="results" element={<DashboardResults />} />
           <Route path="profile" element={<DashboardProfile />} />
           <Route path="support" element={<DashboardSupport />} />

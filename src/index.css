@@ -8,11 +8,10 @@
 } */
 
 /* الخط الريسي*/
-@import '@fontsource/cairo/400.css';
-@import '@fontsource/cairo/600.css';
-@import '@fontsource/cairo/700.css';
-@import '@fontsource/cairo/800.css';
-
+@import "@fontsource/cairo/400.css";
+@import "@fontsource/cairo/600.css";
+@import "@fontsource/cairo/700.css";
+@import "@fontsource/cairo/800.css";
 
 /* المتغيرات والألوان الأساسية */
 @theme {
@@ -26,7 +25,8 @@
   --color-border-navy: #2a4a6b;
   --color-success: #10b981;
   --color-danger: #ef4444;
-  --font-cairo: 'Cairo', sans-serif;
+  --font-cairo: "Cairo", sans-serif;
+  --breakpoint-xs: 475px;
 }
 
 /* إعدادات عامة للـ Body */

@@ -18,7 +18,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function ExamInterface() {
-
   const { examId } = useParams();
   const navigate = useNavigate();
 
@@ -148,7 +147,7 @@ export default function ExamInterface() {
     }
   };
 
-    
+  // Empty
   if (!exam || examQuestions.length === 0) {
     return (
       <div className="flex min-h-[70vh] items-center justify-center px-5 py-16 sm:px-8">
@@ -180,13 +179,13 @@ export default function ExamInterface() {
   return (
     <div className="min-h-screen bg-midnight text-white">
       {/* Exam Header */}
-      <section className="relative overflow-hidden border-b border-white/10 bg-[#091726]">
+      <section className="relative overflow-hidden border-b border-white/10 bg-[#091726] pt-10 lg:pt-7">
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold/10 blur-[100px]" />
         <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/55 blur-[110px]" />
 
         <div className="relative z-10 px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
           <div className="mx-auto max-w-7xl">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="flex flex-col gap-6 xs:flex-row xs:items-end xs:justify-between">
               <div>
                 <span className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold">
                   <FontAwesomeIcon icon={faClipboardCheck} />
@@ -197,7 +196,7 @@ export default function ExamInterface() {
                   {exam.title}
                 </h1>
 
-                <div className="mt-4 flex flex-wrap items-center gap-3 text-xs font-bold text-white/45">
+                <div className="mt-4 flex flex-wrap items-center gap-3 text-xs font-bold text-white/90">
                   <span>{exam.sectionTitle}</span>
 
                   <span className="h-1 w-1 rounded-full bg-white/20" />
@@ -218,14 +217,16 @@ export default function ExamInterface() {
           </div>
         </div>
       </section>
+      {/* Exam Header End */}
 
-      {/* Exam Body */}
+
+      {/* Exam Body Start */}
       <div className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_280px]">
           <div className="min-w-0">
             {/* Progress */}
             <div className="mb-5 flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-[#0c1a2b] px-4 py-3">
-              <span className="text-xs font-bold text-white/40">
+              <span className="text-xs font-bold text-white/80">
                 السؤال {currentIndex + 1} من {examQuestions.length}
               </span>
 
@@ -285,6 +286,9 @@ export default function ExamInterface() {
           </div>
         </div>
       </div>
+      {/* Exam Body End */}
+
+
 
       {/* Submit Confirmation */}
       {showSubmitConfirmation && (
@@ -298,7 +302,7 @@ export default function ExamInterface() {
               هل تريد تسليم الاختبار؟
             </h2>
 
-            <p className="mt-2 text-sm leading-7 text-white/45">
+            <p className="mt-2 text-sm leading-7 text-white/75">
               بعد التسليم لن تتمكن من تعديل إجاباتك في هذه المحاولة.
             </p>
 
@@ -306,7 +310,7 @@ export default function ExamInterface() {
               <button
                 type="button"
                 onClick={() => handleSubmit(answersRef.current, false)}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3 text-sm font-extrabold text-midnight transition-all duration-300 hover:bg-gold-light"
+                className="cursor-pointer flex flex-1 items-center justify-center gap-2 rounded-xl bg-gold px-5 py-3 text-sm font-extrabold text-midnight transition-all duration-300 hover:bg-gold-light"
               >
                 تأكيد التسليم
                 <FontAwesomeIcon icon={faCheck} />
@@ -315,7 +319,7 @@ export default function ExamInterface() {
               <button
                 type="button"
                 onClick={() => setShowSubmitConfirmation(false)}
-                className="flex flex-1 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-extrabold text-white/65 transition-all duration-300 hover:bg-white/[0.06] hover:text-white"
+                className="cursor-pointer flex flex-1 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-extrabold text-white/65 transition-all duration-300 hover:bg-white/[0.06] hover:text-white"
               >
                 متابعة الاختبار
               </button>

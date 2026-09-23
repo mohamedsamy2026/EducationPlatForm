@@ -102,10 +102,9 @@ export default function ExamResult() {
 
   const message = getResultMessage(percentage);
 
-  /*
-   * لو مفيش امتحان أصلًا،
-   * أو مفيش محاولة جديدة ولا نتيجة قديمة.
-   */
+  
+    // لو مفيش امتحان أصلًا،
+    // أو مفيش محاولة جديدة ولا نتيجة قديمة.
   if (!exam || (!attempt && !result)) {
     return (
       <section
@@ -185,7 +184,7 @@ export default function ExamResult() {
           </div>
 
           {/* Subtitle */}
-          <p className="mb-7 text-xs font-medium text-white/70 sm:text-sm">
+          <p className="mb-7 text-xs font-medium text-gray-200 sm:text-sm">
             {hasPendingEssay
               ? "تم تصحيح الأسئلة الموضوعية، والأسئلة المقالية قيد المراجعة."
               : "أحسنت! لقد أكملت الاختبار بنجاح."}
@@ -209,7 +208,7 @@ export default function ExamResult() {
                 لديك {essayCount} أسئلة مقالية قيد التصحيح.
               </p>
 
-              <p className="mt-1 text-xs leading-6 text-white/55">
+              <p className="mt-1 text-xs font-bold leading-6 text-white/90">
                 الدرجة المعروضة حاليًا خاصة بالأسئلة التي تم تصحيحها
                 تلقائيًا، وستتحدث النتيجة بعد مراجعة المدرس.
               </p>
@@ -219,7 +218,7 @@ export default function ExamResult() {
           {/* Stats */}
           <div className="mb-8 grid w-full max-w-lg grid-cols-3 items-center gap-3 sm:gap-8">
             <div className="flex flex-col items-center">
-              <span className="mb-2 text-[10px] font-bold text-gray-300 sm:text-xs">
+              <span className="mb-2 text-[10px] font-bold text-gray-300 sm:text-sm">
                 الأسئلة الصحيحة
               </span>
 
@@ -229,7 +228,7 @@ export default function ExamResult() {
             </div>
 
             <div className="flex flex-col items-center border-x border-white px-3">
-              <span className="mb-2 text-[10px] font-bold text-gray-300 sm:text-xs">
+              <span className="mb-2 text-[10px] font-bold text-gray-300 sm:text-sm">
                 النتيجة
               </span>
 
@@ -239,7 +238,7 @@ export default function ExamResult() {
             </div>
 
             <div className="flex flex-col items-center">
-              <span className="mb-2 text-[10px] font-bold text-gray-300 sm:text-xs">
+              <span className="mb-2 text-[10px] font-bold text-gray-300 sm:text-sm">
                 الإجابات الخاطئة
               </span>
 

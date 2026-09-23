@@ -58,9 +58,13 @@ export default function ExamTimer({ durationMinutes, onTimeUp }) {
     flex-col
     items-center
     justify-center
-    w-36
-    h-36
+    w-29
+    h-29
     rounded-full
+    xs:mx-0
+    mx-auto
+    xs:mt-0
+    mt-2
     border-2
     backdrop-blur-md
     transition-all
@@ -76,9 +80,9 @@ export default function ExamTimer({ durationMinutes, onTimeUp }) {
   `}
       aria-label={`الوقت المتبقي ${formattedTime}`}
     >
-      <span className="text-xs font-bold text-white/60">الوقت المتبقي</span>
+      <span className="text-xs font-bold text-white/60 mb-1">الوقت المتبقي</span>
 
-      <span className="text-2xl font-black tabular-nums tracking-wider">
+      <span className="text-[23px] font-black tabular-nums tracking-wider">
         {formattedTime}
       </span>
     </div>
