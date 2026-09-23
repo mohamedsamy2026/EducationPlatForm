@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import MasterImg from "../assets/Master/master.webp";
 
-import HeroImg from "../assets/Background/dashbord student home.webp";
+import HeroImg from "../assets/Background/bg2.webp";
 
 export default function HeroSection() {
   return (
@@ -20,7 +20,7 @@ export default function HeroSection() {
         />
 
         {/* Navy cinematic overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r lg:bg-gradient-to-l from-[#061522]/80" />
+        <div className="absolute inset-0 bg-gradient-to-r lg:bg-gradient-to-l from-[#061522]/75" />
         {/* Navy cinematic overlay */}
         <div className="absolute inset-0 bg-gradient-to-l lg:bg-gradient-to-r from-[#061522]/20" />
 
