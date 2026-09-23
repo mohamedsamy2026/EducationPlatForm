@@ -18,6 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function ExamInterface() {
+
   const { examId } = useParams();
   const navigate = useNavigate();
 
@@ -147,6 +148,7 @@ export default function ExamInterface() {
     }
   };
 
+    
   if (!exam || examQuestions.length === 0) {
     return (
       <div className="flex min-h-[70vh] items-center justify-center px-5 py-16 sm:px-8">
