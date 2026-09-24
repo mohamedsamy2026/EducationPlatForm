@@ -1,31 +1,86 @@
 // COMPONENTS
+
 import DashboardEmptyState from "../../Components/DashboardStudent/EmptyState";
 
-// DATA
-import courses from "../../date/courses";
-import students from "../../date/students";
-import enrollments from "../../date/enrollments";
+// SERVICES
+
+import { getCurrentStudent } from "../../services/studentService";
+import { getCourses } from "../../services/courseService";
+import { getEnrollmentsByStudentId } from "../../services/enrollmentService";
 
 // ICONS
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { faBookOpen, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 // ROUTER
+
 import { Link } from "react-router-dom";
 
-export default function DashboardCourses() {
-  const student = students[0];
+// HOOKS
 
-  const studentCourses = courses.filter(
-    (course) => course.grade === student.grade,
-  );
+import { useEffect, useState } from "react";
+
+export default function DashboardCourses() {
+  const [student, setStudent] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [enrollments, setEnrollments] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadDashboardCourses() {
+      try {
+        const currentStudent = await getCurrentStudent();
+
+        if (cancelled) return;
+
+        setStudent(currentStudent);
+
+        if (!currentStudent) {
+          setCourses([]);
+          setEnrollments([]);
+          return;
+        }
+
+        const [allCourses, studentEnrollments] = await Promise.all([
+          getCourses(),
+          getEnrollmentsByStudentId(currentStudent.id),
+        ]);
+
+        if (cancelled) return;
+
+        setCourses(allCourses);
+        setEnrollments(studentEnrollments);
+      } catch {
+        if (cancelled) return;
+
+        setStudent(null);
+        setCourses([]);
+        setEnrollments([]);
+      }
+    }
+
+    loadDashboardCourses();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const studentCourses = student
+    ? courses.filter((course) => course.grade === student.grade)
+    : [];
 
   return (
     <>
       {/* Page Header */}
+
       <section className="relative overflow-hidden border-b border-white/10 bg-[#091726] pt-20 lg:pt-24">
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold/10 blur-[100px]" />
         <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/55 blur-[110px]" />
+
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-10 lg:py-16">
           <div className="max-w-2xl">
             <span className="mt-12 inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold lg:mt-3">
@@ -45,6 +100,7 @@ export default function DashboardCourses() {
       </section>
 
       {/* Courses */}
+
       <section className="relative overflow-hidden px-5 py-12 sm:px-8 lg:px-10 lg:py-16">
         <div className="pointer-events-none absolute right-1/2 top-20 h-80 w-80 translate-x-1/2 rounded-full bg-gold/5 blur-[130px]" />
 
@@ -76,6 +132,7 @@ export default function DashboardCourses() {
                       className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a2b] shadow-[0_15px_45px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-2 hover:border-gold/35 hover:shadow-[0_25px_60px_rgba(0,0,0,0.30)]"
                     >
                       {/* Course Image */}
+
                       <div className="relative aspect-video overflow-hidden bg-[#071321]">
                         <img
                           src={course.image}
@@ -91,6 +148,7 @@ export default function DashboardCourses() {
                       </div>
 
                       {/* Course Content */}
+
                       <div className="flex flex-1 flex-col p-6">
                         <div className="mb-4 flex items-center gap-2">
                           <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_10px_rgba(212,175,55,0.65)]" />
@@ -135,6 +193,7 @@ export default function DashboardCourses() {
                       </div>
 
                       {/* Bottom Accent */}
+
                       <div className="pointer-events-none absolute bottom-0 left-1/2 h-px w-0 -translate-x-1/2 bg-gold transition-all duration-500 group-hover:w-1/2" />
                     </article>
                   );

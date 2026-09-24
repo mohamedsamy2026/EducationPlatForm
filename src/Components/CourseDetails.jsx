@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -16,32 +16,69 @@ import {
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-import courses from "../date/courses";
-import students from "../date/students";
-import enrollments from "../date/enrollments";
-import lessons from "../date/lessons";
+// SERVICES
+
+import { getCurrentStudent } from "../services/studentService";
+import { getCourseById } from "../services/courseService";
+import { isStudentEnrolled } from "../services/enrollmentService";
+import { getUnitsByCourseId } from "../services/lessonService";
 
 export default function CourseDetails() {
   const { courseId } = useParams();
 
   const [openSection, setOpenSection] = useState(null);
 
-  const course = courses.find((course) => course.id === courseId);
+  const [course, setCourse] = useState(undefined);
+  const [currentStudent, setCurrentStudent] = useState(null);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [courseSections, setCourseSections] = useState([]);
 
-  const currentStudent = students[0];
+  useEffect(() => {
+    let cancelled = false;
 
-  const isEnrolled = currentStudent
-    ? enrollments.some(
-        (enrollment) =>
-          enrollment.studentId === currentStudent.id &&
-          enrollment.courseId === courseId &&
-          enrollment.status === "active",
-      )
-    : false;
+    async function loadCourseDetails() {
+      try {
+        const [currentCourse, student] = await Promise.all([
+          getCourseById(courseId),
+          getCurrentStudent(),
+        ]);
 
-  const courseSections = lessons.filter(
-    (section) => section.courseId === courseId,
-  );
+        if (cancelled) return;
+
+        setCourse(currentCourse);
+        setCurrentStudent(student);
+
+        if (!currentCourse || !student) {
+          setIsEnrolled(false);
+          setCourseSections([]);
+          return;
+        }
+
+        const [enrolled, sections] = await Promise.all([
+          isStudentEnrolled(student.id, courseId),
+          getUnitsByCourseId(courseId),
+        ]);
+
+        if (cancelled) return;
+
+        setIsEnrolled(enrolled);
+        setCourseSections(sections);
+      } catch {
+        if (cancelled) return;
+
+        setCourse(null);
+        setCurrentStudent(null);
+        setIsEnrolled(false);
+        setCourseSections([]);
+      }
+    }
+
+    loadCourseDetails();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [courseId]);
 
   const totalLessons = courseSections.reduce(
     (total, section) => total + section.lessons.length,
@@ -58,6 +95,10 @@ export default function CourseDetails() {
         <p className="truncate text-sm font-bold text-white">{value}</p>
       </div>
     );
+  }
+
+  if (course === undefined) {
+    return null;
   }
 
   if (!course) {
@@ -94,12 +135,14 @@ export default function CourseDetails() {
       <Navbar />
 
       {/* Hero */}
+
       <section className="relative overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(212,175,55,0.12),transparent_30%),radial-gradient(circle_at_15%_80%,rgba(18,52,78,0.35),transparent_35%)]" />
 
         <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
           <div className="mt-20 grid items-center gap-10 md:mt-15 lg:grid-cols-2 lg:gap-16">
             {/* Course Info */}
+
             <div>
               <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-sm font-bold text-gold">
                 <FontAwesomeIcon icon={faBookOpen} />
@@ -151,6 +194,7 @@ export default function CourseDetails() {
             </div>
 
             {/* Course Image */}
+
             <div className="relative">
               <div className="overflow-hidden rounded-3xl border border-gold/20 bg-white/5 shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
                 <div className="aspect-video">
@@ -171,6 +215,7 @@ export default function CourseDetails() {
       </section>
 
       {/* Course Content */}
+
       <section className="relative mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="mb-10 text-center">
           <span className="mb-3 inline-block text-sm font-bold text-gold">
@@ -185,6 +230,7 @@ export default function CourseDetails() {
         </div>
 
         {/* لو مشترك */}
+
         {isEnrolled ? (
           courseSections.length > 0 ? (
             <div className="space-y-6">
@@ -226,6 +272,7 @@ export default function CourseDetails() {
                     </button>
 
                     {/* الدروس */}
+
                     <div
                       className={`grid transition-all duration-300 ease-in-out ${
                         isOpen
@@ -246,6 +293,7 @@ export default function CourseDetails() {
                                   icon={faPlay}
                                   className="text-xs text-gold"
                                 />
+
                                 <span>{lesson.title}</span>
                               </Link>
                             ))}
@@ -274,6 +322,7 @@ export default function CourseDetails() {
           )
         ) : (
           // لو مش متشرك
+
           <>
             <div className="rounded-3xl border border-gold/20 bg-[radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.10),transparent_40%),#0c1a2b] px-6 py-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.20)] sm:px-10 sm:py-14">
               <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">

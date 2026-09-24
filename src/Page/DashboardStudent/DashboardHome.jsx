@@ -5,7 +5,7 @@ import DashboardEmptyState from "../../Components/DashboardStudent/EmptyState";
 import courses from "../../date/courses";
 import exams from "../../date/exams";
 import results from "../../date/results";
-import students from "../../date/students";
+import { getCurrentStudent } from "../../services/studentService";
 import enrollments from "../../date/enrollments";
 
 // IMGS
@@ -22,10 +22,15 @@ import {
 
 // HOOKS
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function DashboardHome() {
   // الطالب الحالي مؤقتًا
-  const currentStudent = students[0];
+  const [currentStudent, setCurrentStudent] = useState(null);
+
+  useEffect(() => {
+    getCurrentStudent().then(setCurrentStudent);
+  }, []);
 
   // استخراج الكورسات المشترك فيها الطالب
   const enrolledCourseIds = enrollments
@@ -102,9 +107,8 @@ export default function DashboardHome() {
             </span>
 
             <h1 className="text-3xl font-black leading-tight text-white sm:text-4xl lg:text-5xl">
-              مرحبًا محمد سامي
+              مرحبًا {currentStudent?.name || "بك"} 
             </h1>
-
             <p className="mt-4 max-w-xl text-sm leading-8 text-white sm:text-base">
               استمر في التعلم، وكل خطوة جديدة تقربك من هدفك.
             </p>

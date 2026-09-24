@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import { useParams, Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,31 +12,63 @@ import {
 
 import ImgResult from "../assets/Background/Result Exam.jpg";
 
-// Data
-import results from "../date/results";
-import exams from "../date/exams";
-import students from "../date/students";
+// SERVICES
+
+import { getCurrentStudent } from "../services/studentService";
+import { getExamById } from "../services/examService";
+import { getResultByExamId } from "../services/resultService";
 
 export default function ExamResult() {
   const { examId } = useParams();
 
-  const currentStudent = students[0];
+  const [exam, setExam] = useState(undefined);
+  const [result, setResult] = useState(null);
 
-  const exam = exams.find(
-    (exam) => String(exam.id) === String(examId),
-  );
+  useEffect(() => {
+    let cancelled = false;
 
-  const result = results.find(
-    (result) =>
-      String(result.studentId) === String(currentStudent?.id) &&
-      String(result.examId) === String(examId),
-  );
+    async function loadExamResult() {
+      try {
+        const [currentStudent, currentExam] = await Promise.all([
+          getCurrentStudent(),
+          getExamById(examId),
+        ]);
+
+        if (cancelled) return;
+
+        setExam(currentExam);
+
+        if (!currentStudent || !currentExam) {
+          setResult(null);
+          return;
+        }
+
+        const studentResult = await getResultByExamId(
+          examId,
+          currentStudent.id,
+        );
+
+        if (cancelled) return;
+
+        setResult(studentResult);
+      } catch {
+        if (cancelled) return;
+
+        setExam(null);
+        setResult(null);
+      }
+    }
+
+    loadExamResult();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [examId]);
 
   const [attempt] = useState(() => {
     try {
-      const storedAttempt = sessionStorage.getItem(
-        `exam-attempt-${examId}`,
-      );
+      const storedAttempt = sessionStorage.getItem(`exam-attempt-${examId}`);
 
       return storedAttempt ? JSON.parse(storedAttempt) : null;
     } catch {
@@ -48,6 +81,7 @@ export default function ExamResult() {
    * - محاولة جديدة محفوظة في sessionStorage
    * - أو النتيجة القديمة من results.jsx
    */
+
   const hasNewAttempt = Boolean(attempt);
 
   const displayScore = hasNewAttempt
@@ -58,9 +92,7 @@ export default function ExamResult() {
     ? Number(attempt.totalAutoScore) || 0
     : Number(result?.total) || 0;
 
-  const essayCount = hasNewAttempt
-    ? Number(attempt.essayCount) || 0
-    : 0;
+  const essayCount = hasNewAttempt ? Number(attempt.essayCount) || 0 : 0;
 
   const hasPendingEssay = essayCount > 0;
 
@@ -71,6 +103,7 @@ export default function ExamResult() {
    * في النتيجة القديمة:
    * - نحسبهم من score / total.
    */
+
   const correctAnswers = hasNewAttempt
     ? Number(attempt.correctAnswers) || 0
     : displayScore;
@@ -80,9 +113,7 @@ export default function ExamResult() {
     : Math.max(0, displayTotal - displayScore);
 
   const percentage =
-    displayTotal > 0
-      ? Math.round((displayScore / displayTotal) * 100)
-      : 0;
+    displayTotal > 0 ? Math.round((displayScore / displayTotal) * 100) : 0;
 
   const getResultMessage = (percentage) => {
     if (percentage >= 90) {
@@ -102,15 +133,18 @@ export default function ExamResult() {
 
   const message = getResultMessage(percentage);
 
-  
-    // لو مفيش امتحان أصلًا،
-    // أو مفيش محاولة جديدة ولا نتيجة قديمة.
+  // أثناء تحميل بيانات الامتحان والنتيجة
+
+  if (exam === undefined) {
+    return null;
+  }
+
+  // لو مفيش امتحان أصلًا،
+  // أو مفيش محاولة جديدة ولا نتيجة قديمة.
+
   if (!exam || (!attempt && !result)) {
     return (
-      <section
-        dir="rtl"
-        className="relative min-h-screen overflow-hidden"
-      >
+      <section dir="rtl" className="relative min-h-screen overflow-hidden">
         <img
           src={ImgResult}
           alt="نتيجة الاختبار"
@@ -147,11 +181,9 @@ export default function ExamResult() {
   }
 
   return (
-    <section
-      dir="rtl"
-      className="relative min-h-screen overflow-hidden"
-    >
+    <section dir="rtl" className="relative min-h-screen overflow-hidden">
       {/* Background Image */}
+
       <img
         src={ImgResult}
         alt="نتيجة الاختبار"
@@ -159,12 +191,15 @@ export default function ExamResult() {
       />
 
       {/* Dark Overlay */}
+
       <div className="absolute inset-0 bg-[#03101a]/25" />
 
       {/* Content */}
+
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
         <div className="flex w-full max-w-3xl flex-col items-center text-center">
           {/* Title */}
+
           <div className="mb-3 flex items-center justify-center gap-2">
             <FontAwesomeIcon
               icon={faTrophy}
@@ -184,6 +219,7 @@ export default function ExamResult() {
           </div>
 
           {/* Subtitle */}
+
           <p className="mb-7 text-xs font-medium text-gray-200 sm:text-sm">
             {hasPendingEssay
               ? "تم تصحيح الأسئلة الموضوعية، والأسئلة المقالية قيد المراجعة."
@@ -191,6 +227,7 @@ export default function ExamResult() {
           </p>
 
           {/* Score */}
+
           <div className="mb-7 flex h-28 w-28 flex-col items-center justify-center gap-1 rounded-full border-2 border-[#c99b3b] bg-[#071824]/80 shadow-[0_0_25px_rgba(201,155,59,0.2)] sm:h-35 sm:w-35">
             <span className="text-2xl font-black text-white sm:text-3xl">
               {displayScore}/{displayTotal}
@@ -202,6 +239,7 @@ export default function ExamResult() {
           </div>
 
           {/* Pending Essay Notice */}
+
           {hasPendingEssay && (
             <div className="mb-7 w-full max-w-lg rounded-xl border border-[#d7a83d]/20 bg-[#071824]/75 px-5 py-4">
               <p className="text-sm font-bold leading-7 text-[#d7a83d]">
@@ -209,13 +247,14 @@ export default function ExamResult() {
               </p>
 
               <p className="mt-1 text-xs font-bold leading-6 text-white/90">
-                الدرجة المعروضة حاليًا خاصة بالأسئلة التي تم تصحيحها
-                تلقائيًا، وستتحدث النتيجة بعد مراجعة المدرس.
+                الدرجة المعروضة حاليًا خاصة بالأسئلة التي تم تصحيحها تلقائيًا،
+                وستتحدث النتيجة بعد مراجعة المدرس.
               </p>
             </div>
           )}
 
           {/* Stats */}
+
           <div className="mb-8 grid w-full max-w-lg grid-cols-3 items-center gap-3 sm:gap-8">
             <div className="flex flex-col items-center">
               <span className="mb-2 text-[10px] font-bold text-gray-300 sm:text-sm">
@@ -249,6 +288,7 @@ export default function ExamResult() {
           </div>
 
           {/* Message */}
+
           {!hasPendingEssay && (
             <div className="mb-6 flex items-center gap-2 text-xs font-semibold text-white/75 sm:text-sm">
               <FontAwesomeIcon
@@ -261,6 +301,7 @@ export default function ExamResult() {
           )}
 
           {/* Button */}
+
           <Link
             to="/dashboard-student/exams"
             className="group flex items-center gap-2 rounded-md border border-[#b98c32] bg-[#091b27]/90 px-5 py-2.5 text-xs font-bold text-[#d7a83d] transition-all duration-300 hover:bg-[#d7a83d] hover:text-[#06131f] sm:px-7 sm:py-3 sm:text-sm"

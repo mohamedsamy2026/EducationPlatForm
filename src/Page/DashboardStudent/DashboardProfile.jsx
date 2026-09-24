@@ -1,11 +1,15 @@
 // COMPONENTS
+
 import DashboardEmptyState from "../../Components/DashboardStudent/EmptyState";
 
-// DATA
-import students from "../../date/students";
+// SERVICES
+
+import { getCurrentStudent } from "../../services/studentService";
 
 // ICONS
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faEnvelope,
   faGraduationCap,
@@ -15,17 +19,47 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
+// HOOKS
+
+import { useEffect, useState } from "react";
+
 export default function DashboardProfile() {
-  // الطالب الحالي مؤقتًا
-  const currentStudent = students[0];
+  const [currentStudent, setCurrentStudent] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadStudent() {
+      try {
+        const student = await getCurrentStudent();
+
+        if (cancelled) return;
+
+        setCurrentStudent(student);
+      } catch {
+        if (cancelled) return;
+
+        setCurrentStudent(null);
+      }
+    }
+
+    loadStudent();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // حالة عدم وجود بيانات
+
   if (!currentStudent) {
     return (
       <>
         {/* Header */}
+
         <section className="relative overflow-hidden border-b border-white/10 bg-[#091726] pt-20 lg:pt-24">
           <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold/10 blur-[100px]" />
+
           <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/55 blur-[110px]" />
 
           <div className="relative z-10 px-5 py-12 sm:px-8 sm:py-14 lg:px-10 lg:py-16">
@@ -62,8 +96,10 @@ export default function DashboardProfile() {
   return (
     <>
       {/* Header */}
+
       <section className="relative overflow-hidden border-b border-white/10 bg-[#091726] pt-20 lg:pt-24">
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold/10 blur-[100px]" />
+
         <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/55 blur-[110px]" />
 
         <div className="relative z-10 px-5 py-12 sm:px-8 sm:py-14 lg:px-10 lg:py-16">
@@ -87,9 +123,11 @@ export default function DashboardProfile() {
       </section>
 
       {/* Profile Content */}
+
       <div className="mx-auto w-full max-w-7xl px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
         <section className="overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a2b] shadow-[0_18px_50px_rgba(0,0,0,0.16)]">
           {/* Profile Intro */}
+
           <div className="border-b border-white/10 bg-[radial-gradient(circle_at_85%_20%,rgba(212,175,55,0.09),transparent_35%)] p-6 sm:p-8">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
               <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-2xl text-gold">
@@ -111,6 +149,7 @@ export default function DashboardProfile() {
           </div>
 
           {/* Profile Fields */}
+
           <div className="grid grid-cols-1 gap-px bg-white/5 md:grid-cols-2">
             <ProfileItem
               icon={faUser}
@@ -151,6 +190,7 @@ export default function DashboardProfile() {
         </section>
 
         {/* Account Note */}
+
         <div className="mt-6 rounded-2xl border border-gold/10 bg-gold/[0.03] px-5 py-4">
           <p className="text-center text-sm font-bold leading-7 text-white">
             هذه الصفحة مخصصة لعرض بيانات الحساب الحالية فقط. كلمة المرور لا يتم

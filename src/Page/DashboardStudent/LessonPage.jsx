@@ -1,15 +1,23 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+
 import { Link, useParams } from "react-router-dom";
 
 import LessonVideo from "../../Components/Lesson/LessonVideo";
+
 import LessonMaterials from "../../Components/Lesson/LessonMaterials";
+
 import LessonContentList from "../../Components/Lesson/LessonContentList";
 
-import courses from "../../date/courses";
-import lessons from "../../date/lessons";
-import exams from "../../date/exams";
+// SERVICES
+
+import { getCourseById } from "../../services/courseService";
+
+import { getUnitsByCourseId } from "../../services/lessonService";
+
+import { getExamsByCourseId } from "../../services/examService";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faArrowRight,
   faBookOpen,
@@ -23,25 +31,54 @@ const DEMO_YOUTUBE_URL =
 const DEMO_DRIVE_URL =
   "https://drive.google.com/file/d/1kTskQwo8hevRYot9cxd4FgLIlppQbWeV/view?usp=drive_link";
 
-function normalizeUnits(courseId) {
-  return lessons
-    .filter((unit) => String(unit.courseId) === String(courseId))
-    .map((unit) => ({
-      ...unit,
-      lessons: Array.isArray(unit.lessons) ? unit.lessons : [],
-    }))
-    .filter((unit) => unit.lessons.length > 0);
-}
-
 export default function LessonPage() {
   const { courseId, lessonId } = useParams();
 
-  const course = useMemo(
-    () => courses.find((course) => String(course.id) === String(courseId)),
-    [courseId],
-  );
+  const [course, setCourse] = useState(undefined);
+  const [units, setUnits] = useState([]);
+  const [exams, setExams] = useState([]);
 
-  const units = useMemo(() => normalizeUnits(courseId), [courseId]);
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadLessonPage() {
+      try {
+        const currentCourse = await getCourseById(courseId);
+
+        if (cancelled) return;
+
+        if (!currentCourse) {
+          setCourse(null);
+          setUnits([]);
+          setExams([]);
+          return;
+        }
+
+        const [currentUnits, courseExams] = await Promise.all([
+          getUnitsByCourseId(courseId),
+          getExamsByCourseId(courseId),
+        ]);
+
+        if (cancelled) return;
+
+        setCourse(currentCourse);
+        setUnits(currentUnits);
+        setExams(courseExams);
+      } catch {
+        if (cancelled) return;
+
+        setCourse(null);
+        setUnits([]);
+        setExams([]);
+      }
+    }
+
+    loadLessonPage();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [courseId]);
 
   const currentLessonInfo = useMemo(() => {
     for (const unit of units) {
@@ -65,6 +102,7 @@ export default function LessonPage() {
   const currentUnit = currentLessonInfo?.unit ?? null;
 
   //   من اول هنا هنذاكر بكره
+
   const relatedExam = useMemo(() => {
     if (!currentUnit) return null;
 
@@ -72,7 +110,7 @@ export default function LessonPage() {
       exams.find((exam) => String(exam.unitId) === String(currentUnit.id)) ??
       null
     );
-  }, [currentUnit]);
+  }, [currentUnit, exams]);
 
   const isDemoLesson = String(currentLesson?.id) === "ss-prep-lesson-1";
 
@@ -81,6 +119,12 @@ export default function LessonPage() {
 
   const materialUrl =
     currentLesson?.materialUrl ?? (isDemoLesson ? DEMO_DRIVE_URL : null);
+
+  // Loading
+
+  if (course === undefined) {
+    return null;
+  }
 
   if (!course || !currentLesson) {
     return (
@@ -124,6 +168,7 @@ export default function LessonPage() {
     >
       <div className="mx-auto max-w-7xl">
         {/* Breadcrumb */}
+
         <div className="mb-6 flex flex-wrap items-center gap-2 text-xs font-bold text-white/80">
           <Link
             to={`/courses/${course.id}`}
@@ -153,6 +198,7 @@ export default function LessonPage() {
         </div>
 
         {/* Lesson Heading */}
+
         <header className="mb-6">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold">
             <FontAwesomeIcon icon={faPlay} />
@@ -181,9 +227,11 @@ export default function LessonPage() {
         </header>
 
         {/* Video */}
+
         <LessonVideo videoUrl={videoUrl} />
 
         {/* Lesson Info */}
+
         <section className="mt-6 rounded-2xl border border-white/10 bg-[#0c1a2b] p-6 shadow-[0_18px_50px_rgba(0,0,0,0.14)] sm:p-7">
           <div className="flex items-start gap-4">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-gold/20 bg-gold/10 text-gold">
@@ -211,6 +259,7 @@ export default function LessonPage() {
         </section>
 
         {/* Materials + Exam */}
+
         {(materialUrl || relatedExam) && (
           <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
             {materialUrl && (
@@ -253,6 +302,7 @@ export default function LessonPage() {
         )}
 
         {/* Course Content */}
+
         <div className="mt-6">
           <LessonContentList
             units={units}

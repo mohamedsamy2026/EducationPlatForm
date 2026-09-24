@@ -1,61 +1,126 @@
 // COMPONENTS
+
 import DashboardEmptyState from "../../Components/DashboardStudent/EmptyState";
+
 import DashboardExamCard from "../../Components/DashboardStudent/DashboardExamCard";
 
-// DATA
-import exams from "../../date/exams";
-import results from "../../date/results";
-import students from "../../date/students";
-import enrollments from "../../date/enrollments";
-import courses from "../../date/courses";
+// SERVICES
+
+import { getCurrentStudent } from "../../services/studentService";
+
+import { getExamsByCourseId } from "../../services/examService";
+
+import { getResultsByStudentId } from "../../services/resultService";
+
+import { getEnrollmentsByStudentId } from "../../services/enrollmentService";
+
+import { getCourses } from "../../services/courseService";
 
 // ICONS
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
 
+// HOOKS
+
+import { useEffect, useState } from "react";
+
 export default function DashboardExams() {
-  const currentStudent = students[0];
+  const [currentStudent, setCurrentStudent] = useState(null);
+  const [studentExams, setStudentExams] = useState([]);
 
-  const enrolledCourseIds = enrollments
-    .filter(
-      (enrollment) =>
-        enrollment.studentId === currentStudent?.id &&
-        enrollment.status === "active",
-    )
-    .map((enrollment) => enrollment.courseId);
+  useEffect(() => {
+    let cancelled = false;
 
-  const studentExams = exams
-    .filter((exam) => enrolledCourseIds.includes(exam.courseId))
-    .map((exam) => {
-      const result = results.find(
-        (result) =>
-          result.studentId === currentStudent?.id && result.examId === exam.id,
-      );
+    async function loadExams() {
+      try {
+        const student = await getCurrentStudent();
 
-      let status = "available";
+        if (cancelled) return;
 
-      const now = new Date();
-      const startDate = new Date(exam.startsAt);
-      const endDate = new Date(exam.endsAt);
+        setCurrentStudent(student);
 
-      if (result) {
-        status = "completed";
-      } else if (now > endDate) {
-        status = "expired";
-      } else if (now < startDate) {
-        return null;
+        if (!student) {
+          setStudentExams([]);
+          return;
+        }
+
+        const [studentEnrollments, studentResults, allCourses] =
+          await Promise.all([
+            getEnrollmentsByStudentId(student.id),
+            getResultsByStudentId(student.id),
+            getCourses(),
+          ]);
+
+        if (cancelled) return;
+
+        const enrolledCourseIds = studentEnrollments
+          .filter(
+            (enrollment) =>
+              enrollment.studentId === student.id &&
+              enrollment.status === "active",
+          )
+          .map((enrollment) => enrollment.courseId);
+
+        const examGroups = await Promise.all(
+          enrolledCourseIds.map((courseId) => getExamsByCourseId(courseId)),
+        );
+
+        if (cancelled) return;
+
+        const exams = examGroups.flat();
+
+        const now = new Date();
+
+        const formattedExams = exams
+          .map((exam) => {
+            const result = studentResults.find(
+              (result) =>
+                result.studentId === student.id && result.examId === exam.id,
+            );
+
+            let status = "available";
+
+            const startDate = new Date(exam.startsAt);
+            const endDate = new Date(exam.endsAt);
+
+            if (result) {
+              status = "completed";
+            } else if (now > endDate) {
+              status = "expired";
+            } else if (now < startDate) {
+              return null;
+            }
+
+            const course = allCourses.find(
+              (course) => course.id === exam.courseId,
+            );
+
+            return {
+              exam,
+              result,
+              status,
+              courseTitle: course?.title || "كورس غير معروف",
+            };
+          })
+          .filter(Boolean);
+
+        setStudentExams(formattedExams);
+      } catch {
+        if (cancelled) return;
+
+        setCurrentStudent(null);
+        setStudentExams([]);
       }
+    }
 
-      const course = courses.find((course) => course.id === exam.courseId);
+    loadExams();
 
-      return {
-        exam,
-        result,
-        status,
-        courseTitle: course?.title || "كورس غير معروف",
-      };
-    })
-    .filter(Boolean);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const availableExams = studentExams.filter(
     (item) => item.status === "available",
@@ -70,8 +135,10 @@ export default function DashboardExams() {
   return (
     <>
       {/* Page Header */}
+
       <section className="relative overflow-hidden border-b border-white/10 bg-[#091726] pt-20 lg:pt-24">
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold/10 blur-[100px]" />
+
         <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/55 blur-[110px]" />
 
         <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-10 lg:py-16">
@@ -93,6 +160,7 @@ export default function DashboardExams() {
       </section>
 
       {/* Exams Content */}
+
       <section className="relative overflow-hidden px-5 py-12 sm:px-8 lg:px-10 lg:py-16">
         <div className="pointer-events-none absolute right-1/2 top-20 h-80 w-80 translate-x-1/2 rounded-full bg-gold/5 blur-[130px]" />
 
@@ -100,6 +168,7 @@ export default function DashboardExams() {
           {studentExams.length > 0 ? (
             <div className="space-y-12">
               {/* Available Exams */}
+
               {availableExams.length > 0 && (
                 <section>
                   <div className="mb-6">
@@ -127,6 +196,7 @@ export default function DashboardExams() {
               )}
 
               {/* Completed Exams */}
+
               {completedExams.length > 0 && (
                 <section>
                   <div className="mb-6">
@@ -154,6 +224,7 @@ export default function DashboardExams() {
               )}
 
               {/* Expired Exams */}
+
               {expiredExams.length > 0 && (
                 <section>
                   <div className="mb-6">

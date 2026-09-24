@@ -1,14 +1,19 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import ExamQuestionCard from "../../Components/DashboardStudent/ExamQuestionCard";
+
 import ExamQuestionNavigator from "../../Components/DashboardStudent/ExamQuestionNavigator";
+
 import ExamTimer from "../../Components/DashboardStudent/ExamTimer";
 
-import exams from "../../date/exams";
-import questions from "../../date/questions";
+import { getExamById } from "../../services/examService";
+
+import { getQuestionsByExamId } from "../../services/questionService";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faArrowLeft,
   faArrowRight,
@@ -19,10 +24,17 @@ import {
 
 export default function ExamInterface() {
   const { examId } = useParams();
+
   const navigate = useNavigate();
 
+  const [exam, setExam] = useState(undefined);
+
+  const [examQuestions, setExamQuestions] = useState([]);
+
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const [answers, setAnswers] = useState({});
+
   const [showSubmitConfirmation, setShowSubmitConfirmation] = useState(false);
 
   const answersRef = useRef(answers);
@@ -31,27 +43,47 @@ export default function ExamInterface() {
     answersRef.current = answers;
   }, [answers]);
 
-  const exam = useMemo(
-    () => exams.find((exam) => String(exam.id) === String(examId)),
-    [examId],
-  );
+  useEffect(() => {
+    let cancelled = false;
 
-  const examQuestions = useMemo(
-    () =>
-      questions
-        .filter((question) => String(question.examId) === String(examId))
-        .sort((a, b) => a.order - b.order),
-    [examId],
-  );
+    async function loadExamData() {
+      try {
+        const [currentExam, currentQuestions] = await Promise.all([
+          getExamById(examId),
+          getQuestionsByExamId(examId),
+        ]);
+
+        if (cancelled) return;
+
+        setExam(currentExam);
+        setExamQuestions(currentQuestions);
+      } catch {
+        if (cancelled) return;
+
+        setExam(null);
+        setExamQuestions([]);
+      }
+    }
+
+    loadExamData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [examId]);
 
   const currentQuestion = examQuestions[currentIndex] || null;
 
   const calculateAutoScore = useCallback(
     (submittedAnswers) => {
       let score = 0;
+
       let totalAutoScore = 0;
+
       let essayCount = 0;
+
       let correctAnswers = 0;
+
       let incorrectAnswers = 0;
 
       examQuestions.forEach((question) => {
@@ -69,6 +101,7 @@ export default function ExamInterface() {
           String(answer) === String(question.correctAnswer)
         ) {
           score += Number(question.score) || 0;
+
           correctAnswers += 1;
         } else {
           incorrectAnswers += 1;
@@ -147,7 +180,14 @@ export default function ExamInterface() {
     }
   };
 
+  // Loading
+
+  if (exam === undefined) {
+    return null;
+  }
+
   // Empty
+
   if (!exam || examQuestions.length === 0) {
     return (
       <div className="min-h-screen bg-midnight">
@@ -181,8 +221,10 @@ export default function ExamInterface() {
   return (
     <div className="min-h-screen bg-midnight text-white">
       {/* Exam Header */}
+
       <section className="relative overflow-hidden border-b border-white/10 bg-[#091726] pt-10 lg:pt-7">
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold/10 blur-[100px]" />
+
         <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/55 blur-[110px]" />
 
         <div className="relative z-10 px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
@@ -219,13 +261,16 @@ export default function ExamInterface() {
           </div>
         </div>
       </section>
+
       {/* Exam Header End */}
 
       {/* Exam Body Start */}
+
       <div className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_280px]">
           <div className="min-w-0">
             {/* Progress */}
+
             <div className="mb-5 flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-[#0c1a2b] px-4 py-3">
               <span className="text-xs font-bold text-white/80">
                 السؤال {currentIndex + 1} من {examQuestions.length}
@@ -243,6 +288,7 @@ export default function ExamInterface() {
             />
 
             {/* Controls */}
+
             <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <button
                 type="button"
@@ -277,6 +323,7 @@ export default function ExamInterface() {
           </div>
 
           {/* Navigator */}
+
           <div className="xl:sticky xl:top-28 xl:self-start">
             <ExamQuestionNavigator
               questions={examQuestions}
@@ -287,9 +334,11 @@ export default function ExamInterface() {
           </div>
         </div>
       </div>
+
       {/* Exam Body End */}
 
       {/* Submit Confirmation */}
+
       {showSubmitConfirmation && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 px-5 backdrop-blur-sm">
           <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0c1a2b] p-6 shadow-[0_25px_70px_rgba(0,0,0,0.35)] sm:p-7">

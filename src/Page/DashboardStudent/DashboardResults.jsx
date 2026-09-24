@@ -2,10 +2,14 @@ import { Link } from "react-router-dom";
 import DashboardEmptyState from "../../Components/DashboardStudent/EmptyState";
 import DashboardResultCard from "../../Components/DashboardStudent/DashboardResultCard";
 
-import results from "../../date/results";
-import exams from "../../date/exams";
-import courses from "../../date/courses";
-import students from "../../date/students";
+// SERVICES
+
+import { getCurrentStudent } from "../../services/studentService";
+import { getResultsByStudentId } from "../../services/resultService";
+import { getExamById } from "../../services/examService";
+import { getCourseById } from "../../services/courseService";
+
+// ICONS
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,12 +19,83 @@ import {
   faTrophy,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function DashboardResults() {
-  const currentStudent = students[0];
+// HOOKS
 
-  const studentResults = results
-    .filter((result) => String(result.studentId) === String(currentStudent?.id))
-    .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+import { useEffect, useState } from "react";
+
+export default function DashboardResults() {
+  const [currentStudent, setCurrentStudent] = useState(null);
+  const [studentResults, setStudentResults] = useState([]);
+  const [exams, setExams] = useState([]);
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadResults() {
+      try {
+        const student = await getCurrentStudent();
+
+        if (cancelled) return;
+
+        setCurrentStudent(student);
+
+        if (!student) {
+          setStudentResults([]);
+          setExams([]);
+          setCourses([]);
+          return;
+        }
+
+        const results = await getResultsByStudentId(student.id);
+
+        if (cancelled) return;
+
+        const sortedResults = results.sort(
+          (a, b) => new Date(b.submittedAt) - new Date(a.submittedAt),
+        );
+
+        const uniqueExamIds = [
+          ...new Set(sortedResults.map((result) => String(result.examId))),
+        ];
+
+        const loadedExams = await Promise.all(
+          uniqueExamIds.map((examId) => getExamById(examId)),
+        );
+
+        if (cancelled) return;
+
+        const validExams = loadedExams.filter(Boolean);
+
+        const uniqueCourseIds = [
+          ...new Set(validExams.map((exam) => String(exam.courseId))),
+        ];
+
+        const loadedCourses = await Promise.all(
+          uniqueCourseIds.map((courseId) => getCourseById(courseId)),
+        );
+
+        if (cancelled) return;
+
+        setStudentResults(sortedResults);
+        setExams(validExams.filter(Boolean));
+        setCourses(loadedCourses.filter(Boolean));
+      } catch {
+        if (cancelled) return;
+
+        setCurrentStudent(null);
+        setStudentResults([]);
+        setExams([]);
+        setCourses([]);
+      }
+    }
+
+    loadResults();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const latestResult = studentResults[0] || null;
 
@@ -56,8 +131,10 @@ export default function DashboardResults() {
   return (
     <>
       {/* Header Section */}
+
       <section className="relative overflow-hidden border-b border-white/10 bg-[#091726] pt-20 lg:pt-24">
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold/10 blur-[100px]" />
+
         <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/55 blur-[110px]" />
 
         <div className="relative z-10 px-5 py-12 sm:px-8 sm:py-14 lg:px-10 lg:py-16">
@@ -82,10 +159,12 @@ export default function DashboardResults() {
       </section>
 
       {/* Main Content */}
+
       <div className="mx-auto w-full max-w-7xl px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
         {studentResults.length > 0 ? (
           <>
             {/* Latest Result */}
+
             <section>
               <div className="mb-6 flex items-center gap-3">
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold">
@@ -128,6 +207,7 @@ export default function DashboardResults() {
                           icon={faCalendarCheck}
                           className="text-gold/80"
                         />
+
                         {formatDate(latestResult.submittedAt)}
                       </span>
 
@@ -173,6 +253,7 @@ export default function DashboardResults() {
             </section>
 
             {/* Previous Results */}
+
             <section className="mt-12">
               <div className="mb-6 flex items-center justify-between gap-4">
                 <div>

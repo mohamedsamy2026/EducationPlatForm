@@ -1,7 +1,9 @@
 // FontAwesome
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Icons
+
 import {
   faClock,
   faBookOpen,
@@ -9,13 +11,52 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // React Router
+
 import { Link } from "react-router-dom";
 
-// Data
-import courses from "../date/courses";
+// Services
+
+import { getCourses } from "../services/courseService";
+
+// Components
+
 import DashboardEmptyState from "../Components/DashboardStudent/EmptyState";
 
+// Hooks
+
+import { useEffect, useState } from "react";
+
 export default function Courses() {
+  const [courses, setCourses] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadCourses() {
+      try {
+        const allCourses = await getCourses();
+
+        if (cancelled) return;
+
+        setCourses(allCourses);
+      } catch {
+        if (cancelled) return;
+
+        setCourses([]);
+      }
+    }
+
+    loadCourses();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (courses === null) {
+    return null;
+  }
+
   return (
     <section
       id="courses"
@@ -35,6 +76,7 @@ export default function Courses() {
       ========================================================= */}
 
       {/* Main Gold Glow */}
+
       <div
         className="
           pointer-events-none
@@ -51,6 +93,7 @@ export default function Courses() {
       />
 
       {/* Navy Glow - Left */}
+
       <div
         className="
           pointer-events-none
@@ -66,6 +109,7 @@ export default function Courses() {
       />
 
       {/* Top Transition */}
+
       <div
         className="
           pointer-events-none
@@ -81,6 +125,7 @@ export default function Courses() {
       />
 
       {/* Bottom Transition */}
+
       <div
         className="
           pointer-events-none
@@ -102,6 +147,7 @@ export default function Courses() {
 
         <div className="mx-auto mb-14 max-w-2xl text-center">
           {/* Section Label */}
+
           <div className="mb-4 flex items-center justify-center gap-3">
             <span className="h-px w-10 bg-gradient-to-l from-gold to-transparent" />
 
@@ -113,6 +159,7 @@ export default function Courses() {
           </div>
 
           {/* Heading */}
+
           <h2
             className="
               mb-4
@@ -128,6 +175,7 @@ export default function Courses() {
           </h2>
 
           {/* Description */}
+
           <p className="text-sm leading-8 text-white/60 sm:text-base">
             اختر الكورس المناسب لك وابدأ رحلتك في تعلم التاريخ بطريقة مختلفة، مع
             شرح مبسط يساعدك على الفهم وليس الحفظ فقط.
@@ -190,6 +238,7 @@ export default function Courses() {
                   />
 
                   {/* Image Overlay */}
+
                   <div
                     className="
                       pointer-events-none
@@ -203,6 +252,7 @@ export default function Courses() {
                   />
 
                   {/* Image Top Shine */}
+
                   <div
                     className="
                       pointer-events-none
@@ -222,6 +272,7 @@ export default function Courses() {
                   />
 
                   {/* Grade Badge */}
+
                   <div
                     className="
                       absolute
@@ -250,6 +301,7 @@ export default function Courses() {
 
                 <div className="flex flex-1 flex-col p-6">
                   {/* Course Label */}
+
                   <div className="mb-4 flex items-center gap-2">
                     <span
                       className="
@@ -267,6 +319,7 @@ export default function Courses() {
                   </div>
 
                   {/* Title */}
+
                   <h3
                     className="
                       mb-4
@@ -285,6 +338,7 @@ export default function Courses() {
                   </h3>
 
                   {/* Description */}
+
                   <p
                     className="
                       mb-6
@@ -299,6 +353,7 @@ export default function Courses() {
                   </p>
 
                   {/* Divider */}
+
                   <div
                     className="
                       mb-5
@@ -317,6 +372,7 @@ export default function Courses() {
 
                   <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-3">
                     {/* Content Type */}
+
                     <div className="flex items-center gap-2 text-xs font-semibold text-white/55 sm:text-sm">
                       <span
                         className="
@@ -337,6 +393,7 @@ export default function Courses() {
                     </div>
 
                     {/* Duration */}
+
                     <div className="flex items-center gap-2 text-xs font-semibold text-white/55 sm:text-sm">
                       <span
                         className="
@@ -392,6 +449,7 @@ export default function Courses() {
                 </div>
 
                 {/* Bottom Accent */}
+
                 <div
                   className="
                     absolute
