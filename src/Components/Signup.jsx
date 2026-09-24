@@ -51,6 +51,7 @@ const SECONDARY_GRADES = [
   "third-secondary",
 ];
 
+
 function validateSignupForm(formData) {
   const errors = {};
 
@@ -132,8 +133,7 @@ export default function Signup() {
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const fields = [
+ const fields = [
     {
       name: "fullName",
       label: "الاسم الكامل",
