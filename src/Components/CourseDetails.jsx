@@ -48,8 +48,6 @@ export default function CourseDetails() {
     0,
   );
 
-
-
   function InfoItem({ icon, title, value }) {
     return (
       <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
@@ -143,7 +141,7 @@ export default function CourseDetails() {
               </div>
 
               <Link
-                to="/"
+                to={`${isEnrolled ? "" : "/"}`}
                 className="mt-8 inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)] sm:w-fit"
               >
                 <FontAwesomeIcon icon={isEnrolled ? faPlay : faBookOpen} />
@@ -239,7 +237,8 @@ export default function CourseDetails() {
                         <div className="border-t border-white/5 px-5 pb-5 sm:px-6 sm:pb-6">
                           <div className="space-y-6 pt-4">
                             {section.lessons.map((lesson) => (
-                              <a
+                              <Link
+                                to={`/courses/${course.id}/lessons/${lesson.id}`}
                                 key={lesson.id}
                                 className="flex items-center gap-3 rounded-xl bg-white/[0.03] p-5 text-sm text-white duration-300 hover:bg-white/[0.06]"
                               >
@@ -247,9 +246,8 @@ export default function CourseDetails() {
                                   icon={faPlay}
                                   className="text-xs text-gold"
                                 />
-
                                 <span>{lesson.title}</span>
-                              </a>
+                              </Link>
                             ))}
                           </div>
                         </div>

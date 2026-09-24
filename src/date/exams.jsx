@@ -1,6 +1,7 @@
 const exams = [
   {
     id: "exam-1",
+    unitId: "social-studies-preparatory-unit-1", // 👈 إضافة unitId الصريح
     title: "اختبار الوحدة الأولى",
     courseId: "social-studies-preparatory",
     sectionTitle: "الوحدة الأولى",
@@ -9,9 +10,9 @@ const exams = [
     startsAt: "2026-09-01T00:00:00+03:00",
     endsAt: "2026-10-15T23:59:59+03:00",
   },
-
   {
     id: "exam-2",
+    unitId: "social-studies-preparatory-unit-1",
     title: "اختبار الدرس الثالث",
     courseId: "social-studies-preparatory",
     sectionTitle: "الوحدة الأولى",
@@ -20,9 +21,9 @@ const exams = [
     startsAt: "2026-09-01T00:00:00+03:00",
     endsAt: "2026-10-20T23:59:59+03:00",
   },
-
   {
     id: "exam-3",
+    unitId: null, // مراجعة عامة لا تتبع وحدة محددة
     title: "اختبار المراجعة السابقة",
     courseId: "social-studies-preparatory",
     sectionTitle: "مراجعة عامة",
@@ -33,6 +34,7 @@ const exams = [
   },
   {
     id: "exam-4",
+    unitId: null,
     title: "اختبار المراجعة السابقة",
     courseId: "social-studies-preparatory",
     sectionTitle: "مراجعة عامة",
@@ -43,6 +45,7 @@ const exams = [
   },
   {
     id: "exam-5",
+    unitId: null,
     title: "اختبار المراجعة السابقة",
     courseId: "social-studies-preparatory",
     sectionTitle: "مراجعة عامة",
@@ -53,9 +56,10 @@ const exams = [
   },
   {
     id: "exam-7",
+    unitId: "social-studies-preparatory-unit-1", // تصحيح الربط بالوحدة الأولى
     title: "اختبار علي الوحده الاولي",
     courseId: "social-studies-preparatory",
-    sectionTitle: "مراجعة عامة",
+    sectionTitle: "الوحدة الأولى",
     durationMinutes: 20,
     totalQuestions: 10,
     startsAt: "2026-08-01T00:00:00+03:00",

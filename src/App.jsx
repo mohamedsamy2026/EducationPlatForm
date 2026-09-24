@@ -15,6 +15,7 @@ import DashboardResults from "./Page/DashboardStudent/DashboardResults";
 import DashboardProfile from "./Page/DashboardStudent/DashboardProfile";
 import DashboardSupport from "./Page/DashboardStudent/DashboardSupport";
 import ExamInterface from "./Page/DashboardStudent/ExamInterface";
+import LessonPage from "./Page/DashboardStudent/LessonPage";
 
 import "./App.css";
 
@@ -32,7 +33,15 @@ export default function App() {
         <Route path="/courses/:courseId" element={<CourseDetails />} />
         <Route path="/exam-result/:examId" element={<ExamResult />} />
 
-        <Route path="/dashboard-student/exams/:examId" element={<ExamInterface />} />
+        <Route
+          path="/dashboard-student/exams/:examId"
+          element={<ExamInterface />}
+        />
+        {/* Lesson Page */}
+        <Route
+          path="/courses/:courseId/lessons/:lessonId"
+          element={<LessonPage />}
+        />
 
         {/* Dashboard Student */}
         <Route path="/dashboard-student" element={<DashboardLayout />}>

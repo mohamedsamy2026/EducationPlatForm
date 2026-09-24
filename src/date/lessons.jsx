@@ -7,14 +7,17 @@ const lessons = [
       {
         id: "ss-prep-lesson-1",
         title: "مقدمة في الدراسات الاجتماعية",
+        duration: "15 دقيقة",
       },
       {
         id: "ss-prep-lesson-2",
         title: "جغرافية مصر وموقعها",
+        duration: "25 دقيقة",
       },
       {
         id: "ss-prep-lesson-3",
         title: "أهمية الموقع الجغرافي لمصر",
+        duration: "20 دقيقة",
       },
     ],
   },
@@ -26,10 +29,12 @@ const lessons = [
       {
         id: "ss-prep-lesson-4",
         title: "الحضارة المصرية القديمة",
+        duration: "30 دقيقة",
       },
       {
         id: "ss-prep-lesson-5",
         title: "مظاهر الحضارة المصرية القديمة",
+        duration: "28 دقيقة",
       },
     ],
   },
