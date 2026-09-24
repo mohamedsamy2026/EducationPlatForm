@@ -1,18 +1,27 @@
 // COMPONENTS
+
 import DashboardEmptyState from "../../Components/DashboardStudent/EmptyState";
 
-// DATA
-import courses from "../../date/courses";
-import exams from "../../date/exams";
-import results from "../../date/results";
+// SERVICES
+
 import { getCurrentStudent } from "../../services/studentService";
-import enrollments from "../../date/enrollments";
+
+import { getCourses } from "../../services/courseService";
+
+import { getEnrollmentsByStudentId } from "../../services/enrollmentService";
+
+import { getExamsByCourseId } from "../../services/examService";
+
+import { getResultsByStudentId } from "../../services/resultService";
 
 // IMGS
+
 import HeroImg from "../../assets/Background/coureses.webp";
 
 // ICONS
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faArrowLeft,
   faBookOpen,
@@ -21,18 +30,93 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // HOOKS
-import { Link } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 
+import { Link } from "react-router-dom";
+
 export default function DashboardHome() {
-  // الطالب الحالي مؤقتًا
   const [currentStudent, setCurrentStudent] = useState(null);
 
+  const [courses, setCourses] = useState([]);
+
+  const [enrollments, setEnrollments] = useState([]);
+
+  const [exams, setExams] = useState([]);
+
+  const [results, setResults] = useState([]);
+
   useEffect(() => {
-    getCurrentStudent().then(setCurrentStudent);
+    let cancelled = false;
+
+    async function loadDashboardData() {
+      try {
+        const student = await getCurrentStudent();
+
+        if (cancelled) return;
+
+        setCurrentStudent(student);
+
+        if (!student) {
+          setCourses([]);
+          setEnrollments([]);
+          setExams([]);
+          setResults([]);
+          return;
+        }
+
+        const [allCourses, studentEnrollments, studentResults] =
+          await Promise.all([
+            getCourses(),
+            getEnrollmentsByStudentId(student.id),
+            getResultsByStudentId(student.id),
+          ]);
+
+        if (cancelled) return;
+
+        const activeEnrollments = studentEnrollments.filter(
+          (enrollment) => enrollment.status === "active",
+        );
+
+        const activeCourseIds = activeEnrollments.map(
+          (enrollment) => enrollment.courseId,
+        );
+
+        const examGroups = await Promise.all(
+          activeCourseIds.map((courseId) => getExamsByCourseId(courseId)),
+        );
+
+        if (cancelled) return;
+
+        const studentExams = examGroups.flat();
+
+        setCourses(allCourses);
+
+        setEnrollments(studentEnrollments);
+
+        setExams(studentExams);
+
+        setResults(studentResults);
+      } catch {
+        if (cancelled) return;
+
+        setCourses([]);
+
+        setEnrollments([]);
+
+        setExams([]);
+
+        setResults([]);
+      }
+    }
+
+    loadDashboardData();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // استخراج الكورسات المشترك فيها الطالب
   const enrolledCourseIds = enrollments
     .filter(
       (enrollment) =>
@@ -41,18 +125,17 @@ export default function DashboardHome() {
     )
     .map((enrollment) => enrollment.courseId);
 
-  // عرض كورسات الطالب فقط
   const studentCourses = courses.filter((course) =>
     enrolledCourseIds.includes(course.id),
   );
 
-  // تحديد الاختبارات المتاحة للطالب فقط
   const now = new Date();
 
   const availableExams = exams
     .filter((exam) => enrolledCourseIds.includes(exam.courseId))
     .filter((exam) => {
       const startDate = new Date(exam.startsAt);
+
       const endDate = new Date(exam.endsAt);
 
       return now >= startDate && now <= endDate;
@@ -68,20 +151,16 @@ export default function DashboardHome() {
     .sort((a, b) => new Date(b.startsAt) - new Date(a.startsAt))
     .slice(0, 3);
 
-  // استخراج نتائج الطالب وترتيبها من الأحدث للأقدم
   const studentResults = results
     .filter((result) => result.studentId === currentStudent?.id)
     .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
 
-  // أحدث نتيجة فقط
   const latestResult = studentResults[0] || null;
 
-  // حساب النسبة بشكل آمن
   const percentage = latestResult
     ? Math.round((latestResult.score / latestResult.total) * 100)
     : 0;
 
-  // استخراج اسم الامتحان المرتبط بأحدث نتيجة
   const latestResultExam = latestResult
     ? exams.find((exam) => exam.id === latestResult.examId)
     : null;
@@ -89,6 +168,7 @@ export default function DashboardHome() {
   return (
     <>
       {/* Welcome */}
+
       <section className="relative overflow-hidden border-b border-white/10 pt-20 lg:pt-24">
         <img
           src={HeroImg}
@@ -96,19 +176,20 @@ export default function DashboardHome() {
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        <div className="absolute inset-0 bg-[#061522]/15" />
+        <div className="absolute inset-0 bg-[#061522]/14" />
 
         <div className="absolute inset-0 bg-gradient-to-l from-[#061522]/53 via-[#061522]/53 to-transparent" />
 
         <div className="relative z-10 px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
           <div className="max-w-2xl">
-            <span className="mb-3 mt-6 inline-flex rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold md:mt-0">
+            <span className="mb-5 mt-8 inline-flex rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold md:mt-0">
               لوحة الطالب
             </span>
 
             <h1 className="text-3xl font-black leading-tight text-white sm:text-4xl lg:text-5xl">
-              مرحبًا {currentStudent?.name || "بك"} 
+              مرحبًا {currentStudent?.name || "بك"}
             </h1>
+
             <p className="mt-4 max-w-xl text-sm leading-8 text-white sm:text-base">
               استمر في التعلم، وكل خطوة جديدة تقربك من هدفك.
             </p>
@@ -118,6 +199,7 @@ export default function DashboardHome() {
 
       <div className="px-5 py-10 sm:px-8 lg:px-10 lg:py-14">
         {/* Courses */}
+
         <section>
           <div className="mb-6 flex items-end justify-between gap-4">
             <div>
@@ -131,7 +213,7 @@ export default function DashboardHome() {
             </div>
 
             <Link
-              to="/#courses"
+              to="/dashboard-student/courses"
               className="hidden cursor-pointer items-center gap-2 text-sm font-bold text-gray-300 transition-colors hover:text-gold sm:flex"
             >
               عرض الكل
@@ -193,8 +275,10 @@ export default function DashboardHome() {
         </section>
 
         {/* Exams + Latest Result */}
+
         <section className="mt-12 grid grid-cols-1 gap-6 xl:grid-cols-2">
           {/* Exams */}
+
           <div className="rounded-2xl border border-white/10 bg-[#0c1a2b] p-6 shadow-[0_15px_45px_rgba(0,0,0,0.15)]">
             <div className="mb-6 flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold">
@@ -250,6 +334,7 @@ export default function DashboardHome() {
           </div>
 
           {/* Latest Result */}
+
           <div className="rounded-2xl border border-gold/15 bg-[radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.10),transparent_40%),#0c1a2b] p-6 shadow-[0_15px_45px_rgba(0,0,0,0.15)]">
             <div className="mb-6 flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold">
