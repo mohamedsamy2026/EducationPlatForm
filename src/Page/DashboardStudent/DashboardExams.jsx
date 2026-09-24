@@ -27,7 +27,6 @@ import { faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 
 export default function DashboardExams() {
-  const [currentStudent, setCurrentStudent] = useState(null);
   const [studentExams, setStudentExams] = useState([]);
 
   useEffect(() => {
@@ -39,7 +38,6 @@ export default function DashboardExams() {
 
         if (cancelled) return;
 
-        setCurrentStudent(student);
 
         if (!student) {
           setStudentExams([]);
@@ -110,7 +108,6 @@ export default function DashboardExams() {
       } catch {
         if (cancelled) return;
 
-        setCurrentStudent(null);
         setStudentExams([]);
       }
     }
