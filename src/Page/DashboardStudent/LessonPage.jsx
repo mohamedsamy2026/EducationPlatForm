@@ -163,7 +163,7 @@ export default function LessonPage() {
             {currentLesson.title}
           </h1>
 
-          <div className="mt-3 flex flex-wrap items-center gap-3 text-xs font-semibold text-white/40">
+          <div className="mt-4 flex flex-wrap items-center gap-3 text-xs font-semibold text-white/40">
             <span>{course.title}</span>
 
             <span className="h-1 w-1 rounded-full bg-white/20" />
