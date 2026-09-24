@@ -12,6 +12,10 @@ import { getExamById } from "../../services/examService";
 
 import { getQuestionsByExamId } from "../../services/questionService";
 
+import { getCurrentStudent } from "../../services/studentService";
+
+import { isStudentEnrolled } from "../../services/enrollmentService";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -31,6 +35,8 @@ export default function ExamInterface() {
 
   const [examQuestions, setExamQuestions] = useState([]);
 
+  const [accessStatus, setAccessStatus] = useState("loading");
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [answers, setAnswers] = useState({});
@@ -48,20 +54,51 @@ export default function ExamInterface() {
 
     async function loadExamData() {
       try {
-        const [currentExam, currentQuestions] = await Promise.all([
-          getExamById(examId),
-          getQuestionsByExamId(examId),
-        ]);
+        const [currentExam, currentQuestions, currentStudent] =
+          await Promise.all([
+            getExamById(examId),
+            getQuestionsByExamId(examId),
+            getCurrentStudent(),
+          ]);
 
         if (cancelled) return;
 
         setExam(currentExam);
         setExamQuestions(currentQuestions);
+
+        if (!currentExam) {
+          setAccessStatus("missing");
+          return;
+        }
+
+        if (!currentStudent) {
+          setAccessStatus("denied");
+          return;
+        }
+
+        const enrolled = await isStudentEnrolled(
+          currentStudent.id,
+          currentExam.courseId,
+        );
+
+        if (cancelled) return;
+
+        const now = new Date();
+
+        const startDate = new Date(currentExam.startsAt);
+        const endDate = new Date(currentExam.endsAt);
+
+        const isWithinExamTime = now >= startDate && now <= endDate;
+
+        const canAccess = enrolled && isWithinExamTime;
+
+        setAccessStatus(canAccess ? "allowed" : "denied");
       } catch {
         if (cancelled) return;
 
         setExam(null);
         setExamQuestions([]);
+        setAccessStatus("missing");
       }
     }
 
@@ -71,6 +108,14 @@ export default function ExamInterface() {
       cancelled = true;
     };
   }, [examId]);
+
+  useEffect(() => {
+    if (accessStatus === "denied") {
+      navigate("/dashboard-student/exams", {
+        replace: true,
+      });
+    }
+  }, [accessStatus, navigate]);
 
   const currentQuestion = examQuestions[currentIndex] || null;
 
@@ -182,13 +227,13 @@ export default function ExamInterface() {
 
   // Loading
 
-  if (exam === undefined) {
+  if (exam === undefined || accessStatus === "loading") {
     return null;
   }
 
   // Empty
 
-  if (!exam || examQuestions.length === 0) {
+  if (accessStatus === "missing" || !exam || examQuestions.length === 0) {
     return (
       <div className="min-h-screen bg-midnight">
         <div className="flex min-h-[70vh] items-center justify-center px-5 py-16 sm:px-8">

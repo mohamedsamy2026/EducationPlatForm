@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import LessonVideo from "../../Components/Lesson/LessonVideo";
 
@@ -10,11 +10,15 @@ import LessonContentList from "../../Components/Lesson/LessonContentList";
 
 // SERVICES
 
+import { getCurrentStudent } from "../../services/studentService";
+
 import { getCourseById } from "../../services/courseService";
 
 import { getUnitsByCourseId } from "../../services/lessonService";
 
 import { getExamsByCourseId } from "../../services/examService";
+
+import { isStudentEnrolled } from "../../services/enrollmentService";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -34,16 +38,25 @@ const DEMO_DRIVE_URL =
 export default function LessonPage() {
   const { courseId, lessonId } = useParams();
 
+  const navigate = useNavigate();
+
   const [course, setCourse] = useState(undefined);
+
   const [units, setUnits] = useState([]);
+
   const [exams, setExams] = useState([]);
+
+  const [isEnrolled, setIsEnrolled] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
 
     async function loadLessonPage() {
       try {
-        const currentCourse = await getCourseById(courseId);
+        const [currentCourse, currentStudent] = await Promise.all([
+          getCourseById(courseId),
+          getCurrentStudent(),
+        ]);
 
         if (cancelled) return;
 
@@ -51,12 +64,22 @@ export default function LessonPage() {
           setCourse(null);
           setUnits([]);
           setExams([]);
+          setIsEnrolled(false);
           return;
         }
 
-        const [currentUnits, courseExams] = await Promise.all([
+        if (!currentStudent) {
+          setCourse(currentCourse);
+          setUnits([]);
+          setExams([]);
+          setIsEnrolled(false);
+          return;
+        }
+
+        const [currentUnits, courseExams, enrolled] = await Promise.all([
           getUnitsByCourseId(courseId),
           getExamsByCourseId(courseId),
+          isStudentEnrolled(currentStudent.id, courseId),
         ]);
 
         if (cancelled) return;
@@ -64,12 +87,14 @@ export default function LessonPage() {
         setCourse(currentCourse);
         setUnits(currentUnits);
         setExams(courseExams);
+        setIsEnrolled(enrolled);
       } catch {
         if (cancelled) return;
 
         setCourse(null);
         setUnits([]);
         setExams([]);
+        setIsEnrolled(false);
       }
     }
 
@@ -79,6 +104,14 @@ export default function LessonPage() {
       cancelled = true;
     };
   }, [courseId]);
+
+  useEffect(() => {
+    if (course && isEnrolled === false) {
+      navigate(`/courses/${course.id}`, {
+        replace: true,
+      });
+    }
+  }, [course, isEnrolled, navigate]);
 
   const currentLessonInfo = useMemo(() => {
     for (const unit of units) {
@@ -122,7 +155,7 @@ export default function LessonPage() {
 
   // Loading
 
-  if (course === undefined) {
+  if (course === undefined || isEnrolled === null) {
     return null;
   }
 
