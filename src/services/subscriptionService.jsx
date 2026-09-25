@@ -1,10 +1,10 @@
 import subscriptionRequests from "../date/subscriptionRequests";
+import { v4 as uuidv4 } from "uuid";
 
 function generateReferenceNumber() {
-  const uniquePart = Date.now().toString().slice(-6);
-
-    return `MK-${uniquePart}`;
-  }
+  const uniquePart = uuidv4().slice(0, 8).toUpperCase();
+  return `MK-${uniquePart}`;
+}
 
 export async function getSubscriptionRequestsByStudentId(studentId) {
   return subscriptionRequests.filter(
@@ -47,7 +47,7 @@ export async function createSubscriptionRequest({
   }
 
   const newRequest = {
-    id: `subscription-request-${Date.now()}`,
+    id: `subscription-request-${uuidv4()}`,
     referenceNumber: generateReferenceNumber(),
     studentId,
     courseId,
