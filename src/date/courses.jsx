@@ -41,13 +41,13 @@ const courses = [
       {
         id: "monthly",
         name: "اشتراك شهري",
-        price: null,
+        price: 200,
         currency: "EGP",
       },
       {
         id: "term",
         name: "اشتراك الترم",
-        price: null,
+        price: 500,
         currency: "EGP",
       },
     ],
@@ -66,13 +66,13 @@ const courses = [
       {
         id: "monthly",
         name: "اشتراك شهري",
-        price: null,
+        price: 100,
         currency: "EGP",
       },
       {
         id: "term",
         name: "اشتراك الترم",
-        price: null,
+        price: 300,
         currency: "EGP",
       },
     ],
