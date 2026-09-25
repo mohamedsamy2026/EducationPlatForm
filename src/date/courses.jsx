@@ -12,7 +12,22 @@ const courses = [
     duration: "كورس شامل",
     image: Master1,
     lessonsCount: "غير محدد",
+    subscriptionPlans: [
+      {
+        id: "monthly",
+        name: "اشتراك شهري",
+        price: 150,
+        currency: "EGP",
+      },
+      {
+        id: "term",
+        name: "اشتراك الترم",
+        price: 400,
+        currency: "EGP",
+      },
+    ],
   },
+
   {
     id: "history-secondary",
     title: "التاريخ للمرحلة الثانوية",
@@ -22,7 +37,22 @@ const courses = [
     duration: "كورس شامل",
     image: Master2,
     lessonsCount: "غير محدد",
+    subscriptionPlans: [
+      {
+        id: "monthly",
+        name: "اشتراك شهري",
+        price: null,
+        currency: "EGP",
+      },
+      {
+        id: "term",
+        name: "اشتراك الترم",
+        price: null,
+        currency: "EGP",
+      },
+    ],
   },
+
   {
     id: "history-different-way",
     title: "التاريخ بطريقة مختلفة",
@@ -32,6 +62,20 @@ const courses = [
     duration: "دروس متكاملة",
     image: Master3,
     lessonsCount: "غير محدد",
+    subscriptionPlans: [
+      {
+        id: "monthly",
+        name: "اشتراك شهري",
+        price: null,
+        currency: "EGP",
+      },
+      {
+        id: "term",
+        name: "اشتراك الترم",
+        price: null,
+        currency: "EGP",
+      },
+    ],
   },
 ];
 

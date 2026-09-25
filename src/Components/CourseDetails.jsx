@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+
 import { useParams, Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -11,23 +13,33 @@ import {
   faChevronDown,
   faVideo,
   faLock,
+  faCalendarDays,
+  faLayerGroup,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Navbar from "./Navbar";
+
 import Footer from "./Footer";
 
 // SERVICES
-
 import { getCurrentStudent } from "../services/studentService";
 import { getCourseById } from "../services/courseService";
 import { isStudentEnrolled } from "../services/enrollmentService";
 import { getUnitsByCourseId } from "../services/lessonService";
 
+function formatPrice(price) {
+  if (price === null || price === undefined) {
+    return "غير محدد";
+  }
+
+  return `${new Intl.NumberFormat("ar-EG").format(price)} جنيه`;
+}
+
 export default function CourseDetails() {
   const { courseId } = useParams();
 
   const [openSection, setOpenSection] = useState(null);
-
   const [course, setCourse] = useState(undefined);
   const [currentStudent, setCurrentStudent] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
@@ -85,6 +97,10 @@ export default function CourseDetails() {
     0,
   );
 
+  const subscriptionPlans = Array.isArray(course?.subscriptionPlans)
+    ? course.subscriptionPlans
+    : [];
+
   function InfoItem({ icon, title, value }) {
     return (
       <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
@@ -135,14 +151,12 @@ export default function CourseDetails() {
       <Navbar />
 
       {/* Hero */}
-
       <section className="relative overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(212,175,55,0.12),transparent_30%),radial-gradient(circle_at_15%_80%,rgba(18,52,78,0.35),transparent_35%)]" />
 
         <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
           <div className="mt-20 grid items-center gap-10 md:mt-15 lg:grid-cols-2 lg:gap-16">
             {/* Course Info */}
-
             <div>
               <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-sm font-bold text-gold">
                 <FontAwesomeIcon icon={faBookOpen} />
@@ -183,18 +197,26 @@ export default function CourseDetails() {
                 />
               </div>
 
-              <Link
-                to={`${isEnrolled ? "" : "/"}`}
-                className="mt-8 inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)] sm:w-fit"
-              >
-                <FontAwesomeIcon icon={isEnrolled ? faPlay : faBookOpen} />
-
-                {isEnrolled ? "متابعة الكورس" : "اشترك في الكورس"}
-              </Link>
+              {!isEnrolled ? (
+                <a
+                  href="#subscription-plans"
+                  className="mt-8 inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)] sm:w-fit"
+                >
+                  <FontAwesomeIcon icon={faBookOpen} />
+                  اختر اشتراكك
+                </a>
+              ) : (
+                <Link
+                  to="#"
+                  className="mt-8 inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)] sm:w-fit"
+                >
+                  <FontAwesomeIcon icon={faPlay} />
+                  متابعة الكورس
+                </Link>
+              )}
             </div>
 
             {/* Course Image */}
-
             <div className="relative">
               <div className="overflow-hidden rounded-3xl border border-gold/20 bg-white/5 shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
                 <div className="aspect-video">
@@ -214,8 +236,106 @@ export default function CourseDetails() {
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-midnight to-transparent" />
       </section>
 
-      {/* Course Content */}
+      {/* Subscription Plans */}
+      {!isEnrolled && (
+        <section
+          id="subscription-plans"
+          className="relative mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20"
+        >
+          <div className="mb-10 text-center">
+            <span className="mb-3 inline-block text-sm font-bold text-gold">
+              اشتراكات الكورس
+            </span>
 
+            <h2 className="text-3xl font-black sm:text-4xl">
+              اختر الاشتراك المناسب لك
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/50">
+              اختر نوع الاشتراك ثم انتقل مباشرة إلى صفحة إتمام الدفع.
+            </p>
+          </div>
+
+          {subscriptionPlans.length > 0 ? (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {subscriptionPlans.map((plan) => {
+                const isMonthly = plan.id === "monthly";
+
+                return (
+                  <div
+                    key={plan.id}
+                    className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(10,23,41,0.9)_0%,rgba(6,14,26,0.96)_100%)] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:border-gold/30 hover:shadow-[0_25px_70px_rgba(0,0,0,0.35)] sm:p-7"
+                  >
+                    <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gold/10 blur-[60px]" />
+
+                    <div className="relative">
+                      <div className="mb-6 flex items-start justify-between gap-4">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
+                          <FontAwesomeIcon
+                            icon={isMonthly ? faCalendarDays : faLayerGroup}
+                          />
+                        </div>
+
+                        <div className="rounded-full border border-gold/20 bg-gold/10 px-3 py-1 text-[11px] font-bold text-gold">
+                          {isMonthly ? "شهري" : "ترم"}
+                        </div>
+                      </div>
+
+                      <h3 className="text-xl font-black text-white sm:text-2xl">
+                        {plan.name}
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-7 text-white/45">
+                        {isMonthly
+                          ? "وصول إلى محتوى الكورس لمدة شهر."
+                          : "وصول إلى محتوى الكورس ضمن اشتراك الترم."}
+                      </p>
+
+                      <div className="my-7 h-px bg-white/5" />
+
+                      <div>
+                        <p className="text-xs font-semibold text-white/40">
+                          سعر الاشتراك
+                        </p>
+
+                        <div className="mt-2 flex items-end gap-2">
+                          <span className="text-3xl font-black text-gold">
+                            {formatPrice(plan.price)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <Link
+                        to={`/subscription/${course.id}/${plan.id}`}
+                        className="mt-7 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 font-black text-midnight shadow-[0_10px_30px_rgba(212,175,55,0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-light hover:shadow-[0_14px_35px_rgba(212,175,55,0.24)]"
+                      >
+                        اشترك الآن
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="rounded-3xl border border-dashed border-white/10 bg-white/[0.02] px-6 py-12 text-center">
+              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
+                <FontAwesomeIcon icon={faBookOpen} />
+              </div>
+
+              <h3 className="text-lg font-black text-white">
+                لم يتم إعداد خيارات الاشتراك بعد
+              </h3>
+
+              <p className="mt-2 text-sm leading-7 text-white/45">
+                سيتم إضافة خيارات الاشتراك لهذا الكورس قريبًا.
+              </p>
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* Course Content */}
       <section className="relative mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="mb-10 text-center">
           <span className="mb-3 inline-block text-sm font-bold text-gold">
@@ -230,7 +350,6 @@ export default function CourseDetails() {
         </div>
 
         {/* لو مشترك */}
-
         {isEnrolled ? (
           courseSections.length > 0 ? (
             <div className="space-y-6">
@@ -245,7 +364,7 @@ export default function CourseDetails() {
                     <button
                       type="button"
                       onClick={() => setOpenSection(isOpen ? null : index)}
-                      className="cursor-pointer flex w-full items-center justify-between gap-4 p-5 text-right sm:p-6"
+                      className="flex w-full cursor-pointer items-center justify-between gap-4 p-5 text-right sm:p-6"
                     >
                       <div className="flex items-center gap-4">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 font-black text-gold">
@@ -272,7 +391,6 @@ export default function CourseDetails() {
                     </button>
 
                     {/* الدروس */}
-
                     <div
                       className={`grid transition-all duration-300 ease-in-out ${
                         isOpen
@@ -321,8 +439,7 @@ export default function CourseDetails() {
             </div>
           )
         ) : (
-          // لو مش متشرك
-
+          /* لو مش مشترك */
           <>
             <div className="rounded-3xl border border-gold/20 bg-[radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.10),transparent_40%),#0c1a2b] px-6 py-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.20)] sm:px-10 sm:py-14">
               <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
@@ -338,13 +455,13 @@ export default function CourseDetails() {
                 المحتوى كاملًا.
               </p>
 
-              <Link
-                to="/"
+              <a
+                href="#subscription-plans"
                 className="mt-6 inline-flex items-center gap-3 rounded-xl bg-gold px-7 py-3.5 font-black text-midnight transition-all duration-300 hover:-translate-y-1 hover:bg-gold-light"
               >
                 <FontAwesomeIcon icon={faBookOpen} />
                 اشترك في الكورس
-              </Link>
+              </a>
             </div>
           </>
         )}

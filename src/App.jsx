@@ -16,6 +16,7 @@ import DashboardProfile from "./Page/DashboardStudent/DashboardProfile";
 import DashboardSupport from "./Page/DashboardStudent/DashboardSupport";
 import ExamInterface from "./Page/DashboardStudent/ExamInterface";
 import LessonPage from "./Page/DashboardStudent/LessonPage";
+import Subscription from "./Page/Subscription";
 
 import "./App.css";
 
@@ -43,6 +44,11 @@ export default function App() {
           element={<LessonPage />}
         />
 
+        <Route
+          path="/subscription/:courseId/:planId"
+          element={<Subscription />}
+        />
+        
         {/* Dashboard Student */}
         <Route path="/dashboard-student" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
