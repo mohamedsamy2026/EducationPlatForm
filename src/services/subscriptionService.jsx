@@ -3,8 +3,8 @@ import subscriptionRequests from "../date/subscriptionRequests";
 function generateReferenceNumber() {
   const uniquePart = Date.now().toString().slice(-6);
 
-  return `MK-${uniquePart}`;
-}
+    return `MK-${uniquePart}`;
+  }
 
 export async function getSubscriptionRequestsByStudentId(studentId) {
   return subscriptionRequests.filter(
