@@ -24,8 +24,11 @@ import Footer from "./Footer";
 
 // SERVICES
 import { getCurrentStudent } from "../services/studentService";
+
 import { getCourseById } from "../services/courseService";
+
 import { isStudentEnrolled } from "../services/enrollmentService";
+
 import { getUnitsByCourseId } from "../services/lessonService";
 
 function formatPrice(price) {
@@ -41,7 +44,6 @@ export default function CourseDetails() {
 
   const [openSection, setOpenSection] = useState(null);
   const [course, setCourse] = useState(undefined);
-  const [currentStudent, setCurrentStudent] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [courseSections, setCourseSections] = useState([]);
 
@@ -58,7 +60,6 @@ export default function CourseDetails() {
         if (cancelled) return;
 
         setCourse(currentCourse);
-        setCurrentStudent(student);
 
         if (!currentCourse || !student) {
           setIsEnrolled(false);
@@ -79,7 +80,6 @@ export default function CourseDetails() {
         if (cancelled) return;
 
         setCourse(null);
-        setCurrentStudent(null);
         setIsEnrolled(false);
         setCourseSections([]);
       }
@@ -206,13 +206,13 @@ export default function CourseDetails() {
                   اختر اشتراكك
                 </a>
               ) : (
-                <Link
-                  to="#"
+                <a
+                  href="#Lessons"
                   className="mt-8 inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-7 py-4 font-black text-midnight shadow-[0_10px_35px_rgba(212,175,55,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_45px_rgba(212,175,55,0.3)] sm:w-fit"
                 >
                   <FontAwesomeIcon icon={faPlay} />
                   متابعة الكورس
-                </Link>
+                </a>
               )}
             </div>
 
@@ -336,23 +336,25 @@ export default function CourseDetails() {
       )}
 
       {/* Course Content */}
-      <section className="relative mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="mb-10 text-center">
-          <span className="mb-3 inline-block text-sm font-bold text-gold">
-            محتوى الكورس
-          </span>
-
-          <h2 className="text-3xl font-black sm:text-4xl">
-            ابدأ رحلتك التعليمية
-          </h2>
-
-          <p className="mt-4 text-white/50">{totalLessons} حصة</p>
-        </div>
-
+      <section
+        id="Lessons"
+        className="relative mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20"
+      >
         {/* لو مشترك */}
         {isEnrolled ? (
           courseSections.length > 0 ? (
             <div className="space-y-6">
+              <div className="mb-10 text-center">
+                <span className="mb-3 inline-block text-sm font-bold text-gold">
+                  محتوى الكورس
+                </span>
+
+                <h2 className="text-3xl font-black sm:text-4xl">
+                  ابدأ رحلتك التعليمية
+                </h2>
+
+                <p className="mt-4 text-white/50">{totalLessons} حصة</p>
+              </div>
               {courseSections.map((section, index) => {
                 const isOpen = openSection === index;
 
@@ -438,33 +440,30 @@ export default function CourseDetails() {
               </p>
             </div>
           )
-        ) : (
-          /* لو مش مشترك */
-          <>
-            <div className="rounded-3xl border border-gold/20 bg-[radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.10),transparent_40%),#0c1a2b] px-6 py-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.20)] sm:px-10 sm:py-14">
-              <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
-                <FontAwesomeIcon icon={faLock} />
-              </div>
-
-              <h3 className="text-xl font-black text-white">
-                محتوى الكورس متاح للمشتركين فقط
-              </h3>
-
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-white/45">
-                اشترك في الكورس للوصول إلى الأقسام والدروس التعليمية ومتابعة
-                المحتوى كاملًا.
-              </p>
-
-              <a
-                href="#subscription-plans"
-                className="mt-6 inline-flex items-center gap-3 rounded-xl bg-gold px-7 py-3.5 font-black text-midnight transition-all duration-300 hover:-translate-y-1 hover:bg-gold-light"
-              >
-                <FontAwesomeIcon icon={faBookOpen} />
-                اشترك في الكورس
-              </a>
+        ) : subscriptionPlans.length > 0 ? (
+          <div className="rounded-3xl border border-gold/20 bg-[radial-gradient(circle_at_80%_20%,rgba(212,175,55,0.10),transparent_40%),#0c1a2b] px-6 py-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.20)] sm:px-10 sm:py-14">
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-xl text-gold">
+              <FontAwesomeIcon icon={faLock} />
             </div>
-          </>
-        )}
+
+            <h3 className="text-xl font-black text-white">
+              محتوى الكورس متاح للمشتركين فقط
+            </h3>
+
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-white/45">
+              اشترك في الكورس للوصول إلى الأقسام والدروس التعليمية ومتابعة
+              المحتوى كاملًا.
+            </p>
+
+            <a
+              href="#subscription-plans"
+              className="mt-6 inline-flex items-center gap-3 rounded-xl bg-gold px-7 py-3.5 font-black text-midnight transition-all duration-300 hover:-translate-y-1 hover:bg-gold-light"
+            >
+              <FontAwesomeIcon icon={faBookOpen} />
+              اشترك في الكورس
+            </a>
+          </div>
+        ) : null}
       </section>
 
       <Footer />
