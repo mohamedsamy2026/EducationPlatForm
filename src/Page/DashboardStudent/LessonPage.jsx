@@ -20,6 +20,8 @@ import { getExamsByCourseId } from "../../services/examService";
 
 import { isStudentEnrolled } from "../../services/enrollmentService";
 
+import { hasLessonAccess } from "../../services/lessonAccessService";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -48,6 +50,8 @@ export default function LessonPage() {
 
   const [isEnrolled, setIsEnrolled] = useState(null);
 
+  const [hasCurrentLessonAccess, setHasCurrentLessonAccess] = useState(null);
+
   useEffect(() => {
     let cancelled = false;
 
@@ -65,6 +69,7 @@ export default function LessonPage() {
           setUnits([]);
           setExams([]);
           setIsEnrolled(false);
+          setHasCurrentLessonAccess(false);
           return;
         }
 
@@ -73,14 +78,17 @@ export default function LessonPage() {
           setUnits([]);
           setExams([]);
           setIsEnrolled(false);
+          setHasCurrentLessonAccess(false);
           return;
         }
 
-        const [currentUnits, courseExams, enrolled] = await Promise.all([
-          getUnitsByCourseId(courseId),
-          getExamsByCourseId(courseId),
-          isStudentEnrolled(currentStudent.id, courseId),
-        ]);
+        const [currentUnits, courseExams, enrolled, currentLessonAccess] =
+          await Promise.all([
+            getUnitsByCourseId(courseId),
+            getExamsByCourseId(courseId),
+            isStudentEnrolled(currentStudent.id, courseId),
+            hasLessonAccess(currentStudent.id, courseId, lessonId),
+          ]);
 
         if (cancelled) return;
 
@@ -88,6 +96,7 @@ export default function LessonPage() {
         setUnits(currentUnits);
         setExams(courseExams);
         setIsEnrolled(enrolled);
+        setHasCurrentLessonAccess(currentLessonAccess);
       } catch {
         if (cancelled) return;
 
@@ -95,6 +104,7 @@ export default function LessonPage() {
         setUnits([]);
         setExams([]);
         setIsEnrolled(false);
+        setHasCurrentLessonAccess(false);
       }
     }
 
@@ -103,15 +113,7 @@ export default function LessonPage() {
     return () => {
       cancelled = true;
     };
-  }, [courseId]);
-
-  useEffect(() => {
-    if (course && isEnrolled === false) {
-      navigate(`/courses/${course.id}`, {
-        replace: true,
-      });
-    }
-  }, [course, isEnrolled, navigate]);
+  }, [courseId, lessonId]);
 
   const currentLessonInfo = useMemo(() => {
     for (const unit of units) {
@@ -134,7 +136,29 @@ export default function LessonPage() {
 
   const currentUnit = currentLessonInfo?.unit ?? null;
 
-  //   من اول هنا هنذاكر بكره
+  const canAccessCurrentLesson =
+    isEnrolled === true || hasCurrentLessonAccess === true;
+
+  useEffect(() => {
+    if (
+      course &&
+      currentLesson &&
+      isEnrolled !== null &&
+      hasCurrentLessonAccess !== null &&
+      !canAccessCurrentLesson
+    ) {
+      navigate(`/courses/${course.id}`, {
+        replace: true,
+      });
+    }
+  }, [
+    course,
+    currentLesson,
+    isEnrolled,
+    hasCurrentLessonAccess,
+    canAccessCurrentLesson,
+    navigate,
+  ]);
 
   const relatedExam = useMemo(() => {
     if (!currentUnit) return null;
@@ -155,9 +179,15 @@ export default function LessonPage() {
 
   // Loading
 
-  if (course === undefined || isEnrolled === null) {
+  if (
+    course === undefined ||
+    isEnrolled === null ||
+    hasCurrentLessonAccess === null
+  ) {
     return null;
   }
+
+  // Lesson does not exist
 
   if (!course || !currentLesson) {
     return (
@@ -188,6 +218,12 @@ export default function LessonPage() {
         </div>
       </main>
     );
+  }
+
+  // Student is not allowed to access this lesson
+
+  if (!canAccessCurrentLesson) {
+    return null;
   }
 
   return (

@@ -80,10 +80,11 @@ export default function Subscription() {
         const plan =
           plans.find((item) => String(item.id) === String(planId)) ?? null;
 
-        const pendingRequest = await getPendingSubscriptionRequest(
-          student.id,
+        const pendingRequest = await getPendingSubscriptionRequest({
+          studentId: student.id,
           courseId,
-        );
+          planId,
+        });
 
         if (cancelled) return;
 
@@ -245,7 +246,6 @@ export default function Subscription() {
             العودة للصفحة الرئيسية
           </Link>
         </div>
-
       </main>
     );
   }
@@ -270,7 +270,6 @@ export default function Subscription() {
             العودة إلى تفاصيل الكورس
           </Link>
         </div>
-
       </main>
     );
   }
@@ -303,7 +302,6 @@ export default function Subscription() {
             </Link>
           </div>
         </div>
-
       </main>
     );
   }
@@ -645,7 +643,6 @@ export default function Subscription() {
           </div>
         )}
       </section>
-
     </main>
   );
 }

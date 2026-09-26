@@ -31,6 +31,8 @@ import { isStudentEnrolled } from "../services/enrollmentService";
 
 import { getUnitsByCourseId } from "../services/lessonService";
 
+import { getLessonAccessByStudentAndCourseId } from "../services/lessonAccessService";
+
 function formatPrice(price) {
   if (price === null || price === undefined) {
     return "غير محدد";
@@ -46,6 +48,7 @@ export default function CourseDetails() {
   const [course, setCourse] = useState(undefined);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [courseSections, setCourseSections] = useState([]);
+  const [lessonAccess, setLessonAccess] = useState([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -64,24 +67,28 @@ export default function CourseDetails() {
         if (!currentCourse || !student) {
           setIsEnrolled(false);
           setCourseSections([]);
+          setLessonAccess([]);
           return;
         }
 
-        const [enrolled, sections] = await Promise.all([
+        const [enrolled, sections, accessList] = await Promise.all([
           isStudentEnrolled(student.id, courseId),
           getUnitsByCourseId(courseId),
+          getLessonAccessByStudentAndCourseId(student.id, courseId),
         ]);
 
         if (cancelled) return;
 
         setIsEnrolled(enrolled);
         setCourseSections(sections);
+        setLessonAccess(accessList);
       } catch {
         if (cancelled) return;
 
         setCourse(null);
         setIsEnrolled(false);
         setCourseSections([]);
+        setLessonAccess([]);
       }
     }
 
@@ -100,6 +107,14 @@ export default function CourseDetails() {
   const subscriptionPlans = Array.isArray(course?.subscriptionPlans)
     ? course.subscriptionPlans
     : [];
+
+  const accessibleLessonIds = new Set(
+    lessonAccess.map((access) => String(access.lessonId)),
+  );
+
+  const hasLessonAccess = lessonAccess.length > 0;
+
+  const canViewCourseContent = isEnrolled || hasLessonAccess;
 
   function InfoItem({ icon, title, value }) {
     return (
@@ -340,8 +355,7 @@ export default function CourseDetails() {
         id="Lessons"
         className="relative mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20"
       >
-        {/* لو مشترك */}
-        {isEnrolled ? (
+        {canViewCourseContent ? (
           courseSections.length > 0 ? (
             <div className="space-y-6">
               <div className="mb-10 text-center">
@@ -355,6 +369,7 @@ export default function CourseDetails() {
 
                 <p className="mt-4 text-white/50">{totalLessons} حصة</p>
               </div>
+
               {courseSections.map((section, index) => {
                 const isOpen = openSection === index;
 
@@ -403,20 +418,52 @@ export default function CourseDetails() {
                       <div className="overflow-hidden">
                         <div className="border-t border-white/5 px-5 pb-5 sm:px-6 sm:pb-6">
                           <div className="space-y-6 pt-4">
-                            {section.lessons.map((lesson) => (
-                              <Link
-                                to={`/courses/${course.id}/lessons/${lesson.id}`}
-                                key={lesson.id}
-                                className="flex items-center gap-3 rounded-xl bg-white/[0.03] p-5 text-sm text-white duration-300 hover:bg-white/[0.06]"
-                              >
-                                <FontAwesomeIcon
-                                  icon={faPlay}
-                                  className="text-xs text-gold"
-                                />
+                            {section.lessons.map((lesson) => {
+                              const lessonIsAccessible =
+                                isEnrolled ||
+                                accessibleLessonIds.has(String(lesson.id));
 
-                                <span>{lesson.title}</span>
-                              </Link>
-                            ))}
+                              return lessonIsAccessible ? (
+                                <Link
+                                  to={`/courses/${course.id}/lessons/${lesson.id}`}
+                                  key={lesson.id}
+                                  className="flex items-center gap-3 rounded-xl bg-white/[0.03] p-5 text-sm text-white duration-300 hover:bg-white/[0.06]"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faPlay}
+                                    className="text-xs text-gold"
+                                  />
+
+                                  <span className="min-w-0 flex-1">
+                                    {lesson.title}
+                                  </span>
+
+                                  {!isEnrolled && (
+                                    <span className="rounded-full border border-gold/20 bg-gold/10 px-2.5 py-1 text-[10px] font-bold text-gold">
+                                      متاحة لك
+                                    </span>
+                                  )}
+                                </Link>
+                              ) : (
+                                <div
+                                  key={lesson.id}
+                                  className="flex cursor-not-allowed items-center gap-3 rounded-xl border border-white/5 bg-white/[0.015] p-5 text-sm text-white/40"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faLock}
+                                    className="text-xs text-white/30"
+                                  />
+
+                                  <span className="min-w-0 flex-1">
+                                    {lesson.title}
+                                  </span>
+
+                                  <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] font-bold text-white/30">
+                                    مغلقة
+                                  </span>
+                                </div>
+                              );
+                            })}
                           </div>
                         </div>
                       </div>
