@@ -17,8 +17,8 @@ export async function getSubscriptionRequestsByStudentId(studentId) {
 export async function getPendingSubscriptionRequest({
   studentId,
   courseId,
-  accessType = "course",
   planId,
+  accessType = "course",
   lessonId,
 }) {
   return (

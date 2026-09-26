@@ -44,6 +44,7 @@ export default function Subscription() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [isReferenceCopied, setIsReferenceCopied] = useState(false);
   const [submittedRequest, setSubmittedRequest] = useState(null);
 
   useEffect(() => {
@@ -125,12 +126,6 @@ export default function Subscription() {
     return `${new Intl.NumberFormat("ar-EG").format(selectedPlan.price)} جنيه`;
   }, [selectedPlan]);
 
-  const isReady =
-    Boolean(course) &&
-    Boolean(currentStudent) &&
-    Boolean(paymentMethod) &&
-    Boolean(selectedPlan);
-
   const isSubmitted = Boolean(submittedRequest) || Boolean(existingRequest);
 
   const requestToDisplay = submittedRequest || existingRequest;
@@ -148,6 +143,22 @@ export default function Subscription() {
       }, 1800);
     } catch {
       setIsCopied(false);
+    }
+  };
+
+  const handleCopyReference = async () => {
+    if (!requestToDisplay?.referenceNumber) return;
+
+    try {
+      await navigator.clipboard.writeText(requestToDisplay.referenceNumber);
+
+      setIsReferenceCopied(true);
+
+      window.setTimeout(() => {
+        setIsReferenceCopied(false);
+      }, 1800);
+    } catch {
+      setIsReferenceCopied(false);
     }
   };
 
@@ -316,7 +327,7 @@ export default function Subscription() {
         <div className="relative mx-auto max-w-6xl px-4 pb-12 pt-28 sm:px-6 lg:px-8">
           <Link
             to={`/courses/${course.id}`}
-            className="inline-flex items-center gap-2 text-sm font-bold text-white/50 transition-colors duration-300 hover:text-gold"
+            className="inline-flex items-center gap-2 text-sm font-bold text-white/70 transition-colors duration-300 hover:text-gold"
           >
             <FontAwesomeIcon icon={faArrowRight} />
             العودة إلى تفاصيل الكورس
@@ -388,7 +399,7 @@ export default function Subscription() {
                   <p className="text-xs text-white/40">طريقة الدفع</p>
 
                   <h2 className="text-lg font-black text-white">
-                    Vodafone Cash
+                    {paymentMethod.name}
                   </h2>
                 </div>
               </div>
@@ -408,7 +419,7 @@ export default function Subscription() {
                 <button
                   type="button"
                   onClick={handleCopyNumber}
-                  className="mt-4 inline-flex items-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-4 py-2.5 text-sm font-bold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
+                  className="cursor-pointer mt-4 inline-flex items-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-4 py-2.5 text-sm font-bold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
                 >
                   <FontAwesomeIcon icon={isCopied ? faCheck : faCopy} />
 
@@ -455,7 +466,7 @@ export default function Subscription() {
       {/* ================= Subscription Form ================= */}
       <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         {isSubmitted ? (
-          <div className="overflow-hidden rounded-[2rem] border border-green-400/20 bg-[linear-gradient(180deg,rgba(10,31,28,0.95)_0%,rgba(6,20,20,0.98)_100%)] p-7 shadow-[0_25px_80px_rgba(0,0,0,0.35)] sm:p-10">
+          <div className="overflow-hidden rounded-[2rem] border border-green-400/20 p-7 shadow-[0_25px_80px_rgba(0,0,0,0.35)] sm:p-10 bg-[radial-gradient(circle_at_80%_15%,rgba(212,175,55,0.10),transparent_35%),linear-gradient(180deg,#10233a_0%,#071220_100%)]">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-green-400/20 bg-green-400/10 text-xl text-green-400">
               <FontAwesomeIcon icon={faCheck} />
             </div>
@@ -479,12 +490,25 @@ export default function Subscription() {
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
                 <p className="text-xs text-white/40">رقم الطلب</p>
 
-                <p
-                  dir="ltr"
-                  className="mt-2 text-2xl font-black tracking-wide text-gold"
-                >
-                  #{requestToDisplay.referenceNumber}
-                </p>
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={handleCopyReference}
+                    className="cursor-pointer inline-flex items-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-3.5 py-2 text-xs font-bold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
+                  >
+                    <FontAwesomeIcon
+                      icon={isReferenceCopied ? faCheck : faCopy}
+                    />
+
+                    {isReferenceCopied ? "تم النسخ" : "نسخ الرقم"}
+                  </button>
+                  <p
+                    dir="ltr"
+                    className="text-2xl font-black tracking-wide text-gold"
+                  >
+                    #{requestToDisplay.referenceNumber}
+                  </p>
+                </div>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
@@ -605,8 +629,8 @@ export default function Subscription() {
                     className="mt-1 text-xs text-gold"
                   />
 
-                  <p className="text-xs leading-6 text-white/45">
-                    سيتم استخدام رقم العملية لمساعدة الـMaster على مطابقة طلب
+                  <p className="text-xs leading-6 text-white/55">
+                    سيتم استخدام رقم العملية لمساعدة المستر على مطابقة طلب
                     الاشتراك مع عملية التحويل الفعلية.
                   </p>
                 </div>
@@ -631,13 +655,13 @@ export default function Subscription() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="التواصل عبر WhatsApp عند وجود مشكلة"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-green-400/20 bg-green-400/10 text-base text-green-400 transition-all duration-300 hover:-translate-y-1 hover:bg-green-400 hover:text-midnight"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-green-400/20 bg-green-400/10 text-xl text-green-400 transition-all duration-300 hover:-translate-y-1 hover:bg-green-400 hover:text-midnight"
               >
                 <FontAwesomeIcon icon={faWhatsapp} />
               </a>
             </div>
 
-            <p className="mt-2 text-center text-xs text-white/30">
+            <p className="mt-3 text-center text-xs font-semibold text-white/60">
               في حالة وجود مشكلة فقط يمكنك التواصل معنا عبر WhatsApp.
             </p>
           </div>
