@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -36,21 +36,16 @@ import { getPaymentMethodById } from "../services/paymentMethodService";
 
 export default function Subscription() {
   const { courseId, planId } = useParams();
-  const navigate = useNavigate();
-
   const [course, setCourse] = useState(undefined);
   const [currentStudent, setCurrentStudent] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [existingRequest, setExistingRequest] = useState(null);
-
   const [transactionId, setTransactionId] = useState("");
-
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [isCopied, setIsCopied] = useState(false);
   const [submittedRequest, setSubmittedRequest] = useState(null);
 
