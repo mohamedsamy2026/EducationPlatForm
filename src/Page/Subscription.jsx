@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   faArrowRight,
-  faArrowLeft,
   faBookOpen,
   faCalendarDays,
   faCheck,
@@ -15,13 +14,11 @@ import {
   faLock,
   faMobileScreenButton,
   faReceipt,
-  faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer";
 
 import { getCurrentStudent } from "../services/studentService";
 import { getCourseById } from "../services/courseService";
@@ -249,7 +246,6 @@ export default function Subscription() {
           </Link>
         </div>
 
-        <Footer />
       </main>
     );
   }
@@ -275,7 +271,6 @@ export default function Subscription() {
           </Link>
         </div>
 
-        <Footer />
       </main>
     );
   }
@@ -309,7 +304,6 @@ export default function Subscription() {
           </div>
         </div>
 
-        <Footer />
       </main>
     );
   }
@@ -652,7 +646,6 @@ export default function Subscription() {
         )}
       </section>
 
-      <Footer />
     </main>
   );
 }
