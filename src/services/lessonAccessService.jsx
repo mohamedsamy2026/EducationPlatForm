@@ -1,4 +1,5 @@
 import lessonAccess from "../date/lessonAccess";
+import { v4 as uuidv4 } from "uuid";
 
 export async function getLessonAccessByStudentId(studentId) {
   return lessonAccess.filter(
@@ -8,10 +9,7 @@ export async function getLessonAccessByStudentId(studentId) {
   );
 }
 
-export async function getLessonAccessByStudentAndCourseId(
-  studentId,
-  courseId,
-) {
+export async function getLessonAccessByStudentAndCourseId(studentId, courseId) {
   return lessonAccess.filter(
     (access) =>
       String(access.studentId) === String(studentId) &&
@@ -20,11 +18,7 @@ export async function getLessonAccessByStudentAndCourseId(
   );
 }
 
-export async function hasLessonAccess(
-  studentId,
-  courseId,
-  lessonId,
-) {
+export async function hasLessonAccess(studentId, courseId, lessonId) {
   return lessonAccess.some(
     (access) =>
       String(access.studentId) === String(studentId) &&
@@ -34,16 +28,8 @@ export async function hasLessonAccess(
   );
 }
 
-export async function grantLessonAccess({
-  studentId,
-  courseId,
-  lessonId,
-}) {
-  const existingAccess = await hasLessonAccess(
-    studentId,
-    courseId,
-    lessonId,
-  );
+export async function grantLessonAccess({ studentId, courseId, lessonId }) {
+  const existingAccess = await hasLessonAccess(studentId, courseId, lessonId);
 
   if (existingAccess) {
     return lessonAccess.find(
@@ -56,7 +42,7 @@ export async function grantLessonAccess({
   }
 
   const newAccess = {
-    id: `lesson-access-${crypto.randomUUID()}`,
+    id: `lesson-access-${uuidv4()}`,
     studentId,
     courseId,
     lessonId,
