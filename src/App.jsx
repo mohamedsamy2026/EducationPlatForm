@@ -5,6 +5,8 @@ import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import CourseDetails from "./Components/CourseDetails";
 import ExamResult from "./Components/ExamResult";
+import Books from "./Page/Books";
+import BookPurchase from "./Page/BookPurchase";
 import ScrollToTop from "./Components/ScrollToTop";
 import DashboardLayout from "./Components/DashboardStudent/DashboardLayout";
 
@@ -32,6 +34,8 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/courses/:courseId" element={<CourseDetails />} />
+        <Route path="/books" element={<Books />} />
+        <Route path="/books/:bookId/purchase" element={<BookPurchase />} />
         <Route path="/exam-result/:examId" element={<ExamResult />} />
 
         <Route
@@ -48,7 +52,7 @@ export default function App() {
           path="/subscription/:courseId/:planId"
           element={<Subscription />}
         />
-        
+
         {/* Dashboard Student */}
         <Route path="/dashboard-student" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
