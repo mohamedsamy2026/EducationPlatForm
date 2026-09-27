@@ -17,6 +17,17 @@ export async function getPendingBookPurchaseRequest(studentId, bookId) {
   );
 }
 
+
+export async function getBookPurchaseRequestsByStudentId(studentId) {
+  return [...bookPurchaseRequests]
+    .filter((request) => String(request.studentId) === String(studentId))
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+}
+
+
 export async function createBookPurchaseRequest({
   studentId,
   bookId,

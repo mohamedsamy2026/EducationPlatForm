@@ -2,7 +2,7 @@ const enrollments = [
   {
     id: "enrollment-1",
     studentId: "student-1",
-    courseId: "social-studies-preparatory",
+    courseId: "history-different-way",
     status: "active",
   },
 ];

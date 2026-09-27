@@ -7,3 +7,7 @@ export async function getBooks() {
 export async function getBookById(bookId) {
   return books.find((book) => String(book.id) === String(bookId)) ?? null;
 }
+
+export async function getBooksByStudentGrade(grade) {
+  return books.filter((book) => String(book.grade) === String(grade));
+}

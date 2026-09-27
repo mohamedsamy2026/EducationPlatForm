@@ -12,6 +12,7 @@ import DashboardLayout from "./Components/DashboardStudent/DashboardLayout";
 
 import DashboardHome from "./Page/DashboardStudent/DashboardHome";
 import DashboardCourses from "./Page/DashboardStudent/DashboardCourses";
+import DashboardBooks from "./Page/DashboardStudent/DashboardBooks";
 import DashboardExams from "./Page/DashboardStudent/DashboardExams";
 import DashboardResults from "./Page/DashboardStudent/DashboardResults";
 import DashboardProfile from "./Page/DashboardStudent/DashboardProfile";
@@ -57,6 +58,7 @@ export default function App() {
         <Route path="/dashboard-student" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
           <Route path="courses" element={<DashboardCourses />} />
+          <Route path="books" element={<DashboardBooks />} />
           <Route path="exams" element={<DashboardExams />} />
           <Route path="results" element={<DashboardResults />} />
           <Route path="profile" element={<DashboardProfile />} />

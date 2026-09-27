@@ -10,6 +10,7 @@ import {
   faUser,
   faHeadset,
   faRightFromBracket,
+  faBook,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -27,6 +28,11 @@ export default function DashboardSidebar() {
       name: "الكورسات",
       path: "/dashboard-student/courses",
       icon: faBookOpen,
+    },
+    {
+      name: "كتبي",
+      path: "/dashboard-student/books",
+      icon: faBook,
     },
     {
       name: "الاختبارات",
