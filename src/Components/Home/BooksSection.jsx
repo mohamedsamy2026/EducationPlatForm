@@ -60,7 +60,7 @@ export default function BooksSection() {
           <div className="mb-4 flex items-center justify-center gap-3">
             <span className="h-px w-10 bg-gradient-to-l from-gold to-transparent" />
             <span className="text-xs font-bold tracking-[0.25em] text-gold">
-              كتب ومذكرات
+              كتب ومذكرات+
             </span>
             <span className="h-px w-10 bg-gradient-to-r from-gold to-transparent" />
           </div>
