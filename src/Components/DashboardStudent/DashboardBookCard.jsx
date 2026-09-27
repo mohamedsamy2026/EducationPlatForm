@@ -24,12 +24,12 @@ export default function DashboardBookCard({ book, purchaseStatus = null }) {
   const isRejected = purchaseStatus === "rejected";
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a2b] shadow-[0_15px_45px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/30 hover:shadow-[0_20px_55px_rgba(0,0,0,0.25)]">
+    <article className=" flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a2b] shadow-[0_15px_45px_rgba(0,0,0,0.18)] hover:-translate-y-2 duration-300 hover:border-gold/30 hover:shadow-[0_20px_55px_rgba(0,0,0,0.25)]">
       <div className="relative aspect-[3/4] overflow-hidden bg-[#071321]">
         <img
           src={book.image}
           alt={`صورة ${book.title}`}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          className="h-full w-full object-cover"
         />
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#071321]/80 via-transparent to-transparent" />
