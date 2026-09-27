@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
+  faArrowLeft,
   faBookOpen,
   faCheck,
   faCircleCheck,
@@ -15,7 +16,10 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { getBookById } from "../services/bookService";
 import { getCurrentStudent } from "../services/studentService";
-import { getPendingBookPurchaseRequest, createBookPurchaseRequest } from "../services/bookPurchaseService";
+import {
+  getPendingBookPurchaseRequest,
+  createBookPurchaseRequest,
+} from "../services/bookPurchaseService";
 import { getActivePaymentMethods } from "../services/paymentMethodService";
 
 function formatPrice(price) {
@@ -49,11 +53,9 @@ export default function BookPurchase() {
       try {
         setIsLoading(true);
 
-        const [currentBook, currentStudent, paymentMethods] = await Promise.all([
-          getBookById(bookId),
-          getCurrentStudent(),
-          getActivePaymentMethods(),
-        ]);
+        const [currentBook, currentStudent, paymentMethods] = await Promise.all(
+          [getBookById(bookId), getCurrentStudent(), getActivePaymentMethods()],
+        );
 
         if (cancelled) return;
 
@@ -169,9 +171,15 @@ export default function BookPurchase() {
     return (
       <div className="min-h-screen bg-midnight text-white">
         <Navbar />
-        <main dir="rtl" className="flex min-h-[70vh] items-center justify-center px-5 py-32">
+        <main
+          dir="rtl"
+          className="flex min-h-[70vh] items-center justify-center px-5 py-32"
+        >
           <div className="w-full max-w-xl rounded-2xl border border-white/10 bg-[#0c1a2b] p-10 text-center">
-            <FontAwesomeIcon icon={faBookOpen} className="mb-5 text-3xl text-gold" />
+            <FontAwesomeIcon
+              icon={faBookOpen}
+              className="mb-5 text-3xl text-gold"
+            />
             <h1 className="mb-3 text-2xl font-extrabold text-warm-white">
               الكتاب غير موجود
             </h1>
@@ -183,7 +191,7 @@ export default function BookPurchase() {
               className="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 font-extrabold text-midnight transition-colors duration-300 hover:bg-gold-light"
             >
               العودة للكتب
-              <FontAwesomeIcon icon={faArrowRight} />
+              <FontAwesomeIcon icon={faArrowLeft} />
             </Link>
           </div>
         </main>
@@ -196,13 +204,19 @@ export default function BookPurchase() {
     return (
       <div className="min-h-screen bg-midnight text-white">
         <Navbar />
-        <main dir="rtl" className="flex min-h-[70vh] items-center justify-center px-5 py-32">
+        <main
+          dir="rtl"
+          className="flex min-h-[70vh] items-center justify-center px-5 py-32"
+        >
           <div className="w-full max-w-xl rounded-2xl border border-white/10 bg-[#0c1a2b] p-10 text-center shadow-[0_20px_60px_rgba(0,0,0,0.20)]">
-            <FontAwesomeIcon icon={faBookOpen} className="mb-5 text-3xl text-gold" />
+            <FontAwesomeIcon
+              icon={faBookOpen}
+              className="mb-5 text-3xl text-gold"
+            />
             <h1 className="mb-3 text-2xl font-extrabold text-warm-white">
               سجّل دخولك أولًا
             </h1>
-            <p className="mb-7 text-sm leading-7 text-white/55">
+            <p className="mb-7 text-sm font-medium leading-7 text-white/55">
               لازم تسجل دخول عشان نربط طلب شراء الكتاب بحسابك.
             </p>
             <Link
@@ -224,7 +238,10 @@ export default function BookPurchase() {
       <div className="min-h-screen bg-midnight text-white">
         <Navbar />
 
-        <main dir="rtl" className="relative overflow-hidden bg-midnight px-4 pb-24 pt-32 sm:px-6 lg:px-8">
+        <main
+          dir="rtl"
+          className="relative overflow-hidden bg-midnight px-4 pb-24 pt-32 sm:px-6 lg:px-8"
+        >
           <div className="pointer-events-none absolute right-1/2 top-12 h-96 w-96 translate-x-1/2 rounded-full bg-gold/5 blur-[150px]" />
 
           <div className="relative z-10 mx-auto max-w-3xl">
@@ -241,22 +258,28 @@ export default function BookPurchase() {
                   طلب شراء الكتاب اتبعت بنجاح
                 </h1>
                 <p className="mx-auto max-w-2xl text-sm leading-8 text-white/60 sm:text-base">
-                  تم تسجيل طلبك للمراجعة اليدوية. احتفظ بالكود المرجعي لمتابعة الطلب عند الحاجة.
+                  تم تسجيل طلبك للمراجعة اليدوية. احتفظ بالكود المرجعي لمتابعة
+                  الطلب عند الحاجة.
                 </p>
               </div>
 
               <div className="mt-8 rounded-2xl border border-gold/15 bg-gold/5 p-6 text-center">
                 <p className="text-xs font-bold text-white/45">الكود المرجعي</p>
-                <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
-                  <p dir="ltr" className="text-2xl font-black tracking-wide text-gold">
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-4">
+                  <p
+                    dir="ltr"
+                    className="text-2xl font-black tracking-wide text-gold"
+                  >
                     #{requestToDisplay.referenceNumber}
                   </p>
                   <button
                     type="button"
                     onClick={handleCopyReference}
-                    className="inline-flex items-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-3.5 py-2 text-xs font-bold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
+                    className="cursor-pointer inline-flex items-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-3.5 py-2.5 text-xs font-bold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
                   >
-                    <FontAwesomeIcon icon={isReferenceCopied ? faCheck : faCopy} />
+                    <FontAwesomeIcon
+                      icon={isReferenceCopied ? faCheck : faCopy}
+                    />
                     {isReferenceCopied ? "تم النسخ" : "نسخ الرقم"}
                   </button>
                 </div>
@@ -275,7 +298,9 @@ export default function BookPurchase() {
                     <div className="mx-auto mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-gold/10 text-sm font-black text-gold">
                       {index + 1}
                     </div>
-                    <p className="text-sm font-bold leading-7 text-white/75">{item}</p>
+                    <p className="text-sm font-bold leading-7 text-white/75">
+                      {item}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -287,7 +312,7 @@ export default function BookPurchase() {
                   className="inline-flex items-center justify-center gap-3 rounded-xl bg-gold px-6 py-3.5 text-sm font-extrabold text-midnight transition-colors duration-300 hover:bg-gold-light"
                 >
                   العودة للكتب
-                  <FontAwesomeIcon icon={faArrowRight} />
+                  <FontAwesomeIcon icon={faArrowLeft} />
                 </button>
 
                 <Link
@@ -310,14 +335,17 @@ export default function BookPurchase() {
     <div className="min-h-screen bg-midnight text-white">
       <Navbar />
 
-      <main dir="rtl" className="relative overflow-hidden bg-midnight px-4 pb-24 pt-32 sm:px-6 lg:px-8">
+      <main
+        dir="rtl"
+        className="relative overflow-hidden bg-midnight px-4 pb-24 pt-32 sm:px-6 lg:px-8"
+      >
         <div className="pointer-events-none absolute right-1/2 top-8 h-96 w-96 translate-x-1/2 rounded-full bg-gold/5 blur-[150px]" />
         <div className="pointer-events-none absolute bottom-10 left-0 h-80 w-80 rounded-full bg-[#10243a]/50 blur-[130px]" />
 
         <div className="relative z-10 mx-auto max-w-6xl">
           <Link
             to="/books"
-            className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-white/50 transition-colors duration-200 hover:text-gold"
+            className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-white/80 transition-colors duration-200 hover:text-gold"
           >
             <FontAwesomeIcon icon={faArrowRight} />
             <span>العودة للكتب</span>
@@ -349,15 +377,21 @@ export default function BookPurchase() {
                 </p>
 
                 <div className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.025] p-5">
-                  <span className="text-sm font-bold text-white/45">سعر الكتاب</span>
-                  <span className="text-2xl font-black text-gold">{formatPrice(book.price)}</span>
+                  <span className="text-sm font-bold text-white/45">
+                    سعر الكتاب
+                  </span>
+                  <span className="text-2xl font-black text-gold">
+                    {formatPrice(book.price)}
+                  </span>
                 </div>
               </div>
             </section>
 
             <section className="rounded-3xl border border-white/10 bg-[#0c1a2b] p-7 shadow-[0_25px_70px_rgba(0,0,0,0.28)] sm:p-9">
               <div className="mb-8">
-                <p className="mb-2 text-xs font-bold tracking-[0.2em] text-gold">خطوات شراء الكتاب</p>
+                <p className="mb-2 text-xs font-bold tracking-[0.2em] text-gold">
+                  خطوات شراء الكتاب
+                </p>
                 <h2 className="text-3xl font-extrabold leading-tight text-warm-white">
                   اتبع الخطوات بالترتيب
                 </h2>
@@ -370,20 +404,27 @@ export default function BookPurchase() {
                       1
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="mb-2 text-base font-extrabold text-warm-white">حوّل قيمة الكتاب</h3>
+                      <h3 className="mb-2 text-base font-extrabold text-warm-white">
+                        حوّل قيمة الكتاب
+                      </h3>
                       <p className="mb-4 text-sm leading-7 text-white/55">
-                        قم بالتحويل عبر Vodafone Cash إلى الرقم التالي:
+                        قم بالتحويل عبر {paymentMethod?.name} إلى الرقم التالي:
                       </p>
-                      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-gold/15 bg-gold/5 p-4">
-                        <p dir="ltr" className="text-xl font-black tracking-wide text-gold">
+                      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gold/15 bg-gold/5 p-4">
+                        <p
+                          dir="ltr"
+                          className="text-xl font-black tracking-wide text-gold"
+                        >
                           {paymentMethod?.accountNumber}
                         </p>
                         <button
                           type="button"
                           onClick={handleCopyAccount}
-                          className="inline-flex items-center gap-2 rounded-lg border border-gold/20 bg-gold/10 px-3 py-2 text-xs font-bold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
+                          className="cursor-pointer inline-flex items-center gap-2 rounded-lg border border-gold/20 bg-gold/10 px-3 py-2 text-xs font-bold text-gold transition-all duration-300 hover:bg-gold hover:text-midnight"
                         >
-                          <FontAwesomeIcon icon={isAccountCopied ? faCheck : faCopy} />
+                          <FontAwesomeIcon
+                            icon={isAccountCopied ? faCheck : faCopy}
+                          />
                           {isAccountCopied ? "تم النسخ" : "نسخ الرقم"}
                         </button>
                       </div>
@@ -397,9 +438,12 @@ export default function BookPurchase() {
                       2
                     </div>
                     <div>
-                      <h3 className="mb-2 text-base font-extrabold text-warm-white">احتفظ برقم عملية التحويل</h3>
+                      <h3 className="mb-2 text-base font-extrabold text-warm-white">
+                        احتفظ برقم عملية التحويل
+                      </h3>
                       <p className="text-sm leading-7 text-white/55">
-                        بعد إتمام التحويل، احتفظ برقم العملية لاستخدامه في الخطوة التالية.
+                        بعد إتمام التحويل، احتفظ برقم العملية لاستخدامه في
+                        الخطوة التالية.
                       </p>
                     </div>
                   </div>
@@ -411,14 +455,19 @@ export default function BookPurchase() {
                       3
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="mb-2 text-base font-extrabold text-warm-white">اكتب رقم العملية</h3>
+                      <h3 className="mb-2 text-base font-extrabold text-warm-white">
+                        اكتب رقم العملية
+                      </h3>
                       <p className="mb-4 text-sm leading-7 text-white/55">
                         ضع رقم عملية التحويل في الخانة التالية.
                       </p>
 
                       <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                          <label htmlFor="transactionId" className="mb-2 block text-sm font-bold text-white/75">
+                          <label
+                            htmlFor="transactionId"
+                            className="mb-2 block text-sm font-bold text-white/75"
+                          >
                             رقم عملية التحويل
                           </label>
                           <input
@@ -434,17 +483,25 @@ export default function BookPurchase() {
                             className="w-full rounded-xl border border-white/10 bg-[#071321] px-4 py-3.5 text-sm font-semibold text-white outline-none transition-all duration-300 placeholder:text-white/25 focus:border-gold/40 focus:ring-2 focus:ring-gold/10"
                           />
                           {error ? (
-                            <p className="mt-2 text-xs font-bold text-red-400">{error}</p>
+                            <p className="mt-2 text-xs font-bold text-red-400">
+                              {error}
+                            </p>
                           ) : null}
                         </div>
 
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-5 py-3.5 text-sm font-extrabold text-midnight transition-all duration-300 hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-50"
+                          className="cursor-pointer flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-5 py-3.5 text-sm font-extrabold text-midnight transition-all duration-300 hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                          <FontAwesomeIcon icon={isSubmitting ? faMoneyBillTransfer : faPaperPlane} />
-                          {isSubmitting ? "جاري إرسال الطلب..." : "إرسال طلب الشراء"}
+                          {isSubmitting
+                            ? "جاري إرسال الطلب..."
+                            : "إرسال طلب الشراء"}
+                          <FontAwesomeIcon
+                            icon={
+                              isSubmitting ? faMoneyBillTransfer : faPaperPlane
+                            }
+                          />
                         </button>
                       </form>
                     </div>
@@ -457,9 +514,12 @@ export default function BookPurchase() {
                       4
                     </div>
                     <div>
-                      <h3 className="mb-2 text-base font-extrabold text-warm-white">احتفظ بالكود المرجعي</h3>
+                      <h3 className="mb-2 text-base font-extrabold text-warm-white">
+                        احتفظ بالكود المرجعي
+                      </h3>
                       <p className="text-sm leading-7 text-white/55">
-                        بعد إرسال الطلب سيظهر لك الكود المرجعي الخاص بطلب الشراء.
+                        بعد إرسال الطلب سيظهر لك الكود المرجعي الخاص بطلب
+                        الشراء.
                       </p>
                     </div>
                   </div>
@@ -467,7 +527,10 @@ export default function BookPurchase() {
               </div>
 
               <div className="mt-7 flex items-center gap-3 rounded-2xl border border-gold/15 bg-gold/5 p-4 text-sm font-semibold leading-7 text-white/65">
-                <FontAwesomeIcon icon={faCircleCheck} className="shrink-0 text-gold" />
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  className="shrink-0 text-gold"
+                />
                 <span>سيتم مراجعة التحويل يدويًا قبل اعتماد طلب الشراء.</span>
               </div>
             </section>
