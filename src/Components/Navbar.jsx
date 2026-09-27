@@ -21,8 +21,8 @@ export default function Navbar() {
     { name: "من نحن", href: "#aboutPlatform" },
     { name: "الكورسات", href: "#courses" },
     { name: "آراء طلابنا", href: "#StudentOpinions" },
-    { name: "تواصل معنا", href: "#footer" },
     { name: "الكتب", href: "#books" },
+    { name: "تواصل معنا", href: "#footer" },
   ];
 
   /* تغيير شكل الـ Navbar عند الـ Scroll */
