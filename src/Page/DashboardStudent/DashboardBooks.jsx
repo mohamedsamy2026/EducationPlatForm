@@ -2,20 +2,13 @@ import { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import {
-  faBookOpen,
-  faGraduationCap,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBookOpen, faGraduationCap } from "@fortawesome/free-solid-svg-icons";
 
 import { getCurrentStudent } from "../../services/studentService";
 
-import {
-  getBooksByStudentGrade,
-} from "../../services/bookService";
+import { getBooksByStudentGrade } from "../../services/bookService";
 
-import {
-  getBookPurchaseRequestsByStudentId,
-} from "../../services/bookPurchaseService";
+import { getBookPurchaseRequestsByStudentId } from "../../services/bookPurchaseService";
 
 import DashboardBookCard from "../../Components/DashboardStudent/DashboardBookCard";
 
@@ -96,16 +89,14 @@ export default function DashboardBooks() {
       className="min-h-screen bg-midnight px-5 py-24 text-white sm:px-8 lg:px-10"
     >
       <div className="mx-auto max-w-7xl">
-        <div className="mb-10">
+        <div className="my-12">
           <div className="mb-4 flex items-center gap-3">
             <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold">
               <FontAwesomeIcon icon={faBookOpen} />
             </span>
 
             <div>
-              <p className="text-xs font-bold text-gold">
-                الكتب الخاصة بك
-              </p>
+              <p className="text-xs font-bold text-gold">الكتب الخاصة بك</p>
 
               <h1 className="mt-1 text-3xl font-black text-warm-white sm:text-4xl">
                 كتبي
@@ -137,7 +128,7 @@ export default function DashboardBooks() {
                     الكتب الخاصة بصفك
                   </h2>
 
-                  <p className="mt-1 text-xs leading-6 text-white/45">
+                  <p className="mt-1 text-sm leading-6 text-white/55">
                     تظهر هنا الكتب المطابقة للصف المسجل في حسابك.
                   </p>
                 </div>
