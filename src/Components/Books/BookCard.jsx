@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
-  faBookOpen,
   faGraduationCap,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -23,10 +22,10 @@ export default function BookCard({ book }) {
         <img
           src={book.image}
           alt={`صورة ${book.title}`}
-          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.035]"
+          className="h-full w-full object-cover"
         />
 
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071321]/90 via-[#071321]/10 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071321]/75 via-[#071321]/10 to-transparent" />
 
         <div className="absolute bottom-4 right-4 rounded-lg border border-gold/30 bg-[#071321]/85 px-3 py-2 text-xs font-bold text-gold shadow-[0_8px_20px_rgba(0,0,0,0.25)] backdrop-blur-sm">
           {book.grade}

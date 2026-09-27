@@ -20,8 +20,8 @@ export default function Navbar() {
     { name: "الرئيسية", href: "#heroSection" },
     { name: "من نحن", href: "#aboutPlatform" },
     { name: "الكورسات", href: "#courses" },
-    { name: "آراء طلابنا", href: "#StudentOpinions" },
     { name: "الكتب", href: "#books" },
+    { name: "آراء طلابنا", href: "#StudentOpinions" },
     { name: "تواصل معنا", href: "#footer" },
   ];
 

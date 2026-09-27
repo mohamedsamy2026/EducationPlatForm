@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
-import BookCard from "../Components/Home/BookCard";
+import BookCard from "../Components/Books/BookCard";
 import { getBooks } from "../services/bookService";
 
 const grades = [
@@ -72,7 +72,7 @@ export default function Books() {
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <Link
               to="/"
-              className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-white/50 transition-colors duration-200 hover:text-gold"
+              className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-white/50 duration-200 hover:text-gold hover:gap-4"
             >
               <FontAwesomeIcon icon={faArrowRight} />
               <span>العودة للرئيسية</span>
@@ -104,7 +104,7 @@ export default function Books() {
                   key={grade}
                   type="button"
                   onClick={() => setSelectedGrade(grade)}
-                  className={`rounded-xl border px-4 py-2.5 text-sm font-bold transition-all duration-300 ${isActive ? "border-gold bg-gold text-midnight shadow-[0_10px_30px_rgba(212,175,55,0.16)]" : "border-white/10 bg-white/[0.03] text-white/60 hover:border-gold/30 hover:bg-gold/10 hover:text-gold"}`}
+                  className={`cursor-pointer rounded-xl border px-4 py-2.5 text-sm font-bold transition-all duration-300 ${isActive ? "border-gold bg-gold text-midnight shadow-[0_10px_30px_rgba(212,175,55,0.16)]" : "border-white/10 bg-white/[0.03] text-white/60 hover:border-gold/30 hover:bg-gold/10 hover:text-gold"}`}
                 >
                   {grade}
                 </button>

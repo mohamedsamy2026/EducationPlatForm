@@ -8,7 +8,7 @@ import AboutPlatform from "../Components/AboutPlatform";
 import Courses from "../Components/Courses";
 import StudentOpinions from "../Components/StudentOpinions";
 import Footer from "../Components/Footer";
-import BooksSection from "../Components/Home/BooksSection";
+import BooksSection from "../Components/Books/BooksSection";
 
 export default function Home() {
   useEffect(() => {

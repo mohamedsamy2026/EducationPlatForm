@@ -60,7 +60,7 @@ export default function BooksSection() {
           <div className="mb-4 flex items-center justify-center gap-3">
             <span className="h-px w-10 bg-gradient-to-l from-gold to-transparent" />
             <span className="text-xs font-bold tracking-[0.25em] text-gold">
-              كتب ومذكرات+
+              كتب ومذكرات
             </span>
             <span className="h-px w-10 bg-gradient-to-r from-gold to-transparent" />
           </div>
@@ -70,7 +70,8 @@ export default function BooksSection() {
           </h2>
 
           <p className="text-sm leading-8 text-white/60 sm:text-base">
-            اختر الكتاب المناسب لصفك وابدأ مراجعتك بطريقة منظمة تساعدك على الفهم والمذاكرة.
+            اختر الكتاب المناسب لصفك وابدأ مراجعتك بطريقة منظمة تساعدك على الفهم
+            والمذاكرة.
           </p>
         </div>
 
@@ -83,15 +84,15 @@ export default function BooksSection() {
               modules={[Autoplay]}
               loop={books.length > 3}
               autoplay={{
-                delay: 3000,
+                delay: 2500,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
               }}
-              slidesPerView={1.08}
+              slidesPerView={1}
               spaceBetween={16}
               breakpoints={{
-                640: {
-                  slidesPerView: 1.6,
+                650: {
+                  slidesPerView: 1,
                   spaceBetween: 20,
                 },
                 900: {
@@ -116,7 +117,7 @@ export default function BooksSection() {
               type="button"
               aria-label="الكتب السابقة"
               onClick={() => swiperRef.current?.slidePrev()}
-              className="absolute right-0 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gold/20 bg-[#0c1a2b]/90 text-gold shadow-[0_10px_30px_rgba(0,0,0,0.30)] backdrop-blur-md transition-all duration-300 hover:border-gold hover:bg-gold hover:text-midnight lg:flex"
+              className="cursor-pointer absolute -right-1.5 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gold/20 bg-[#0c1a2b]/90 text-gold shadow-[0_10px_30px_rgba(0,0,0,0.30)] backdrop-blur-md transition-all duration-300 hover:border-gold hover:bg-gold hover:text-midnight lg:flex"
             >
               <FontAwesomeIcon icon={faArrowRight} />
             </button>
@@ -125,29 +126,35 @@ export default function BooksSection() {
               type="button"
               aria-label="الكتب التالية"
               onClick={() => swiperRef.current?.slideNext()}
-              className="absolute left-0 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gold/20 bg-[#0c1a2b]/90 text-gold shadow-[0_10px_30px_rgba(0,0,0,0.30)] backdrop-blur-md transition-all duration-300 hover:border-gold hover:bg-gold hover:text-midnight lg:flex"
+              className="cursor-pointer absolute -left-1.5 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gold/20 bg-[#0c1a2b]/90 text-gold shadow-[0_10px_30px_rgba(0,0,0,0.30)] backdrop-blur-md transition-all duration-300 hover:border-gold hover:bg-gold hover:text-midnight lg:flex"
             >
               <FontAwesomeIcon icon={faArrowLeft} />
             </button>
           </div>
         ) : (
           <div className="mx-auto max-w-xl rounded-2xl border border-white/10 bg-[#0c1a2b] p-8 text-center">
-            <FontAwesomeIcon icon={faBookOpen} className="mb-4 text-2xl text-gold" />
-            <p className="text-sm leading-7 text-white/60">
+            <FontAwesomeIcon
+              icon={faBookOpen}
+              className="mb-4 text-2xl text-gold"
+            />
+            <p className="text-lg leading-7 text-white/60">
               لا توجد كتب متاحة حاليًا.
             </p>
           </div>
         )}
 
-        <div className="mt-12 flex justify-center">
-          <Link
-            to="/books"
-            className="inline-flex items-center gap-3 rounded-xl border border-gold/35 bg-gold/10 px-6 py-3.5 text-sm font-extrabold text-gold transition-all duration-300 hover:gap-4 hover:bg-gold hover:text-midnight"
-          >
-            <span>عرض كل الكتب</span>
-            <FontAwesomeIcon icon={faArrowLeft} />
-          </Link>
-        </div>
+        {books.length > 0 &&
+        (
+          <div className="mt-12 flex justify-center">
+            <Link
+              to="/books"
+              className="inline-flex items-center gap-3 rounded-xl border border-gold/35 bg-gold/10 px-6 py-3.5 text-sm font-extrabold text-gold transition-all duration-300 hover:gap-4 hover:bg-gold hover:text-midnight"
+            >
+              <span>عرض كل الكتب</span>
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </Link>
+          </div>
+        )}
       </div>
 
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/15 to-transparent" />
