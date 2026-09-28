@@ -1,28 +1,19 @@
 // COMPONENTS
-
 import DashboardEmptyState from "../../Components/DashboardStudent/EmptyState";
 import { getGradeLabel } from "../../utils/gradeUtils";
 
 // SERVICES
-
 import { getCurrentStudent } from "../../services/studentService";
-
 import { getCourses } from "../../services/courseService";
-
 import { getEnrollmentsByStudentId } from "../../services/enrollmentService";
-
 import { getExamsByCourseId } from "../../services/examService";
-
 import { getResultsByStudentId } from "../../services/resultService";
 
 // IMGS
-
 import HeroImg from "../../assets/Background/coureses.webp";
 
 // ICONS
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import {
   faArrowLeft,
   faBookOpen,
@@ -31,20 +22,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // HOOKS
-
 import { useEffect, useState } from "react";
 
+// REACT ROUTER
 import { Link } from "react-router-dom";
 
 export default function DashboardHome() {
   const [currentStudent, setCurrentStudent] = useState(null);
-
   const [courses, setCourses] = useState([]);
-
   const [enrollments, setEnrollments] = useState([]);
-
   const [exams, setExams] = useState([]);
-
   const [results, setResults] = useState([]);
 
   useEffect(() => {
@@ -75,6 +62,7 @@ export default function DashboardHome() {
 
         if (cancelled) return;
 
+        // الكورسات المشترك فيها الطالب حاليًا
         const activeEnrollments = studentEnrollments.filter(
           (enrollment) => enrollment.status === "active",
         );
@@ -83,6 +71,7 @@ export default function DashboardHome() {
           (enrollment) => enrollment.courseId,
         );
 
+        // جلب كل امتحانات الكورسات المشترك فيها الطالب
         const examGroups = await Promise.all(
           activeCourseIds.map((courseId) => getExamsByCourseId(courseId)),
         );
@@ -92,21 +81,15 @@ export default function DashboardHome() {
         const studentExams = examGroups.flat();
 
         setCourses(allCourses);
-
         setEnrollments(studentEnrollments);
-
         setExams(studentExams);
-
         setResults(studentResults);
       } catch {
         if (cancelled) return;
 
         setCourses([]);
-
         setEnrollments([]);
-
         setExams([]);
-
         setResults([]);
       }
     }
@@ -117,6 +100,10 @@ export default function DashboardHome() {
       cancelled = true;
     };
   }, []);
+
+  // =========================================================
+  // Student Courses
+  // =========================================================
 
   const enrolledCourseIds = enrollments
     .filter(
@@ -130,17 +117,23 @@ export default function DashboardHome() {
     enrolledCourseIds.includes(course.id),
   );
 
+  // =========================================================
+  // Available Exams
+  // =========================================================
+
   const now = new Date();
 
   const availableExams = exams
+    // لازم الامتحان يكون تابع لكورس الطالب المشترك فيه
     .filter((exam) => enrolledCourseIds.includes(exam.courseId))
+    // لازم يكون الامتحان داخل فترة الإتاحة
     .filter((exam) => {
       const startDate = new Date(exam.startsAt);
-
       const endDate = new Date(exam.endsAt);
 
       return now >= startDate && now <= endDate;
     })
+    // الطالب لم يحل الامتحان من قبل
     .filter(
       (exam) =>
         !results.some(
@@ -149,22 +142,44 @@ export default function DashboardHome() {
             result.examId === exam.id,
         ),
     )
+    // الأحدث أولًا
     .sort((a, b) => new Date(b.startsAt) - new Date(a.startsAt))
-    .slice(0, 3);
+    // نعرض امتحانًا واحدًا فقط
+    .slice(0, 1);
+
+  // =========================================================
+  // Latest Result
+  // =========================================================
+
+  /*
+    نريد فقط نتائج الامتحانات التابعة للكورسات
+    التي الطالب مشترك فيها حاليًا.
+  */
+
+  const enrolledExamIds = new Set(
+    exams
+      .filter((exam) => enrolledCourseIds.includes(exam.courseId))
+      .map((exam) => exam.id),
+  );
 
   const studentResults = results
     .filter((result) => result.studentId === currentStudent?.id)
+    .filter((result) => enrolledExamIds.has(result.examId))
+    // الأحدث زمنيًا أولًا
     .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
 
-  const latestResult = studentResults[0] || null;
+  // أحدث نتيجة واحدة فقط
+  const latestResult = studentResults[0] ?? null;
 
+  // الامتحان المرتبط بآخر نتيجة
+  const latestResultExam = latestResult
+    ? (exams.find((exam) => exam.id === latestResult.examId) ?? null)
+    : null;
+
+  // نسبة آخر نتيجة
   const percentage = latestResult
     ? Math.round((latestResult.score / latestResult.total) * 100)
     : 0;
-
-  const latestResultExam = latestResult
-    ? exams.find((exam) => exam.id === latestResult.examId)
-    : null;
 
   return (
     <>
@@ -328,8 +343,6 @@ export default function DashboardHome() {
                 icon={faClipboardCheck}
                 title="لا توجد اختبارات متاحة حاليًا"
                 description="اشترك في كورس لتظهر الاختبارات الخاصة بك."
-                buttonText="استكشف الكورسات"
-                buttonTo="/courses"
               />
             )}
           </div>
