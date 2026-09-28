@@ -1,4 +1,4 @@
-import enrollments from "../date/enrollments";
+import enrollments from "../data/enrollments";
 
 export async function getEnrollmentsByStudentId(studentId) {
   return enrollments.filter(

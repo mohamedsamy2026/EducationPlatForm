@@ -1,4 +1,4 @@
-import books from "../date/books";
+import books from "../data/books";
 
 export async function getBooks() {
   return [...books];

@@ -1,4 +1,4 @@
-import lessonAccess from "../date/lessonAccess";
+import lessonAccess from "../data/lessonAccess";
 import { v4 as uuidv4 } from "uuid";
 
 export async function getLessonAccessByStudentId(studentId) {

@@ -1,4 +1,4 @@
-import chatMessages from "../date/chatMessages";
+import chatMessages from "../data/chatMessages";
 
 let mockMessages = [...chatMessages];
 

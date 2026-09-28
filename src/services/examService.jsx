@@ -1,4 +1,4 @@
-import exams from "../date/exams";
+import exams from "../data/exams";
 
 export async function getExamsByCourseId(courseId) {
   return exams.filter(

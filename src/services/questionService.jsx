@@ -1,4 +1,4 @@
-import questions from "../date/questions";
+import questions from "../data/questions";
 
 export async function getQuestionsByExamId(examId) {
   return questions

@@ -7,7 +7,7 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import BookCard from "../Components/Books/BookCard";
 import { getBooks } from "../services/bookService";
-import grades from "../date/grades";
+import grades from "../data/grades";
 
 const gradeFilters = [
    { 

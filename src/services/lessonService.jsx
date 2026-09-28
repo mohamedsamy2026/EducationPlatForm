@@ -1,4 +1,4 @@
-import lessons from "../date/lessons";
+import lessons from "../data/lessons";
 
 export async function getUnitsByCourseId(courseId) {
   return lessons

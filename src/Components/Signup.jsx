@@ -21,7 +21,7 @@ import SignupHome from "../assets/Background/signup.jpg";
 import Master from "../assets/Master/master.webp";
 
 // Data
-import grades from "../date/grades";
+import grades from "../data/grades";
 
 // React Router
 import { Link } from "react-router-dom";

@@ -1,4 +1,4 @@
-import paymentMethods from "../date/paymentMethods";
+import paymentMethods from "../data/paymentMethods";
 
 export async function getActivePaymentMethods() {
   return paymentMethods.filter((paymentMethod) => paymentMethod.isActive);

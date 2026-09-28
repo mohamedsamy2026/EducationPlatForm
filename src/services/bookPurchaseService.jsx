@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-import bookPurchaseRequests from "../date/bookPurchaseRequests";
+import bookPurchaseRequests from "../data/bookPurchaseRequests";
 
 function generateReferenceNumber() {
   return `MK-${uuidv4().slice(0, 8).toUpperCase()}`;

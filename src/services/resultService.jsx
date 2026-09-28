@@ -1,4 +1,4 @@
-import results from "../date/results";
+import results from "../data/results";
 
 export async function getResultsByStudentId(studentId) {
   return results.filter(
