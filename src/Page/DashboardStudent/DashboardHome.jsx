@@ -1,6 +1,7 @@
 // COMPONENTS
 
 import DashboardEmptyState from "../../Components/DashboardStudent/EmptyState";
+import { getGradeLabel } from "../../utils/gradeUtils";
 
 // SERVICES
 
@@ -238,7 +239,7 @@ export default function DashboardHome() {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#071321]/80 to-transparent" />
 
                     <span className="absolute bottom-4 right-4 rounded-lg border border-gold/20 bg-[#071321]/85 px-3 py-2 text-xs font-bold text-gold backdrop-blur-sm">
-                      {course.grade}
+                      {getGradeLabel(course.grade)}
                     </span>
                   </div>
 

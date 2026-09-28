@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Link } from "react-router-dom";
+import { getGradeLabel } from "../../utils/gradeUtils";
 
 function formatPrice(price) {
   if (price === null || price === undefined) {
@@ -35,7 +36,7 @@ export default function DashboardBookCard({ book, purchaseStatus = null }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#071321]/80 via-transparent to-transparent" />
 
         <div className="absolute bottom-4 right-4 rounded-lg border border-gold/20 bg-[#071321]/90 px-3 py-2 text-xs font-bold text-gold backdrop-blur-sm">
-          {book.grade}
+          {getGradeLabel(book.grade)}
         </div>
       </div>
 

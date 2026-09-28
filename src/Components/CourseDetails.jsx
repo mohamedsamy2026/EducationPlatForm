@@ -22,6 +22,8 @@ import Navbar from "./Navbar";
 
 import Footer from "./Footer";
 
+import { getGradeLabel } from "../utils/gradeUtils";
+
 // SERVICES
 import { getCurrentStudent } from "../services/studentService";
 
@@ -190,7 +192,7 @@ export default function CourseDetails() {
                 <InfoItem
                   icon={faGraduationCap}
                   title="المرحلة"
-                  value={course.grade}
+                  value={getGradeLabel(course.grade)}
                 />
 
                 <InfoItem

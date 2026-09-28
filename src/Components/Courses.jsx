@@ -2,6 +2,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+
 // Icons
 
 import {
@@ -20,6 +21,7 @@ import { getCourses } from "../services/courseService";
 
 // Components
 
+import { getGradeLabel } from "../utils/gradeUtils";
 import DashboardEmptyState from "../Components/DashboardStudent/EmptyState";
 
 // Hooks
@@ -291,7 +293,7 @@ export default function Courses() {
                       backdrop-blur-sm
                     "
                   >
-                    {course.grade}
+                    {getGradeLabel(course.grade)}
                   </div>
                 </div>
 

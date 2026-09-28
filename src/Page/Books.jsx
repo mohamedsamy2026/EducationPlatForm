@@ -7,20 +7,22 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import BookCard from "../Components/Books/BookCard";
 import { getBooks } from "../services/bookService";
+import grades from "../date/grades";
 
-const grades = [
-  "الكل",
-  "أولى إعدادي",
-  "ثانية إعدادي",
-  "ثالثة إعدادي",
-  "أولى ثانوي",
-  "ثانية ثانوي",
-  "ثالثة ثانوي",
+const gradeFilters = [
+   { 
+    id: "all",
+    label: "الكل" 
+    },
+    ...grades.map((grade) => ({
+    id: grade.id,
+    label: grade.label,
+  })),
 ];
 
 export default function Books() {
   const [books, setBooks] = useState(null);
-  const [selectedGrade, setSelectedGrade] = useState("الكل");
+  const [selectedGrade, setSelectedGrade] = useState("all");
 
   useEffect(() => {
     let cancelled = false;
@@ -49,7 +51,7 @@ export default function Books() {
   const filteredBooks = useMemo(() => {
     if (!books) return [];
 
-    if (selectedGrade === "الكل") {
+    if (selectedGrade === "all") {
       return books;
     }
 
@@ -64,7 +66,10 @@ export default function Books() {
     <div className="min-h-screen bg-midnight text-white">
       <Navbar />
 
-      <main dir="rtl" className="relative overflow-hidden bg-midnight px-4 pb-24 pt-32 sm:px-6 lg:px-8">
+      <main
+        dir="rtl"
+        className="relative overflow-hidden bg-midnight px-4 pb-24 pt-32 sm:px-6 lg:px-8"
+      >
         <div className="pointer-events-none absolute right-1/2 top-8 h-96 w-96 translate-x-1/2 rounded-full bg-gold/5 blur-[150px]" />
         <div className="pointer-events-none absolute bottom-10 left-0 h-80 w-80 rounded-full bg-[#10243a]/50 blur-[130px]" />
 
@@ -96,17 +101,17 @@ export default function Books() {
           </div>
 
           <div className="mb-12 flex flex-wrap justify-center gap-3">
-            {grades.map((grade) => {
+            {gradeFilters.map((grade) => {
               const isActive = grade === selectedGrade;
 
               return (
                 <button
-                  key={grade}
+                  key={grade.id}
                   type="button"
-                  onClick={() => setSelectedGrade(grade)}
+                  onClick={() => setSelectedGrade(grade.id)}
                   className={`cursor-pointer rounded-xl border px-4 py-2.5 text-sm font-bold transition-all duration-300 ${isActive ? "border-gold bg-gold text-midnight shadow-[0_10px_30px_rgba(212,175,55,0.16)]" : "border-white/10 bg-white/[0.03] text-white/60 hover:border-gold/30 hover:bg-gold/10 hover:text-gold"}`}
                 >
-                  {grade}
+                  {grade.label}
                 </button>
               );
             })}
@@ -120,7 +125,10 @@ export default function Books() {
             </div>
           ) : (
             <div className="mx-auto max-w-xl rounded-2xl border border-white/10 bg-[#0c1a2b] p-10 text-center shadow-[0_20px_60px_rgba(0,0,0,0.20)]">
-              <FontAwesomeIcon icon={faBookOpen} className="mb-5 text-3xl text-gold" />
+              <FontAwesomeIcon
+                icon={faBookOpen}
+                className="mb-5 text-3xl text-gold"
+              />
               <h2 className="mb-3 text-xl font-extrabold text-warm-white">
                 لا توجد كتب لهذا الصف حاليًا
               </h2>

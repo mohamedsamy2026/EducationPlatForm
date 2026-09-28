@@ -20,6 +20,9 @@ import {
 import SignupHome from "../assets/Background/signup.jpg";
 import Master from "../assets/Master/master.webp";
 
+// Data
+import grades from "../date/grades";
+
 // React Router
 import { Link } from "react-router-dom";
 
@@ -30,7 +33,6 @@ const INITIAL_FORM_DATA = {
   parentPhone: "",
   password: "",
   confirmPassword: "",
-  stage: "",
   grade: "",
   governorate: "",
 };
@@ -38,19 +40,6 @@ const INITIAL_FORM_DATA = {
 const EGYPTIAN_MOBILE_REGEX = /^01[0125][0-9]{8}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NAME_REGEX = /^[\u0600-\u06FFa-zA-Z\s]+$/;
-
-const PREPARATORY_GRADES = [
-  "first-preparatory",
-  "second-preparatory",
-  "third-preparatory",
-];
-
-const SECONDARY_GRADES = [
-  "first-secondary",
-  "second-secondary",
-  "third-secondary",
-];
-
 
 function validateSignupForm(formData) {
   const errors = {};
@@ -101,25 +90,10 @@ function validateSignupForm(formData) {
     errors.confirmPassword = "كلمتا المرور غير متطابقتين.";
   }
 
-  if (!formData.stage) {
-    errors.stage = "يرجى اختيار المرحلة الدراسية.";
-  }
-
   if (!formData.grade) {
     errors.grade = "يرجى اختيار الصف الدراسي.";
-  }
-
-  if (formData.stage && formData.grade) {
-    const isPreparatoryGrade = PREPARATORY_GRADES.includes(formData.grade);
-
-    const isSecondaryGrade = SECONDARY_GRADES.includes(formData.grade);
-
-    if (
-      (formData.stage === "preparatory" && !isPreparatoryGrade) ||
-      (formData.stage === "secondary" && !isSecondaryGrade)
-    ) {
-      errors.grade = "الصف الدراسي لا يتوافق مع المرحلة المختارة.";
-    }
+  } else if (!grades.some((grade) => grade.id === formData.grade)) {
+    errors.grade = "الصف الدراسي المختار غير صالح.";
   }
 
   if (!formData.governorate) {
@@ -133,7 +107,8 @@ export default function Signup() {
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
- const fields = [
+
+  const fields = [
     {
       name: "fullName",
       label: "الاسم الكامل",
@@ -187,31 +162,12 @@ export default function Signup() {
     },
   ];
 
-  const educationFields = [
-    {
-      name: "stage",
-      label: "المرحلة الدراسية",
-      icon: faGraduationCap,
-      options: [
-        { value: "", label: "اختر المرحلة" },
-        { value: "preparatory", label: "المرحلة الإعدادية" },
-        { value: "secondary", label: "المرحلة الثانوية" },
-      ],
-    },
-    {
-      name: "grade",
-      label: "الصف الدراسي",
-      icon: faSchool,
-      options: [
-        { value: "", label: "اختر الصف" },
-        { value: "first-preparatory", label: "الصف الأول الإعدادي" },
-        { value: "second-preparatory", label: "الصف الثاني الإعدادي" },
-        { value: "third-preparatory", label: "الصف الثالث الإعدادي" },
-        { value: "first-secondary", label: "الصف الأول الثانوي" },
-        { value: "second-secondary", label: "الصف الثاني الثانوي" },
-        { value: "third-secondary", label: "الصف الثالث الثانوي" },
-      ],
-    },
+  const gradeOptions = [
+    { value: "", label: "اختر الصف" },
+    ...grades.map((grade) => ({
+      value: grade.id,
+      label: grade.label,
+    })),
   ];
 
   const governorateOptions = [
@@ -301,6 +257,7 @@ export default function Signup() {
           aria-hidden="true"
           className="h-full w-full object-cover"
         />
+
         <div className="absolute inset-0 bg-[#040a12]/5" />
       </div>
 
@@ -549,64 +506,60 @@ export default function Signup() {
                     </h2>
 
                     <p className="mt-0.5 text-[11px] text-white/35">
-                      حدد مرحلتك وصفك الدراسي
+                      حدد صفك الدراسي
                     </p>
                   </div>
 
                   <div className="h-px flex-1 bg-white/5" />
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {educationFields.map((field) => (
-                    <div key={field.name}>
-                      <label
-                        htmlFor={field.name}
-                        className="mb-2 block text-xs font-semibold text-white/70"
+                <div className="flex justify-center">
+                  <div className="w-full">
+                    <label
+                      htmlFor="grade"
+                      className="mb-2 block text-xs font-semibold text-white/70"
+                    >
+                      الصف الدراسي
+                    </label>
+
+                    <div className="group relative">
+                      <FontAwesomeIcon
+                        icon={faSchool}
+                        className="absolute right-4 top-1/2 z-10 -translate-y-1/2 text-sm text-gold/70 transition-colors duration-300 group-focus-within:text-gold"
+                      />
+
+                      <select
+                        id="grade"
+                        name="grade"
+                        value={formData.grade}
+                        onChange={handleChange}
+                        aria-invalid={Boolean(errors.grade)}
+                        aria-describedby={
+                          errors.grade ? "grade-error" : undefined
+                        }
+                        className="h-[3.1rem] w-full cursor-pointer appearance-none rounded-xl border border-white/10 bg-[#040c16]/50 px-4 pr-11 text-sm text-warm-white outline-none transition-all duration-300 focus:border-gold/60 focus:bg-gold/[0.03] focus:shadow-[0_0_0_3px_rgba(212,175,55,0.06)]"
                       >
-                        {field.label}
-                      </label>
-
-                      <div className="group relative">
-                        <FontAwesomeIcon
-                          icon={field.icon}
-                          className="absolute right-4 top-1/2 z-10 -translate-y-1/2 text-sm text-gold/70 transition-colors duration-300 group-focus-within:text-gold"
-                        />
-
-                        <select
-                          id={field.name}
-                          name={field.name}
-                          value={formData[field.name]}
-                          onChange={handleChange}
-                          aria-invalid={Boolean(errors[field.name])}
-                          aria-describedby={
-                            errors[field.name]
-                              ? `${field.name}-error`
-                              : undefined
-                          }
-                          className="h-[3.1rem] w-full cursor-pointer appearance-none rounded-xl border border-white/10 bg-[#040c16]/50 px-4 pr-11 text-sm text-warm-white outline-none transition-all duration-300 focus:border-gold/60 focus:bg-gold/[0.03] focus:shadow-[0_0_0_3px_rgba(212,175,55,0.06)]"
-                        >
-                          {field.options.map((option) => (
-                            <option
-                              key={option.value}
-                              value={option.value}
-                              className="bg-[#061220] text-warm-white"
-                            >
-                              {option.label}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      {errors[field.name] && (
-                        <p
-                          id={`${field.name}-error`}
-                          className="mt-1.5 text-[11px] font-medium text-red-400"
-                        >
-                          {errors[field.name]}
-                        </p>
-                      )}
+                        {gradeOptions.map((option) => (
+                          <option
+                            key={option.value}
+                            value={option.value}
+                            className="bg-[#061220] text-warm-white"
+                          >
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
                     </div>
-                  ))}
+
+                    {errors.grade && (
+                      <p
+                        id="grade-error"
+                        className="mt-1.5 text-[11px] font-medium text-red-400"
+                      >
+                        {errors.grade}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
 

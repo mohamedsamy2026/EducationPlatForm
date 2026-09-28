@@ -8,7 +8,7 @@ const courses = [
     title: "الدراسات الاجتماعية للمرحلة الإعدادية",
     description:
       "شرح مبسط ومنظم يساعدك على فهم الدروس وربط الأحداث بطريقة سهلة وشيقة.",
-    grade: "ثانية إعدادي",
+    grade: "second-preparatory",
     duration: "كورس شامل",
     image: Master1,
     lessonsCount: "غير محدد",
@@ -33,7 +33,7 @@ const courses = [
     title: "التاريخ للمرحلة الثانوية",
     description:
       "شرح التاريخ بطريقة واضحة مع التركيز على أهم الأحداث والنقاط التي تحتاجها في دراستك.",
-    grade: "المرحلة الثانوية",
+    grade: "third-secondary",
     duration: "كورس شامل",
     image: Master2,
     lessonsCount: "غير محدد",
@@ -58,7 +58,7 @@ const courses = [
     title: "التاريخ بطريقة مختلفة",
     description:
       "محتوى تعليمي منظم يساعدك على تثبيت المعلومات وفهم التاريخ بصورة أعمق.",
-    grade: "ثانية ثانوي",
+    grade: "second-secondary",
     duration: "دروس متكاملة",
     image: Master3,
     lessonsCount: "غير محدد",

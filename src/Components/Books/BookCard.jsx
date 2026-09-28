@@ -4,6 +4,7 @@ import {
   faGraduationCap,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { getGradeLabel } from "../../utils/gradeUtils";
 
 function formatPrice(price) {
   if (price === null || price === undefined) {
@@ -15,9 +16,7 @@ function formatPrice(price) {
 
 export default function BookCard({ book }) {
   return (
-    <article
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a2b] shadow-[0_15px_45px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-2 hover:border-gold/35 hover:shadow-[0_25px_60px_rgba(0,0,0,0.30)]"
-    >
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a2b] shadow-[0_15px_45px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-2 hover:border-gold/35 hover:shadow-[0_25px_60px_rgba(0,0,0,0.30)]">
       <div className="relative aspect-[3/4] overflow-hidden bg-[#071321]">
         <img
           src={book.image}
@@ -28,7 +27,7 @@ export default function BookCard({ book }) {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071321]/75 via-[#071321]/10 to-transparent" />
 
         <div className="absolute bottom-4 right-4 rounded-lg border border-gold/30 bg-[#071321]/85 px-3 py-2 text-xs font-bold text-gold shadow-[0_8px_20px_rgba(0,0,0,0.25)] backdrop-blur-sm">
-          {book.grade}
+          {getGradeLabel(book.grade)}
         </div>
       </div>
 
@@ -53,7 +52,7 @@ export default function BookCard({ book }) {
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gold/10 text-gold">
               <FontAwesomeIcon icon={faGraduationCap} />
             </span>
-            <span>{book.grade}</span>
+            <span>{getGradeLabel(book.grade)}</span>
           </div>
 
           <div className="flex items-center gap-2 text-sm font-extrabold text-gold sm:text-base">

@@ -11,6 +11,7 @@ import { getBooksByStudentGrade } from "../../services/bookService";
 import { getBookPurchaseRequestsByStudentId } from "../../services/bookPurchaseService";
 
 import DashboardBookCard from "../../Components/DashboardStudent/DashboardBookCard";
+import { getGradeLabel } from "../../utils/gradeUtils";
 
 export default function DashboardBooks() {
   const [student, setStudent] = useState(null);
@@ -106,7 +107,7 @@ export default function DashboardBooks() {
 
           {student ? (
             <div className="flex items-center gap-3 text-sm text-white/50">
-              <span>{student.grade}</span>
+              <span>{getGradeLabel(student.grade)}</span>
 
               <span className="text-white/20">•</span>
 
