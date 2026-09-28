@@ -4,7 +4,7 @@ const students = [
     name: "محمد سامي",
     email: "mohamedeng747@gmail.com",
     phone: "01101497998",
-    grade: "second-preparatory",
+    grade: "second-secondary",
     governorate: "بني سويف",
   },
 ];
