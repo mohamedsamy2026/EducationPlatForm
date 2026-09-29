@@ -1,1751 +1,683 @@
-# 🗺️ خريطة مشروع منصة "الغازي في التاريخ"
+# الغازي في التاريخ — README المرجعي للمشروع
 
-## 🛠️ المرحلة 1: التجهيز وإعداد البيئة (Setup)
+> **إلى أي مساعد ذكاء اصطناعي يقرأ هذا الملف:** هذا هو المرجع الأساسي والوحيد للمشروع. اقرأه كاملًا قبل أي شيء. لو اختلف هذا الملف مع الكود الفعلي، **الكود الفعلي هو الأصح**، وبلّغ المستخدم بالاختلاف بدل ما تفترض. لا تكتب أي كود قبل ما تقرأ الملفات الحالية المرتبطة بالميزة.
 
-- تثبيت React (Vite) + JavaScript + Tailwind CSS.
-- تثبيت المكتبات الأساسية: React Router, Supabase Client, Cloudinary, React Icons.
-- إنشاء مشروع Supabase وتجهيز الـ Environment Variables (.env).
-- إعداد هيكل المجلدات (Components, Pages, Context, Assets).
-
-## 🎨 المرحلة 2: بناء الواجهات (UI/UX) - هنبدأها بالصور
-
-_(هنشتغل في كل صفحة لحد ما نخلصها بناءً على الصور اللي هتبعتها)_
-
-### أ. الواجهات العامة (Public):
-
-- الصفحة الرئيسية (Landing Page) + سكشن "عن المدرس".
-- صفحة تسجيل الدخول (Login).
-- صفحة إنشاء حساب جديد (Sign Up).
-
-### ب. واجهات الطالب (Student):
-
-1. داش بورد الطالب.
-2. صفحة الكورسات (كورساتي + المتاحة).
-3. صفحة تفاصيل الكورس.
-4. صفحة الدرس (مشغل الفيديو + القائمة الجانبية).
-5. صفحة الامتحانات.
-6. واجهة حل الامتحان.
-7. صفحة نتيجة الامتحان.
-8. صفحة الاشتراك والدفع (تعليمات فودافون كاش + إدخال الكود).
-9. صفحة حسابي (My Account).
-10. صفحة الدعم والمساعدة (Chat + FAQ).
-
-### ج. واجهات المدرس (Teacher Dashboard):
-
-11. داش بورد المدرس.
-12. إدارة الطلاب.
-13. إدارة الكورسات والمحتوى (وحدات، دروس، رفع ملفات).
-14. إدارة الامتحانات (إنشاء وتعديل).
-15. إدارة طلبات الاشتراك (تفعيل الأكواد).
-16. صندوق الرسائل (Inbox).
-
-## 🗄️ المرحلة 3: الباك إند وقاعدة البيانات (Supabase Backend)
-
-- **الجداول (Tables):** Users/Profiles, Courses, Units, Lessons, Exams, Questions, Results, Activation_Codes, Subscriptions, Messages.
-- **الأتمتة (Triggers):** إنشاء Profile تلقائي عند تسجيل حساب جديد.
-- **الأمان الصارم (RLS Policies):** تطبيق قواعد الحماية على كل الجداول (طالب يشوف بس، مدرس يعدل ويحذف).
-
-## 🔗 المرحلة 4: الربط والمنطق البرمجي (Integration)
-
-- إعداد Auth Context و Protected Routes (حماية الصفحات).
-- ربط تسجيل الدخول وإنشاء الحساب بـ Supabase.
-- برمجة منطق أكواد التفعيل (توليد، تحقق، تفعيل اشتراك).
-- ربط الداش بوردات بالبيانات الحقيقية (جلب الكورسات، الامتحانات، إلخ).
-- برمجة نظام الشات (إرسال واستقبال الرسائل).
-
-## 🛡️ المرحلة 5: الأمان والحماية (Security - الخط الأحمر)
-
-- **منع مشاركة الحسابات:** تفعيل نظام الجلسة الواحدة (Single Session).
-- **حماية الفيديوهات:** منع Right-Click، إخفاء روابط YouTube، والتحقق من الاشتراك قبل التحميل.
-- **Edge Functions:** نقل العمليات الحساسة (زي رفع الصور لـ Cloudinary) للسيرفر لحماية الـ API Keys.
-
-## 🚀 المرحلة 6: النشر والإطلاق (Deployment)
-
-- رفع المشروع على Cloudflare Pages.
-- ربط الدومين (المجاني أو المدفوع لاحقاً).
-- اختبار نهائي للأمان والسرعة على الموبايل والكمبيوتر.
-
-############################################################
-
-# الغازي في التاريخ — UI Design System Brief #The Promt
-
-Create a complete, high-end desktop UI design system and a full set of cohesive web interface screens for a modern Egyptian educational platform called **"الغازي في التاريخ"**, owned and taught by **Mohamed Khaled**.
-
-## ⚠️ IMPORTANT
-
-- This is a **VISUAL UI DESIGN TASK ONLY**.
-- Generate polished **UI DESIGN IMAGES**, not code.
-- Do **NOT** output HTML, CSS, React, JavaScript, wireframes, or programming instructions.
-- The final result must look like a real, production-ready premium educational website that a professional UI/UX designer could hand to a developer.
-
-## Brand References
-
-Use the attached images as brand references:
-
-- The attached images contain the official "الغازي في التاريخ" logo, photos of the teacher Mohamed Khaled, educational book/course artwork, and visual references related to the brand.
-- Use these uploaded images as references for the brand identity, teacher appearance, logo, books, and overall visual direction.
-- Do not redesign or replace the official logo.
-- Do not invent a different teacher identity.
-- Use the teacher's provided photos naturally and professionally where appropriate.
-
-## Platform Identity
-
-- **Brand name:** "الغازي في التاريخ"
-- **Teacher:** Mohamed Khaled
-- **Target audience:** Egyptian middle-school and high-school students.
-
-The platform teaches:
-
-- Social Studies for all Egyptian middle-school grades.
-- History for all Egyptian high-school grades.
-
-## Language
-
-- Arabic only.
-- Full RTL Arabic interface.
-- All navigation, buttons, labels, headings, cards, forms, menus, and interface text must be in natural Egyptian/Modern Standard Arabic suitable for an Egyptian educational platform.
-- Do not use English UI labels anywhere.
-
-## Design Direction
-
-Modern · Premium · Elegant · Professional · Educational · Historical · Contemporary · Sophisticated · Clean · Easy to understand.
-
-- Not childish.
-- Not cartoonish.
-- Not game-like.
-- Not visually crowded.
-- Not old-fashioned.
-- Do not make the website look like a museum website.
-- Instead, create a modern educational SaaS-style interface with a subtle historical identity.
-
-## Theme
-
-Dark mode only. The primary visual identity should be based on deep midnight navy and charcoal tones rather than pure black.
-
-**Suggested visual palette:**
-
-- Deep Midnight Navy for main backgrounds.
-- Dark charcoal/navy surfaces for cards and panels.
-- Refined antique gold / muted metallic gold as the primary accent.
-- Warm off-white / light gray for primary text.
-- Muted gray for secondary text.
-- Very subtle bronze/brown tones only where they support the historical atmosphere.
-
-Notes:
-
-- Use gold carefully and intentionally.
-- Gold should feel premium and historical, not excessive.
-- Do not make the entire interface gold.
-- Do not use bright neon colors.
-- Do not use excessive gradients.
-- Maintain excellent contrast and readability.
-
-## Visual Atmosphere
-
-Create a subtle cinematic historical atmosphere inspired by history, Egyptian heritage, old maps, manuscripts, ancient architecture, parchment textures, historical books, monuments, and archival materials.
-
-However, historical elements must remain subtle and elegant. They should support the UI instead of overpowering it.
-
-For backgrounds or visual elements where no supplied image exists, generate original high-quality historical visuals that match the brand identity. Examples include:
-
-- dark cinematic historical maps
-- subtle parchment textures
-- silhouettes of historical architecture
-- ancient Egyptian-inspired architectural details
-- historical books
-- elegant archival textures
-- atmospheric historical scenes
-- subtle golden particles or light
-- classical historical objects
-
-Do **NOT** use random generic stock photography.
-Do **NOT** overload screens with historical decorations.
-Do **NOT** make backgrounds visually noisy.
-Keep all important UI content highly readable.
-
-## Typography
-
-Use a modern premium Arabic font style with excellent readability. The typography must feel contemporary and professional.
-
-Use strong hierarchy between:
-
-- large headings
-- section headings
-- body text
-- labels
-- buttons
-- metadata
-
-Avoid decorative Arabic fonts that reduce usability.
-
-## UI Component Style
-
-- Elegant rounded cards.
-- Moderate corner radius.
-- Clean spacing.
-- Premium buttons.
-- Subtle borders.
-- Soft shadows.
-- Clear visual hierarchy.
-- Consistent iconography.
-- Modern Arabic RTL navigation.
-- Consistent components across every screen.
-- Minimal but refined micro-interaction visual cues.
-- Avoid excessive glassmorphism.
-- Avoid excessive neumorphism.
-- Avoid huge cards.
-- Avoid unnecessary widgets.
-
-The entire website must feel like **ONE coherent product**.
-
-## Desktop Format
-
-- Design all screens specifically for desktop computer displays.
-- Use a wide 16:9 desktop composition.
-- Target approximately 1920 × 1080 visual proportions.
-- Do not design mobile screens.
-- Do not create phone mockups.
-- Do not create tablet layouts.
-
-## Important UI Principle
-
-Keep the interface simple. Do not invent complicated features. Do not add unnecessary dashboards, analytics, tracking systems, notifications, achievement systems, search systems, favorites, certificates, parent accounts, or other features not specified below.
+آخر تحديث لهذا الملف: 29 سبتمبر 2026.
 
 ---
 
-## Screen 1 — Home / Landing Page
+## 1. فكرة المشروع
 
-Create a premium, visually impressive landing page for "الغازي في التاريخ".
+**«الغازي في التاريخ»** منصة تعليمية متخصصة في التاريخ والدراسات الاجتماعية (مصر). صاحب المنصة مدرس واحد يُسمّى في المشروع **«المستر» / Master**.
 
-The page should contain:
+**الطالب يقدر:**
 
-**1. Hero / Cover Section**
+- ينشئ حسابه ويختار صفه الدراسي.
+- يشترك في الكورسات.
+- يفتح الدروس ويشاهد الفيديوهات والمواد.
+- يدخل الامتحانات ويشوف النتائج.
+- يشتري الكتب والمذكرات.
+- يتواصل مع المدرس من Chat داخل الموقع.
 
-- Official "الغازي في التاريخ" logo.
-- Mohamed Khaled's provided photo used professionally.
-- Strong Arabic headline introducing the platform.
-- Short educational value proposition.
-- Primary CTA for starting/registering.
-- Secondary CTA for exploring courses.
-- Cinematic historical visual background.
-- Strong dark navy and antique gold identity.
-- Excellent visual hierarchy.
-- The hero should immediately communicate: history + education + premium quality.
+**المستر يدير كل ده من Master Dashboard:** الطلاب، الكورسات والدروس، الامتحانات والأسئلة، النتائج والتصحيح، الاشتراكات، طلبات شراء الكتب، الكتب، صلاحيات الدروس الخاصة، وإعدادات الحساب والدفع.
 
-**2. About Mohamed Khaled**
-
-A major and visually important section. Use the provided teacher photo. Show:
-
-- Mohamed Khaled
-- Brief professional educational introduction.
-- His teaching subjects and target grades.
-- A premium editorial composition combining the teacher image with subtle historical elements.
-
-This section should feel trustworthy and important, not like a generic "About us" block.
-
-**3. Subjects and Grades**
-
-Clearly communicate:
-
-- Social Studies — middle school
-- History — high school
-
-Show the relevant Egyptian school grades in a clean visual structure.
-
-**4. Courses**
-
-Show selected course cards using the provided book/course visual references where appropriate. Course cards should feel premium and educational. Do not overcrowd the section.
-
-**5. Why "الغازي في التاريخ"**
-
-A simple, elegant section communicating the main benefits of learning through the platform. Keep it concise and visual. Do not create complicated feature grids.
-
-**6. Student Testimonials**
-
-Create a premium testimonials section featuring:
-
-- أحمد أشرف
-- مروان محمد
-- محمد عماد
-
-Do not use real-person identification or imply that generated avatar portraits are the actual students. Use elegant abstract avatars, initials, or generic student avatar representations. Keep testimonials visually believable but concise.
-
-**7. Final CTA**
-
-A strong but clean call-to-action encouraging students to start learning.
-
-**8. Footer**
-
-A complete premium footer containing:
-
-- Official logo
-- Platform name
-- Important navigation links
-- WhatsApp
-- Facebook
-- Instagram
-- Contact information area
-- Copyright
-
-Maintain the same dark navy and gold identity.
+**أهم مبدأ للـ Master Dashboard:** لوحة **تشغيلية** يومية، واضحة، Premium وProfessional. مش منصة تحليلات (BI).
 
 ---
 
-## Screen 2 — Login
+## 2. الحالة الحالية (مهم جدًا)
 
-Create a clean Arabic RTL login screen.
+| الجزء | الحالة |
+|---|---|
+| الموقع العام (Home / Login / Signup / Courses / CourseDetails / Books) | موجود |
+| Student Dashboard كامل (Home, Courses, Books, Exams, Results, Profile, Support) | موجود |
+| ExamInterface + ExamResult + LessonPage + Subscription + BookPurchase + Chat | موجود |
+| Grade System موحّد | موجود |
+| Lesson Access (منح الصلاحيات في الـ data/service) | موجود |
+| Master Dashboard: التصميم والقرارات | **انتهى ومقفول** |
+| Master Dashboard: الكود | **لم يبدأ فعليًا** (فقط هيكل مبدئي، انظر تحت) |
+| Backend | **لا يوجد**. كل الداتا Mock في `src/data` |
+| Auth حقيقي / حماية Routes | **لا يوجد** (`getCurrentStudent()` بترجع أول طالب mock) |
 
-Include:
+### ما هو موجود من Master بالضبط
 
-- Official logo
-- Welcome message
-- Username/login field
-- Password field
-- Login button
-- Link to create a new account
-- Elegant historical visual treatment
-- Dark premium layout
-- Minimal distractions
-
-Do **NOT** include a forgot-password feature.
-
----
-
-## Screen 3 — Sign Up
-
-Create a modern Arabic RTL registration screen.
-
-Include:
-
-- Name
-- Login/contact information required by the platform
-- Password
-- Confirm password
-- Mandatory school grade selection
-
-**Grade options:**
-
-Middle School:
-
-- الصف الأول الإعدادي
-- الصف الثاني الإعدادي
-- الصف الثالث الإعدادي
-
-High School:
-
-- الصف الأول الثانوي
-- الصف الثاني الثانوي
-- الصف الثالث الثانوي
-
-Make grade selection clear and easy.
+- ملف واحد فقط: `src/Components/DashboardMaster/MasterLayout.jsx`. فيه Sidebar فاضي (عنوان فقط)، وTopbar بسيط، و`<Outlet />`.
+- في `App.jsx` الـ Route الحالي: `<Route path="/dashboard-master" element={<MasterLayout />} />` وهو **غير متداخل** (مفيهوش Child Routes). لازم يتحول لـ Nested Routes زي Student Dashboard.
+- **غير موجود لسه:** `MasterSidebar`، `MasterTopbar`، أي صفحة من صفحات Master، الـ Shared Components، ConfirmModal.
 
 ---
 
-## Screen 4 — Student Dashboard
+## 3. التقنيات (من `package.json` الفعلي)
 
-Create a clean and useful student dashboard.
+| التقنية | النسخة |
+|---|---|
+| React | 19 |
+| Vite | 8 |
+| JavaScript (بدون TypeScript) | — |
+| Tailwind CSS | v4 (عن طريق `@tailwindcss/vite`، والألوان في `@theme` داخل `src/index.css`، **مفيش** `tailwind.config.js`) |
+| React Router DOM | 7 |
+| Font Awesome | `@fortawesome/*` (react-fontawesome + free-solid + free-brands) |
+| Swiper | 14 (مستخدم في سكشن الكتب) |
+| uuid | 14 |
+| خط Cairo | `@fontsource/cairo` |
+| React Compiler | مفعّل (`babel-plugin-react-compiler`) |
+| ESLint | 10 |
 
-Do **NOT** overload the dashboard.
+**الـ Backend المخطط لاحقًا: Supabase.** الخطة إنهاء الـ Frontend بالكامل بـ Mock Data أولًا، وبعدها نستبدل طبقة `services/` بـ Supabase.
 
-Include only useful high-level information such as:
+> ملاحظة: كان هناك تصور قديم لـ Firebase / Cloud Functions / Cloudinary / React Icons. **مش مثبتين ومش مستخدمين** حاليًا. المعتمد Font Awesome وSupabase.
 
-- Greeting using a sample student name such as "محمد سامي"
-- Student grade
-- Enrolled courses
-- Simple course information
-- Available exams
-- A very small, subtle gamification/achievement element if it naturally fits
-- Simple access to support/chat
-- Clear navigation
+### تشغيل المشروع
 
-Do not create a complicated analytics dashboard. Do not create a dedicated progress system. Do not create an announcements system. Do not create excessive statistics. The dashboard should feel calm, organized, premium, and easy for a student to understand immediately.
-
----
-
-## Screen 5 — Courses
-
-Create the main courses browsing screen.
-
-The page should contain:
-
-- "كورساتي" for courses the student already has access to.
-- Available courses the student can subscribe to.
-- Courses organized logically according to the student's grade and subject.
-- Course cards using suitable book/course imagery.
-- Clear course title.
-- Grade.
-- Subject.
-- Subscription information.
-- Clean CTA.
-
-Do not create a search system. Do not add unnecessary filters. Keep the page simple.
+```bash
+npm install
+npm run dev      # يفتح المتصفح تلقائيًا
+npm run build
+npm run lint
+```
 
 ---
 
-## Screen 6 — Course Details
+## 4. الهوية البصرية
 
-Create a premium course details page.
+- **الاتجاه:** Premium تاريخي، داكن (Dark Navy) مع ذهبي (Gold). عربي RTL بالكامل.
+- **الخط:** Cairo (400 / 600 / 700 / 800).
+- **الألوان (معرّفة في `src/index.css` داخل `@theme`):**
 
-Include:
+| المتغير | القيمة |
+|---|---|
+| `midnight` | `#0a1628` |
+| `charcoal` | `#132238` |
+| `navy` | `#1a2d4a` |
+| `gold` | `#d4af37` |
+| `gold-light` | `#e5c158` |
+| `warm-white` | `#f5f0e8` |
+| `muted-gray` | `#a8a29e` |
+| `border-navy` | `#2a4a6b` |
+| `success` | `#10b981` |
+| `danger` | `#ef4444` |
 
-- Course cover artwork.
-- Course title.
-- Teacher name: محمد خالد.
-- Grade and subject.
-- Short course description.
-- Course content structure.
-- Units and lessons.
-- Videos.
-- PDF/material indicators.
-- Exams.
-- Subscription CTA.
-
-For a student who already has access, show a clear learning CTA instead of a purchase CTA.
-
----
-
-## Screen 7 — Lesson / Video
-
-Create the main lesson learning interface.
-
-Include:
-
-- Large YouTube video player area.
-- Lesson title.
-- Course/unit context.
-- RTL lesson navigation.
-- Lesson list/sidebar.
-- Available PDF/materials.
-- Previous and next lesson controls.
-
-Keep it simple. The video is the main focus. Do not add complicated video tracking features. Do not create restrictions around skipping video. Do not create excessive analytics.
+- كل صفحة/Layout بتبدأ بـ `dir="rtl"` وخلفية `bg-midnight text-white`.
+- **قرار Master (اتجاه مقترح ولم يُثبَّت رسميًا):** نفس الهوية العامة (ألوان، خطوط، Spacing، Buttons، Cards) مع طابع Admin أكثر تنظيمًا. **مش** نظام بصري منفصل.
 
 ---
 
-## Screen 8 — Exams
+## 5. شجرة الملفات (الحالية فعليًا)
 
-Create a clean student exams page.
-
-Show exam cards with:
-
-- Exam name.
-- Related course/unit.
-- Number of questions.
-- Score information where appropriate.
-- Exam status.
-- Start exam button.
-
-Only support:
-
-- Multiple choice.
-- True / False.
-
----
-
-## Screen 9 — Exam Interface
-
-Create a professional Arabic RTL exam interface.
-
-Include:
-
-- Question.
-- Multiple-choice answers.
-- True/False questions.
-- Question numbering.
-- Previous/next controls.
-- Clear submit button.
-- Simple clean structure.
-
-Avoid unnecessary complexity.
-
----
-
-## Screen 10 — Exam Result
-
-Create a clean result screen.
-
-Show:
-
-- Final score.
-- Percentage.
-- Correct answers.
-- Incorrect answers.
-- Clear result status.
-- Simple option to review answers if appropriate.
-
-Keep it visually simple and encouraging without making it look like a game.
-
----
-
-## Screen 11 — Subscription / Payment Flow
-
-Create the subscription experience for paid courses.
-
-**Subscription options:**
-
-- Monthly subscription.
-- Term subscription.
-
-The student selects a plan and sees simple Vodafone Cash payment instructions.
-
-Show:
-
-- Selected course.
-- Selected subscription type.
-- Price.
-- Vodafone Cash payment instructions.
-- "تم الدفع" / payment confirmation action.
-
-**After submitting payment**, show a clean confirmation state:
-
-- Payment request submitted.
-- Unique order/reference number such as #MK-2847.
-- Status: "في انتظار المراجعة".
-- WhatsApp contact action.
-
-The reference number is only a payment/order reference, **NOT** an access code.
-
----
-
-## Screen 12 — My Account
-
-Create one unified account page instead of separate profile and settings pages.
-
-Include:
-
-- Student profile information.
-- Name.
-- Profile image/avatar.
-- Grade.
-- Account information.
-- Password management.
-- Active subscriptions.
-- Subscription status.
-- Subscription dates.
-- Appearance/theme controls.
-
-Keep it organized with sections or tabs if necessary, but do not create a cluttered page.
-
----
-
-## Screen 13 — Support & Help
-
-Create a unified support center.
-
-Include:
-
-- FAQ / frequently asked questions.
-- Simple categories or expandable questions.
-- Contact options:
-  - WhatsApp
-  - Facebook
-  - Instagram
-- In-platform chat with the platform support/team.
-
-Do not create separate FAQ, contact, and chat pages. Keep everything simple and accessible.
-
----
-
-## Screen 14 — Teacher Dashboard
-
-Create a professional dashboard specifically for Mohamed Khaled.
-
-It should feel like a teacher/content-management dashboard, not a generic corporate admin dashboard.
-
-Include simple useful information:
-
-- Students.
-- Active subscriptions.
-- New subscription requests.
-- Courses.
-- Exams.
-- Recent useful activity.
-
-Avoid complicated analytics.
-
----
-
-## Screen 15 — Students Management
-
-Create a teacher-side student management interface.
-
-Show:
-
-- Student name.
-- Grade.
-- Enrolled courses.
-- Subscription status.
-- Basic student information.
-
-Allow the teacher to open a student's details in a clean interface.
-
-Do not create unnecessary analytics.
-
----
-
-## Screen 16 — Courses & Content Management
-
-Create one unified teacher interface for managing courses and course content.
-
-Mohamed Khaled should be able to manage:
-
-- Courses.
-- Units.
-- Lessons.
-- YouTube unlisted video links.
-- PDF files.
-- Lesson questions/materials.
-- Course organization.
-
-Keep the interface practical and easy for a teacher to use. Do not make it overly technical.
-
----
-
-## Screen 17 — Exams Management
-
-Create the teacher exam-management interface.
-
-Mohamed Khaled can:
-
-- Create an exam.
-- Choose the course/unit.
-- Add multiple-choice questions.
-- Add True/False questions.
-- Define the correct answer.
-- Set the score.
-- Edit exams.
-- Publish/hide exams.
-
-Make automatic grading visually understandable.
-
----
-
-## Screen 18 — Subscription Requests
-
-Create the teacher interface for reviewing payment/subscription requests.
-
-Show request cards or a clean table containing:
-
-- Student name.
-- Grade.
-- Course.
-- Monthly or term subscription.
-- Amount.
-- Request status.
-
-Each pending request should have clear actions:
-
-- قبول وتفعيل
-- رفض
-
-When the teacher accepts the payment, the student's subscription becomes active and the course becomes accessible.
-
-Keep this interface extremely clear and easy to operate.
-
----
-
-## Teacher Messages / Inbox
-
-Do not create a completely separate complex messaging product.
-
-Include a simple messages/inbox area within the teacher dashboard/navigation where Mohamed Khaled can view and respond to student support conversations.
-
-For the student, chat access should remain part of the Support & Help experience.
-
----
-
-## Global Navigation
-
-Create a consistent RTL navigation system across the platform.
-
-**Student navigation** should remain simple and include the most important areas such as:
-
-- الرئيسية
-- الكورسات
-- الامتحانات
-- حسابي
-- الدعم
-
-**Teacher navigation** should include:
-
-- لوحة التحكم
-- الطلاب
-- الكورسات والمحتوى
-- الامتحانات
-- طلبات الاشتراك
-- الرسائل
-
-Use the official logo appropriately.
-
----
-
-## Visual Consistency
-
-All 18 screens must clearly look like parts of the same product.
-
-Maintain:
-
-- Same color system.
-- Same typography.
-- Same card language.
-- Same button language.
-- Same spacing system.
-- Same icon style.
-- Same navigation.
-- Same RTL behavior.
-- Same historical visual atmosphere.
-- Same premium dark navy + antique gold identity.
-
-Do not randomly change styles between screens.
-
----
-
-## Image Generation Rules
-
-Use the supplied teacher and brand images wherever they are relevant.
-
-For missing visual assets, generate original visuals that match the identity.
-
-Historical backgrounds should be:
-
-- cinematic
-- elegant
-- subtle
-- premium
-- educational
-- historically inspired
-- visually coherent with the attached brand images
-
-Examples: dark historical maps, old manuscripts, archival paper, historical architecture, ancient Egyptian-inspired details, books, monuments, subtle golden light, atmospheric historical scenes.
-
-Do not use cartoon characters. Do not use childish illustrations. Do not use generic colorful education stock imagery. Do not fill every section with an image. Use imagery strategically.
-
----
-
-## Final Output
-
-Present the complete design as a cohesive collection of high-fidelity desktop UI screens.
-
-Each screen should be visually distinct and readable while clearly belonging to the same design system.
-
-**Prioritize:**
-
-1. Beautiful visual hierarchy.
-2. Professional UX.
-3. Strong Arabic RTL layout.
-4. Premium historical identity.
-5. Simplicity.
-6. Realistic educational content.
-7. Consistency between all screens.
-8. Clean, production-ready UI appearance.
-
-The result must look like a real premium Egyptian educational platform called **"الغازي في التاريخ"**, not a generic AI-generated website.
-
-**\***Folder Tree**\***
-
+```text
 master/
-├── public/
-│ ├── Imgs-plan/
-│ │ ├── Plan.png
-│ │ ├── website 2.png
-│ │ └── website.png
-│ └── Imgs-websit/
-│ └── favacon.png
+├── public/   # ملفات ثابتة
+│   ├── Imgs-plan/   # صور تخطيط التصميم (مرجع فقط)
+│   │   ├── Plan.png
+│   │   ├── website 2.png
+│   │   └── website.png
+│   └── Imgs-websit/   # أيقونة الموقع
+│       └── favacon.png
 ├── src/
-│ ├── assets/
-│ │ ├── Background/
-│ │ │ ├── 1.jpg
-│ │ │ ├── coureses.webp
-│ │ │ ├── dashbord student 1.webp
-│ │ │ ├── dashbord student 2.webp
-│ │ │ ├── dashbord student home.webp
-│ │ │ ├── hero-bg.webp
-│ │ │ ├── Login.webp
-│ │ │ ├── Result Exam.jpg
-│ │ │ └── signup.jpg
-│ │ ├── Books/
-│ │ │ ├── book2.jpeg
-│ │ │ ├── book3.jpeg
-│ │ │ ├── book4 .jpeg
-│ │ │ └── book4 (1).jpeg
-│ │ ├── Logo/
-│ │ │ ├── logo.jpeg
-│ │ │ └── transparent-Logo.png
-│ │ └── Master/
-│ │ ├── master 1.webp
-│ │ ├── master 2.webp
-│ │ ├── master 3.webp
-│ │ ├── master no transparent.jpeg
-│ │ ├── Master transparent.png
-│ │ ├── master-home.png
-│ │ └── master.webp
-│ ├── Components/
-│ │ ├── Chat/
-│ │ │ └── ChatMessage.jsx
-│ │ ├── DashboardStudent/
-│ │ │ ├── DashboardExamCard.jsx
-│ │ │ ├── DashboardLayout.jsx
-│ │ │ ├── DashboardResultCard.jsx
-│ │ │ ├── DashboardSidebar.jsx
-│ │ │ └── EmptyState.jsx
-│ │ ├── AboutPlatform.jsx
-│ │ ├── Chat.jsx
-│ │ ├── CourseDetails.jsx
-│ │ ├── Courses.jsx
-│ │ ├── ExamResult.jsx
-│ │ ├── Footer.jsx
-│ │ ├── HeroSection.jsx
-│ │ ├── Login.jsx
-│ │ ├── Navbar.jsx
-│ │ ├── ScrollToTop.jsx
-│ │ ├── Signup.jsx
-│ │ └── StudentOpinions.jsx
-│ ├── date/
-│ │ ├── chatMessages.jsx
-│ │ ├── courses.jsx
-│ │ ├── enrollments.jsx
-│ │ ├── exams.jsx
-│ │ ├── lessons.jsx
-│ │ ├── results.jsx
-│ │ └── students.jsx
-│ ├── Page/
-│ │ ├── DashboardStudent/
-│ │ │ ├── DashboardCourses.jsx
-│ │ │ ├── DashboardExams.jsx
-│ │ │ ├── DashboardHome.jsx
-│ │ │ ├── DashboardProfile.jsx
-│ │ │ ├── DashboardResults.jsx
-│ │ │ └── DashboardSupport.jsx
-│ │ └── Home.jsx
-│ ├── services/
-│ │ └── chatService.jsx
-│ ├── App.css
-│ ├── App.jsx
-│ ├── index.css
-│ └── main.jsx
+│   ├── assets/   # الصور
+│   │   ├── Background/   # خلفيات الصفحات
+│   │   │   ├── 1.jpg
+│   │   │   ├── bg1.png
+│   │   │   ├── bg2.webp
+│   │   │   ├── coureses.webp
+│   │   │   ├── dashbord student 1.webp
+│   │   │   ├── dashbord student 2.webp
+│   │   │   ├── dashbord student home.webp
+│   │   │   ├── hero-bg.webp
+│   │   │   ├── Login.webp
+│   │   │   ├── Result Exam.jpg
+│   │   │   └── signup.jpg
+│   │   ├── Books/   # أغلفة الكتب
+│   │   │   ├── book1.jpeg
+│   │   │   ├── book2.jpeg
+│   │   │   ├── book3.webp
+│   │   │   ├── book4.jpeg
+│   │   │   ├── book5.jpeg
+│   │   │   └── book6.webp
+│   │   ├── Logo/   # اللوجو
+│   │   │   ├── logo.jpeg
+│   │   │   └── transparent-Logo.png
+│   │   └── Master/   # صور هوية المستر (تُستخدم في Hero وغيره)
+│   │       ├── master 1.webp
+│   │       ├── master 2.webp
+│   │       ├── master 3.webp
+│   │       ├── master no transparent.jpeg
+│   │       ├── Master transparent.png
+│   │       ├── master-home.png
+│   │       └── master.webp
+│   ├── Components/   # مكونات مشتركة وصفحات عامة
+│   │   ├── Books/   # أغلفة الكتب
+│   │   │   ├── BookCard.jsx
+│   │   │   └── BooksSection.jsx
+│   │   ├── Chat/   # مكونات الشات
+│   │   │   └── ChatMessage.jsx
+│   │   ├── DashboardMaster/   # داشبورد المستر (لسه في البداية)
+│   │   │   └── MasterLayout.jsx   # هيكل مبدئي فقط (Sidebar فاضي + Topbar بسيط + Outlet)
+│   │   ├── DashboardStudent/   # مكونات داشبورد الطالب
+│   │   │   ├── DashboardBookCard.jsx
+│   │   │   ├── DashboardExamCard.jsx
+│   │   │   ├── DashboardLayout.jsx   # Layout الطالب (Navbar + Sidebar + Chat + Footer)
+│   │   │   ├── DashboardResultCard.jsx
+│   │   │   ├── DashboardSidebar.jsx   # Sidebar الطالب
+│   │   │   ├── EmptyState.jsx
+│   │   │   ├── ExamQuestionCard.jsx
+│   │   │   ├── ExamQuestionNavigator.jsx
+│   │   │   └── ExamTimer.jsx
+│   │   ├── Lesson/   # مكونات صفحة الدرس
+│   │   │   ├── LessonContentList.jsx
+│   │   │   ├── LessonMaterials.jsx
+│   │   │   └── LessonVideo.jsx
+│   │   ├── AboutPlatform.jsx
+│   │   ├── Chat.jsx   # الشات العائم داخل الموقع
+│   │   ├── CourseDetails.jsx
+│   │   ├── Courses.jsx
+│   │   ├── ExamResult.jsx
+│   │   ├── Footer.jsx
+│   │   ├── HeroSection.jsx
+│   │   ├── Login.jsx
+│   │   ├── Navbar.jsx
+│   │   ├── ScrollToTop.jsx
+│   │   ├── Signup.jsx
+│   │   └── StudentOpinions.jsx
+│   ├── data/   # Mock Data (بديل مؤقت لقاعدة البيانات)
+│   │   ├── bookPurchaseRequests.jsx   # طلبات شراء الكتب (فاضية/معلّقة)
+│   │   ├── books.jsx
+│   │   ├── chatMessages.jsx
+│   │   ├── courses.jsx
+│   │   ├── enrollments.jsx   # اشتراكات الطلاب في الكورسات
+│   │   ├── exams.jsx
+│   │   ├── grades.jsx   # مصدر الصفوف الوحيد (IDs + Labels)
+│   │   ├── lessonAccess.jsx   # صلاحيات الدروس الخاصة
+│   │   ├── lessons.jsx
+│   │   ├── paymentMethods.jsx   # Vodafone Cash
+│   │   ├── questions.jsx   # الأسئلة (multiple-choice / true-false / essay)
+│   │   ├── results.jsx
+│   │   ├── students.jsx
+│   │   └── subscriptionRequests.jsx   # طلبات الاشتراك (فاضية حاليًا)
+│   ├── Page/   # صفحات الموقع
+│   │   ├── DashboardStudent/   # مكونات داشبورد الطالب
+│   │   │   ├── DashboardBooks.jsx
+│   │   │   ├── DashboardCourses.jsx
+│   │   │   ├── DashboardExams.jsx
+│   │   │   ├── DashboardHome.jsx
+│   │   │   ├── DashboardProfile.jsx
+│   │   │   ├── DashboardResults.jsx
+│   │   │   ├── DashboardSupport.jsx
+│   │   │   ├── ExamInterface.jsx   # واجهة حل الامتحان
+│   │   │   └── LessonPage.jsx   # صفحة الدرس
+│   │   ├── BookPurchase.jsx
+│   │   ├── Books.jsx
+│   │   ├── Home.jsx
+│   │   └── Subscription.jsx   # صفحة الاشتراك والدفع
+│   ├── services/   # طبقة الخدمات (async) — هي اللي هتتبدل بـ Supabase
+│   │   ├── bookPurchaseService.jsx
+│   │   ├── bookService.jsx
+│   │   ├── chatService.jsx
+│   │   ├── courseService.jsx
+│   │   ├── enrollmentService.jsx
+│   │   ├── examService.jsx
+│   │   ├── lessonAccessService.jsx
+│   │   ├── lessonService.jsx
+│   │   ├── paymentMethodService.jsx
+│   │   ├── questionService.jsx
+│   │   ├── resultService.jsx
+│   │   ├── studentService.jsx
+│   │   └── subscriptionService.jsx
+│   ├── utils/   # دوال مساعدة
+│   │   └── gradeUtils.jsx   # getGradeLabel(gradeId)
+│   ├── App.css
+│   ├── App.jsx   # كل الـ Routes
+│   ├── index.css   # Tailwind v4 + الألوان (@theme) + خط Cairo
+│   └── main.jsx   # نقطة بداية التطبيق
 ├── .gitignore
 ├── eslint.config.js
 ├── index.html
 ├── package-lock.json
 ├── package.json
-├── README.md
-└── vite.config.js
+├── README.md   # هذا الملف
+└── vite.config.js   # React + Tailwind v4 + React Compiler
+```
 
-**حاجات منشتركه**
-أولًا
-نخلص تصور كل صفحات الـMaster Dashboard
-↓
-ثانيًا
-نحدد وظيفة كل صفحة بالتفصيل
-↓
-ثالثًا
-نستخرج الحاجات المشتركة بين الصفحات
-↓
-رابعًا
-نبني Layout + Sidebar + Topbar + Components المشتركة
-↓
-خامسًا
-نبدأ تنفيذ الصفحات
-
-**SideBar Master DashBoard**
-الرئيسية
-
-الطلاب
-
-الكورسات والمحتوى
-
-الامتحانات والأسئلة
-
-النتائج
-
-الاشتراكات وطلبات الاشتراك
-
-طلبات شراء الكتب
-
-الكتب والمذكرات
-
-صلاحيات الدروس
-
-الإعدادات
+> ملحوظات على الشجرة:
+> - مجلد الداتا اسمه `src/data` (مش `src/date`).
+> - `gradeUtils` امتداده `.jsx`.
+> - مجلد Master Assets موجود: `src/assets/Master/` ولازم يُستغل في هوية Master.
 
 ---
 
-تسجيل الخروج
-**SideBar Master DashBoard End**
+## 6. الـ Routes
 
-**الصفحه الرئيسية تبدأ**
-┌─────────────────────────────────────────────┐
-│ HERO تاريخي │
-│ │
-│ مرحبًا بك يا مستر │
-│ لوحة التحكم الرئيسية لمنصة الغازي │
-│ │
-│ [ Telegram ] │
-└─────────────────────────────────────────────┘
+### الحالية في `App.jsx`
 
-┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐
-│ عدد الطلاب │ │ عدد الكورسات│ │الاشتراكات │ │ تحتاج │
-│ │ │ │ │ النشطة │ │ مراجعة │
-└────────────┘ └────────────┘ └────────────┘ └────────────┘
+| المسار | الصفحة |
+|---|---|
+| `/` | Home |
+| `/signup` | Signup |
+| `/login` | Login |
+| `/courses/:courseId` | CourseDetails |
+| `/courses/:courseId/lessons/:lessonId` | LessonPage |
+| `/books` | Books |
+| `/books/:bookId/purchase` | BookPurchase |
+| `/subscription/:courseId/:planId` | Subscription |
+| `/exam-result/:examId` | ExamResult |
+| `/dashboard-student/exams/:examId` | ExamInterface (خارج الـ Layout) |
+| `/dashboard-student` (Nested داخل `DashboardLayout`) | index=Home، `courses`, `books`, `exams`, `results`, `profile`, `support` |
+| `/dashboard-master` | `MasterLayout` (غير متداخل حاليًا) |
 
-              الأشياء التي تحتاج إجراء
+### المخططة لـ Master (Nested Routes داخل `MasterLayout`)
 
-┌────────────────┐ ┌────────────────┐ ┌────────────────┐
-│ طلبات الاشتراك │ │ طلبات الكتب │ │ امتحانات │
-│ الجديدة │ │ الجديدة │ │ تحتاج تصحيح │
-│ [مراجعة] │ │ [مراجعة] │ │ [بدء التصحيح] │
-└────────────────┘ └────────────────┘ └────────────────┘
+```text
+/dashboard-master              الرئيسية
+/dashboard-master/students     الطلاب  (+ تفاصيل الطالب)
+/dashboard-master/courses      الكورسات والمحتوى
+/dashboard-master/exams        الامتحانات والأسئلة
+/dashboard-master/results      النتائج
+/dashboard-master/subscriptions   الاشتراكات وطلبات الاشتراك
+/dashboard-master/book-requests   طلبات شراء الكتب
+/dashboard-master/books        الكتب والمذكرات
+/dashboard-master/lesson-access   صلاحيات الدروس
+/dashboard-master/settings     الإعدادات
+```
 
-                 آخر 3 نتائج
+> أسماء المسارات الفرعية أعلاه **مقترحة** وقابلة للتعديل عند التنفيذ، أما `/dashboard-master` نفسه فمعتمد. Master Dashboard **مستقل تمامًا** عن Student Dashboard.
 
-┌─────────────────────────────────────────────┐
-│ نتيجة 1 │
-│ نتيجة 2 │
-│ نتيجة 3 │
-└─────────────────────────────────────────────┘
+---
 
-                 اختصارات سريعة
+## 7. طبقة البيانات (Mock Data + Services)
 
-[إضافة كورس] [إضافة امتحان] [إضافة كتاب] [الطلاب]
+**النمط المتبع:** كل ملف داتا في `src/data/`، وكل وصول ليه من خلال `src/services/` بدوال `async` (عشان الانتقال لـ Supabase يبقى بتبديل الـ services فقط). الـ IDs بتتقارن دائمًا بـ `String(a) === String(b)`.
 
-                 آخر النشاطات
+### ملفات الداتا وشكلها الحالي
 
-• نشاط 1
-• نشاط 2
-• نشاط 3
-• نشاط 4
-• نشاط 5
-**الصفحه الرئيسية تنتهي**
+| الملف | الحقول الحالية |
+|---|---|
+| `students.jsx` | `id, name, email, phone, grade, governorate` |
+| `courses.jsx` | `id, title, description, grade, duration, image, lessonsCount, subscriptionPlans[{id,name,price,currency}]` |
+| `lessons.jsx` | Units: `{id, courseId, title, lessons[{id,title,duration,description}]}` |
+| `exams.jsx` | `id, unitId (أو null), title, courseId, sectionTitle, durationMinutes, totalQuestions, startsAt, endsAt` |
+| `questions.jsx` | `id, examId, type, question, score, order` + حسب النوع (تحت) |
+| `results.jsx` | `id, studentId, examId, score, total, submittedAt` (وأحيانًا `title`) |
+| `enrollments.jsx` | `id, studentId, courseId, status ("active")` |
+| `subscriptionRequests.jsx` | مصفوفة فاضية. الطلب: `id, referenceNumber (MK-…), studentId, courseId, accessType, planId, lessonId, amount, transactionId, paymentMethodId, status ("pending"), createdAt` |
+| `books.jsx` | `id, title, grade, category, description, price, image` |
+| `bookPurchaseRequests.jsx` | فاضية. الطلب: `id, referenceNumber, studentId, bookId, amount, transactionId, paymentMethodId, status ("pending"), createdAt` |
+| `lessonAccess.jsx` | `id, studentId, courseId, lessonId, status ("active"), createdAt` |
+| `paymentMethods.jsx` | `{id:"vodafone-cash", name:"Vodafone Cash", accountNumber:"01115083459", supportWhatsApp:"01006254308", isActive:true}` |
+| `chatMessages.jsx` | `id, conversationId, senderRole, type (text/image/audio), text, createdAt` |
+| `grades.jsx` | الصفوف (تحت) |
 
-**الصفحه الطلاب تبدأ**
-[ عنوان الصفحة ]
+### أنواع الأسئلة الفعلية (لا تخترع أنواع جديدة)
 
-[ 3 كروت معلومات ]
+```js
+// اختيار من متعدد
+{ type: "multiple-choice", question, options: [..4 خيارات..], correctAnswer: 1 /* index */, score, order }
+// صح/خطأ
+{ type: "true-false", question, correctAnswer: true /* boolean */, score, order }
+// مقالي (بدون correctAnswer، يحتاج تصحيح يدوي)
+{ type: "essay", question, score, order }
+```
 
-[ البحث + الفلاتر ]
+### الـ Services الموجودة
 
-[ جدول الطلاب ]
+| الملف | الدوال |
+|---|---|
+| `studentService` | `getCurrentStudent` |
+| `courseService` | `getCourses`, `getCourseById` |
+| `lessonService` | `getUnitsByCourseId` |
+| `enrollmentService` | `getEnrollmentsByStudentId`, `isStudentEnrolled` |
+| `examService` | `getExamsByCourseId`, `getExamById` |
+| `questionService` | `getQuestionsByExamId` |
+| `resultService` | `getResultsByStudentId`, `getResultByExamId` |
+| `subscriptionService` | `getSubscriptionRequestsByStudentId`, `getPendingSubscriptionRequest`, `createSubscriptionRequest` |
+| `bookService` | `getBooks`, `getBookById`, `getBooksByStudentGrade` |
+| `bookPurchaseService` | `getPendingBookPurchaseRequest`, `getBookPurchaseRequestsByStudentId`, `createBookPurchaseRequest` |
+| `lessonAccessService` | `getLessonAccessByStudentId`, `getLessonAccessByStudentAndCourseId`, `hasLessonAccess`, `grantLessonAccess` |
+| `paymentMethodService` | `getActivePaymentMethods`, `getPaymentMethodById` |
+| `chatService` | `getMessages`, `sendMessage` |
 
-[ Pagination ]
+> Master هيحتاج services جديدة (قراءة الكل، تعديل، حذف، قبول طلبات…). تتبنى **مع كل ميزة** وليس دفعة واحدة.
 
-والضغط على "عرض التفاصيل"
-↓
-[ ملف الطالب الكامل ]
-**الصفحه الطلاب تنتهي**
+---
 
-**الكورسات والمحتوى يبدأ**
+## 8. نظام الصفوف الدراسية
+
+مصدره الوحيد `src/data/grades.jsx`:
+
+```js
+const grades = [
+  { id: "first-preparatory",  label: "أولى إعدادي",  stage: "المرحلة الإعدادية" },
+  { id: "second-preparatory", label: "ثانية إعدادي", stage: "المرحلة الإعدادية" },
+  { id: "third-preparatory",  label: "ثالثة إعدادي", stage: "المرحلة الإعدادية" },
+  { id: "first-secondary",    label: "أولى ثانوي",   stage: "المرحلة الثانوية" },
+  { id: "second-secondary",   label: "ثانية ثانوي",  stage: "المرحلة الثانوية" },
+  { id: "third-secondary",    label: "ثالثة ثانوي",  stage: "المرحلة الثانوية" },
+];
+export default grades;
+```
+
+- الـ **logic يعتمد على الـ IDs** دائمًا، والـ **Label للعرض فقط**. ممنوع استخدام الأسماء العربية في أي منطق.
+- `stage` موجود كـ Metadata في تعريف الصفوف فقط، **ولا يُخزَّن** داخل الطالب أو الكتاب أو الكورس.
+- العرض: `getGradeLabel(gradeId)` من `src/utils/gradeUtils.jsx`.
+- Signup بيعرض الصفوف ديناميكيًا من `grades` ويخزن الـ Grade ID.
+
+**ربط الكورسات بالصفوف:**
+
+| الكورس | الصف |
+|---|---|
+| `social-studies-preparatory` | `second-preparatory` |
+| `history-secondary` | `third-secondary` |
+| `history-different-way` | `second-secondary` |
+
+---
+
+## 9. قواعد نظام الطالب (موجودة وبتأثر على Master)
+
+### الاشتراك في الكورس
+
+`غير مشترك` ← «اشترك في الكورس» | `قيد المراجعة` ← «الاشتراك قيد المراجعة» | `مقبول` ← «متابعة الكورس»
+
+### شراء الكتاب
+
+`لا يوجد طلب` ← «شراء الكتاب» | `قيد المراجعة` ← «الطلب قيد المراجعة» | `مقبول` ← «تم شراء الكتاب»
+(حالة «مرفوض» **اتلغت**، انظر القسم 12.)
+
+### الدفع
+
+- المستر واحد. طريقة الدفع الحالية **Vodafone Cash** فقط. **لا Payment Gateway.**
+- الطالب يحوّل، ثم يدخل **رقم العملية (`transactionId`)** ويرسل الطلب. المستر يراجع ويقبل.
+- **لا رفع صورة إثبات دفع** (اتشالت). المراجعة بتعتمد على: طريقة الدفع + رقم التحويل + المبلغ + تاريخ الطلب.
+- طرق الدفع بتتعدّل من **Settings** (مش صفحة مستقلة في الـ Sidebar).
+
+### صلاحيات الدروس (Lesson Access)
+
+- الفكرة الأصلية «اشتراك بالحصة» اترفضت (معقدة). البديل: **صلاحية خاصة لدرس** يمنحها المستر.
+- الطالب يفتح الدرس لو: عنده اشتراك نشط في الكورس، **أو** عنده صلاحية خاصة للدرس.
+- **مش شرط** يكون مشترك في الكورس لكي ياخد صلاحية درس.
+- الصلاحية = `طالب + كورس + درس`. المستر يقدر يمنح درسًا واحدًا أو عدة دروس في العملية الواحدة.
+- بدون مدة، بدون سعر، بدون Payment لكل درس، **ممنوع Duplicate**.
+- **سحب الصلاحية:** لو الطالب غير مشترك ← يفقد الوصول. لو مشترك ← يفضل يفتح الدرس لأن اشتراكه بيسمح.
+
+### معرّفات الكتب والطلبات
+
+| الشيء | المعرّف | مثال |
+|---|---|---|
+| الكتاب | ID من السيرفر | `BOOK-1025` |
+| طلب شراء الكتاب | Request Number من السيرفر | `BK-2051` |
+| التحويل | `transactionId` اللي كتبه الطالب | — |
+
+مفيش Reference داخلي ثالث. (في الـ Mock حاليًا الكتب `book-1…6` والطلبات `MK-…`، انظر القسم 13.)
+
+### الكتب
+
+- **لا سنة دراسية (`academicYear`) للكتب.** لو كتاب قديم انتهى، المستر يخليه «غير متاح للشراء» ويضيف كتابًا جديدًا.
+- حالة الكتاب: **متاح للشراء / غير متاح للشراء.** لو غير متاح، الطالب **لا يقدر يعمل طلب جديد**، لكن اللي اشتراه قبل كده **يفضل عنده** ومشترياته مش بتتلغي.
+- الكتاب: `ID، اسم، وصف، grade، price، cover، availability`. لا مخزون، لا شحن، لا كوبونات، لا سلة.
+
+---
+
+## 10. Master Dashboard: القرارات العامة
+
+### ترتيب العمل المتفق عليه
+
+```text
+1. تصور كل صفحات Master        ← انتهى
+2. وظيفة كل صفحة بالتفصيل      ← انتهى
+3. تحديد الحاجات المشتركة       ← اتحدد مفهومها
+4. Layout + Sidebar + Topbar + Shared Components  ← الخطوة الجاية
+5. تنفيذ الصفحات واحدة واحدة
+```
+
+### الـ Layout
+
+- Sidebar ثابت على Desktop، وHamburger على الشاشات الصغيرة.
+- Topbar بسيط. **لا يوجد Footer** في Master.
+- Layout مستقل عن `DashboardLayout` الخاص بالطالب (الطالب فيه Navbar + Footer + Chat، وMaster لا).
+- Hero تاريخي **في Home فقط**. صفحات الجداول الثقيلة بدون Hero.
+- زر **Telegram** في الـ Topbar/Home.
+- مفيش Charts/Analytics إلا لو لها قيمة تشغيلية واضحة.
+
+### Sidebar Master النهائي (بالترتيب)
+
+```text
+الرئيسية
+الطلاب
 الكورسات والمحتوى
-│
-├── بحث + فلاتر
-├── بطاقات الكورسات
-│
-├── إدارة المحتوى
-│ ├── بيانات الكورس
-│ ├── الوحدات
-│ ├── الدروس
-│ ├── ترتيب بسيط ↑ ↓
-│ └── مواد الدروس
-│
-├── إضافة امتحان
-├── تعديل
-├── حذف محدد
-└── حذف الكل
-**الكورسات والمحتوى ينتهي**
-
-**الامتحانات والأسئلة يبدأ**
-┌─────────────────────────────────────────────────────────────┐
-│ الامتحانات والأسئلة │
-│ إدارة الامتحانات والأسئلة ومواعيدها ودرجاتها │
-│ │
-│ [ + إضافة امتحان ] │
-└─────────────────────────────────────────────────────────────┘
-
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│ إجمالي │ │ الامتحانات │ │ الامتحانات │ │ تحتاج │
-│ الامتحانات │ │ المنشورة │ │ المنتهية │ │ تصحيحًا │
-│ │ │ │ │ │ │ │
-│ 25 │ │ 18 │ │ 5 │ │ 3 │
-└──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘
-
-┌─────────────────────────────────────────────────────────────┐
-│ البحث: [ ابحث عن امتحان... ] │
-│ │
-│ الكورس [ الكل ▼ ] الصف [ الكل ▼ ] النشر [ الكل ▼ ] │
-└─────────────────────────────────────────────────────────────┘
-
-                         الامتحانات
-
-┌───────────────────────┐ ┌───────────────────────┐
-│ امتحان الوحدة الأولى │ │ امتحان الوحدة الثانية │
-│ │ │ │
-│ الكورس: الجغرافيا │ │ الكورس: التاريخ │
-│ الصف: ثالثة ثانوي │ │ الصف: ثالثة ثانوي │
-│ │ │ │
-│ 20 سؤال │ │ 25 سؤال │
-│ 40 درجة │ │ 50 درجة │
-│ 30 دقيقة │ │ 45 دقيقة │
-│ │ │ │
-│ منشور │ │ غير منشور │
-│ │ │ │
-│ [إدارة الامتحان] │ │ [إدارة الامتحان] │
-│ [تعديل] [حذف] │ │ [تعديل] [حذف] │
-└───────────────────────┘ └───────────────────────┘
-
-┌───────────────────────┐ ┌───────────────────────┐
-│ امتحان الوحدة الثالثة │ │ امتحان المراجعة │
-│ │ │ │
-│ ... │ │ ... │
-│ │ │ │
-│ [إدارة الامتحان] │ │ [إدارة الامتحان] │
-│ [تعديل] [حذف] │ │ [تعديل] [حذف] │
-└───────────────────────┘ └───────────────────────┘
-
-                  [ < ] [ 1 ] [ 2 ] [ 3 ] [ > ]
-
-┌─────────────────────────────────────────────────────────────┐
-│ [ حذف جميع الامتحانات ] │
-└─────────────────────────────────────────────────────────────┘
-
-لما يدخل «إدارة الامتحان»
-
-┌─────────────────────────────────────────────────────────────┐
-│ [ ← العودة إلى الامتحانات ] │
-│ │
-│ امتحان الوحدة الأولى │
-│ الجغرافيا - ثالثة ثانوي │
-└─────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────┐
-│ بيانات الامتحان │
-│ │
-│ اسم الامتحان امتحان الوحدة الأولى │
-│ الكورس الجغرافيا │
-│ الصف الدراسي ثالثة ثانوي │
-│ مدة الامتحان 30 دقيقة │
-│ موعد البداية .... │
-│ موعد النهاية .... │
-│ الدرجة النهائية 40 درجة │
-│ حالة النشر منشور │
-│ التصحيح المطلوب 3 محاولات │
-│ │
-│ [ تعديل بيانات الامتحان ] [ إخفاء الامتحان ] │
-└─────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────┐
-│ الأسئلة │
-│ │
-│ 50 سؤالًا [ + إضافة سؤال ] │
-│ [ استيراد JSON ] │
-└─────────────────────────────────────────────────────────────┘
-
-┌────┬─────────────────────────┬──────────────┬───────┬─────────┐
-│ # │ نص السؤال │ النوع │ الدرجة│ إجراءات │
-├────┼─────────────────────────┼──────────────┼───────┼─────────┤
-│ 1 │ ما أسباب ...؟ │ اختيار │ 2 │ ↑ ↓ ✎ 🗑 │
-│ 2 │ صح أم خطأ ...؟ │ صح / خطأ │ 1 │ ↑ ↓ ✎ 🗑 │
-│ 3 │ اشرح أثر ...؟ │ مقالي │ 5 │ ↑ ↓ ✎ 🗑 │
-│ 4 │ ... │ اختيار │ 2 │ ↑ ↓ ✎ 🗑 │
-│ 5 │ ... │ صح / خطأ │ 1 │ ↑ ↓ ✎ 🗑 │
-│ 6 │ ... │ اختيار │ 2 │ ↑ ↓ ✎ 🗑 │
-│ 7 │ ... │ مقالي │ 5 │ ↑ ↓ ✎ 🗑 │
-│ 8 │ ... │ اختيار │ 2 │ ↑ ↓ ✎ 🗑 │
-│ 9 │ ... │ صح / خطأ │ 1 │ ↑ ↓ ✎ 🗑 │
-│ 10 │ ... │ اختيار │ 2 │ ↑ ↓ ✎ 🗑 │
-└────┴─────────────────────────┴──────────────┴───────┴─────────┘
-
-                        [ < ] [ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ] [ > ]
-
-┌─────────────────────────────────────────────────────────────┐
-│ 10 أسئلة معروضة من أصل 50 سؤالًا │
-└─────────────────────────────────────────────────────────────┘
-
-لما يضغط «إضافة سؤال»
-┌───────────────────────────────────────┐
-│ إضافة سؤال │
-│ │
-│ كيف تريد إضافة السؤال؟ │
-│ │
-│ ┌────────────────┐ │
-│ │ إضافة يدويًا │ │
-│ └────────────────┘ │
-│ │
-│ ┌────────────────┐ │
-│ │ استيراد JSON │ │
-│ └────────────────┘ │
-│ │
-│ [ إلغاء ] │
-└───────────────────────────────────────┘
-
-┌─────────────────────────────────────────────┐
-│ استيراد أسئلة JSON │
-│ │
-│ [ رفع ملف JSON ] [ لصق JSON ] │
-│ │
-│ ┌─────────────────────────────────────────┐ │
-│ │ │ │
-│ │ مكان ملف / كود JSON │ │
-│ │ │ │
-│ └─────────────────────────────────────────┘ │
-│ │
-│ [ معاينة الأسئلة ] │
-└─────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────┐
-│ معاينة │
-│ │
-│ تم العثور على 20 سؤالًا │
-│ │
-│ سؤال 1 ✅ │
-│ سؤال 2 ✅ │
-│ سؤال 3 ✅ │
-│ سؤال 4 ✅ │
-│ ... │
-│ │
-│ [ إلغاء ] [ استيراد الأسئلة ] │
-└─────────────────────────────────────────────┘
-**الامتحانات والأسئلة ينتهي**
-
-**النتائج تبدأ**
-
-صفحة النتائج
-│
-├── عنوان + وصف
-├── تصدير النتائج
-│
-├── 4 بطاقات معلومات
-│ ├── إجمالي النتائج
-│ ├── تحتاج تصحيحًا
-│ ├── مكتملة التصحيح
-│ └── نتائج اليوم
-│
-├── بحث + فلاتر
-│
-├── جدول النتائج
-│ ├── الطالب
-│ ├── الامتحان
-│ ├── الكورس
-│ ├── الدرجة
-│ ├── التاريخ
-│ ├── حالة التصحيح
-│ └── عرض / بدء التصحيح
-│
-├── Pagination
-│
-└── حذف جميع النتائج
-
-تفاصيل النتيجة
-│
-├── بيانات الطالب والامتحان
-├── الدرجة والنسبة
-├── إجابات الطالب
-├── Pagination للأسئلة
-├── التصحيح اليدوي عند الحاجة
-└── حفظ الدرجة وتحديث النتيجة
-**النتائج تنهي**
-
-**الاشتراكات وطلبات الاشتراك يبدأ**
-┌──────────────────────────────────────────────────────────────────────┐
-│ الاشتراكات وطلبات الاشتراك │
-│ إدارة اشتراكات الطلاب ومراجعة طلبات الاشتراك │
-│ │
-│ [ الاشتراكات ] [ طلبات الاشتراك ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│ الاشتراكات │ │ الاشتراكات │ │ تحتاج │ │ -------- │
-│ النشطة │ │ المنتهية │ │ مراجعة │ │ -------- │
-│ │ │ │ │ │ │ │
-│ 120 │ │ 18 │ │ 7 │ │ │
-└──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘
-ملاحظة: البطاقة الرابعة مش ضرورية حاليًا، فممكن نكتفي بـ3 بطاقات بدل ما نحط معلومة ملهاش قيمة فعلية.
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ [ ابحث باسم الطالب أو رقم الطلب أو رقم العملية... ] │
-│ │
-│ الصف الدراسي [ الكل ▼ ] الكورس [ الكل ▼ ] الحالة [ الكل ▼ ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────┬──────────────┬──────────────┬──────────┬──────────┬──────────────┬────────┐
-│ رقم الطلب │ الطالب │ الكورس │ المبلغ │ التاريخ │ الحالة │ إجراء │
-├──────────┼──────────────┼──────────────┼──────────┼──────────┼──────────────┼────────┤
-│ MK-1025 │ أحمد محمد │ التاريخ │ 150 ج │ 10/09 │ قيد المراجعة │ عرض │
-│ MK-1024 │ محمد علي │ الجغرافيا │ 150 ج │ 10/09 │ مقبول │ عرض │
-│ MK-1023 │ عمر حسن │ التاريخ │ 150 ج │ 09/09 │ مرفوض │ عرض │
-└──────────┴──────────────┴──────────────┴──────────┴──────────┴──────────────┴────────┘
-
-                         [ < ] [ 1 ] [ 2 ] [ 3 ] [ > ]
-
-
-
-
-                         ┌──────────────────────────────────────────────────────────────────────┐
-
-│ [ ← العودة إلى الطلبات ] │
-│ │
-│ طلب اشتراك │
-│ MK-1025 │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ بيانات الطالب │
-│ │
-│ الاسم: أحمد محمد │
-│ البريد الإلكتروني: ... │
-│ رقم الهاتف: ... │
-│ الصف الدراسي: ... │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ بيانات الاشتراك │
-│ │
-│ الكورس: التاريخ │
-│ الخطة: شهرية │
-│ المبلغ: 150 جنيه │
-│ تاريخ الطلب: ... │
-│ رقم العملية: ... │
-│ طريقة الدفع: Vodafone Cash │
-│ │
-│ [ عرض إثبات الدفع ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ مراجعة الطلب │
-│ │
-│ حالة الطلب: قيد المراجعة │
-│ │
-│ [ قبول الطلب ] [ رفض الطلب ] │
-└──────────────────────────────────────────────────────────────────────┘
-┌──────────────────────────────────────┐
-│ سبب رفض الطلب: │
-│ │
-│ [................................] │
-│ │
-│ [ تأكيد الرفض ] │
-└──────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ [ ابحث باسم الطالب أو الكورس... ] │
-│ │
-│ الصف [ الكل ▼ ] الكورس [ الكل ▼ ] الحالة [ الكل ▼ ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────┬──────────────┬──────────────┬────────────┬────────────┬───────────┐
-│ الطالب │ الكورس │ الخطة │ البداية │ النهاية │ الحالة │
-├──────────────┼──────────────┼──────────────┼────────────┼────────────┼───────────┤
-│ أحمد محمد │ التاريخ │ شهرية │ 01/09 │ 01/10 │ نشطة │
-│ محمد علي │ الجغرافيا │ شهرية │ 01/08 │ 01/09 │ منتهية │
-└──────────────┴──────────────┴──────────────┴────────────┴────────────┴───────────┘
-
-                         [ < ] [ 1 ] [ 2 ] [ 3 ] [ > ]
-
-                         ┌──────────────────────────────────────────────────────────────────────┐
-
-│ [ ← العودة إلى الاشتراكات ] │
-│ │
-│ تفاصيل الاشتراك │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ الطالب: أحمد محمد │
-│ الكورس: التاريخ │
-│ الخطة: شهرية │
-│ بداية الاشتراك: 01/09/2026 │
-│ نهاية الاشتراك: 01/10/2026 │
-│ الحالة: نشطة │
-│ │
-│ مصدر الاشتراك: طلب رقم MK-1025 │
-│ │
-│ [ تمديد الاشتراك ] [ إنهاء الاشتراك ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────┐
-│ تمديد الاشتراك │
-│ │
-│ مدة التمديد: [ 30 يوم ▼ ] │
-│ │
-│ تاريخ الانتهاء الجديد: 01/11/2026 │
-│ │
-│ [ تأكيد التمديد ] │
-└──────────────────────────────────────┘
-
-طلبات الاشتراك:
-[ حذف طلب ] [ حذف جميع الطلبات ]
-
-الاشتراكات:
-[ إنهاء الاشتراك ]
-**الاشتراكات وطلبات الاشتراك ينتهي**
-
-**طلبات شراء الكتب يبدأ**
-┌──────────────────────────────────────────────────────────────────────┐
-│ طلبات شراء الكتب │
-│ مراجعة طلبات شراء الكتب الخاصة بالطلاب │
-│ │
-│ [ + إضافة كتاب ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
-│ إجمالي الطلبات │ │ تحتاج مراجعة │ │ الطلبات المقبولة │
-│ │ │ │ │ │
-│ 85 │ │ 6 │ │ 79 │
-└──────────────────┘ └──────────────────┘ └──────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ [ ابحث باسم الطالب أو رقم الطلب أو رقم التحويل... ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────┬──────────────┬────────────────┬──────────────┬──────────┬──────────────┬────────┐
-│ رقم الطلب │ الطالب │ الكتاب │ رقم التحويل │ المبلغ │ تاريخ الطلب │ إجراء │
-├──────────┼──────────────┼────────────────┼──────────────┼──────────┼──────────────┼────────┤
-│ BK-1025 │ أحمد محمد │ مذكرة التاريخ │ 123456789 │ 120 ج │ 10/09 │ عرض │
-│ BK-1026 │ محمد علي │ كتاب الجغرافيا │ 987654321 │ 150 ج │ 10/09 │ عرض │
-│ BK-1027 │ عمر حسن │ مذكرة التاريخ │ 555666777 │ 120 ج │ 09/09 │ عرض │
-└──────────┴──────────────┴────────────────┴──────────────┴──────────┴──────────────┴────────┘
-
-                         [ < ] [ 1 ] [ 2 ] [ 3 ] [ > ]
-
-                         ┌──────────────────────────────────────────────────────────────────────┐
-
-│ [ ← العودة إلى الطلبات ] │
-│ │
-│ طلب شراء كتاب │
-│ BK-1025 │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ اسم الطالب: أحمد محمد │
-│ البريد الإلكتروني: ... │
-│ رقم الهاتف: ... │
-│ الصف الدراسي: ثانية إعدادي │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ اسم الكتاب: مذكرة التاريخ │
-│ الصف: ثانية إعدادي │
-│ السعر: 120 جنيه │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ طريقة الدفع: Vodafone Cash │
-│ رقم التحويل: 123456789 │
-│ تاريخ الطلب: 10/09/2026 │
-│ المبلغ: 120 جنيه │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ حالة الطلب │
-│ │
-│ قيد المراجعة │
-│ │
-│ [ قبول الطلب ] │
-└──────────────────────────────────────────────────────────────────────┘
-
+الامتحانات والأسئلة
+النتائج
+الاشتراكات وطلبات الاشتراك
 طلبات شراء الكتب
-│
-├── + إضافة كتاب
-│
-├── 3 بطاقات
-│ ├── إجمالي الطلبات
-│ ├── تحتاج مراجعة
-│ └── الطلبات المقبولة
-│
-├── بحث
-│ ├── اسم الطالب
-│ ├── رقم الطلب
-│ └── رقم التحويل
-│
-├── فلاتر
-│ ├── الصف الدراسي
-│ ├── الكتاب
-│ └── حالة الطلب
-│
-├── جدول الطلبات
-│ ├── رقم الطلب
-│ ├── الطالب
-│ ├── الكتاب
-│ ├── رقم التحويل
-│ ├── المبلغ
-│ ├── التاريخ
-│ └── عرض
-│
-├── Pagination
-│
-└── حذف طلب / حذف جميع الطلبات
-
-تفاصيل الطلب
-│
-├── بيانات الطالب
-├── بيانات الكتاب
-├── بيانات الدفع
-├── حالة الطلب
-└── قبول الطلب
-
-**طلبات شراء الكتب ينتهي**
-
-**الكتب والمذكرات يبدأ**
-┌──────────────────────────────────────────────────────────────────────┐
-│ الكتب والمذكرات │
-│ إدارة الكتب والمذكرات المتاحة للطلاب │
-│ │
-│ [ + إضافة كتاب ] [ طلبات شراء الكتب ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────┐ ┌──────────────────┐ ┌──────────────────────────┐
-│ إجمالي الكتب │ │ متاحة للشراء │ │ غير متاحة للشراء │
-│ والمذكرات │ │ │ │ │
-│ │ │ │ │ │
-│ 12 │ │ 9 │ │ 3 │
-└──────────────────┘ └──────────────────┘ └──────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ [ ابحث عن اسم الكتاب أو رقم الكتاب... ] │
-│ │
-│ الصف الدراسي [ الكل ▼ ] حالة الكتاب [ الكل ▼ ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-                              الكتب
-
-┌──────────────────────────────┐ ┌──────────────────────────────┐
-│ │ │ │
-│ صورة الغلاف │ │ صورة الغلاف │
-│ │ │ │
-├──────────────────────────────┤ ├──────────────────────────────┤
-│ مذكرة التاريخ │ │ كتاب الجغرافيا │
-│ │ │ │
-│ رقم الكتاب: BOOK-1025 │ │ رقم الكتاب: BOOK-1026 │
-│ الصف: ثانية إعدادي │ │ الصف: ثالثة ثانوي │
-│ السعر: 120 جنيه │ │ السعر: 150 جنيه │
-│ عدد المشترين: 34 │ │ عدد المشترين: 21 │
-│ │ │ │
-│ [ متاح للشراء ] │ │ [ غير متاح للشراء ] │
-│ │ │ │
-│ [ إدارة الكتاب ] │ │ [ إدارة الكتاب ] │
-│ [ عرض الكتاب ] │ │ [ عرض الكتاب ] │
-│ [ تعديل ] [ حذف ] │ │ [ تعديل ] [ حذف ] │
-└──────────────────────────────┘ └──────────────────────────────┘
-
-┌──────────────────────────────┐ ┌──────────────────────────────┐
-│ صورة الغلاف │ │ صورة الغلاف │
-│ │ │ │
-│ كتاب آخر │ │ مذكرة أخرى │
-│ رقم الكتاب: BOOK-1027 │ │ رقم الكتاب: BOOK-1028 │
-│ الصف: ... │ │ الصف: ... │
-│ السعر: ... │ │ السعر: ... │
-│ عدد المشترين: ... │ │ عدد المشترين: ... │
-│ │ │ │
-│ [ متاح للشراء ] │ │ [ متاح للشراء ] │
-│ │ │ │
-│ [ إدارة الكتاب ] │ │ [ إدارة الكتاب ] │
-│ [ عرض الكتاب ] │ │ [ عرض الكتاب ] │
-│ [ تعديل ] [ حذف ] │ │ [ تعديل ] [ حذف ] │
-└──────────────────────────────┘ └──────────────────────────────┘
-
-                         [ < ] [ 1 ] [ 2 ] [ 3 ] [ > ]
-
-
-                     [ حذف جميع الكتب ]
-
-
-                     ┌──────────────────────────────────────────────────────────────────────┐
-
-│ [ ← العودة إلى الكتب ] │
-│ │
-│ إدارة الكتاب │
-│ مذكرة التاريخ │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ بيانات الكتاب │
-│ │
-│ رقم الكتاب: BOOK-1025 │
-│ اسم الكتاب: مذكرة التاريخ │
-│ الوصف: ....................................................... │
-│ الصف الدراسي: ثانية إعدادي │
-│ السعر: 120 جنيه │
-│ │
-│ حالة الكتاب: متاح للشراء │
-│ │
-│ [ تعديل ] [ متاح / غير متاح للشراء ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ صورة الكتاب │
-│ │
-│ [ صورة الغلاف ] │
-│ │
-│ [ عرض الكتاب ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ عدد المشترين │
-│ │
-│ 34 │
-│ │
-│ [ عرض طلبات شراء هذا الكتاب ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-                         [ حذف الكتاب ]
-                         ┌──────────────────────────────────────────────┐
-
-│ معاينة الكتاب │
-│ │
-│ صورة الغلاف │
-│ │
-│ مذكرة التاريخ │
-│ │
-│ الصف: ثانية إعدادي │
-│ السعر: 120 جنيه │
-│ │
-│ متاح للشراء │
-│ │
-│ [ إغلاق ] │
-└──────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────┐
-│ إضافة كتاب │
-│ │
-│ اسم الكتاب │
-│ [.........................................................] │
-│ │
-│ الوصف │
-│ [.........................................................] │
-│ │
-│ الصف الدراسي │
-│ [ ثانية إعدادي ▼ ] │
-│ │
-│ السعر │
-│ [....................] جنيه │
-│ │
-│ صورة الغلاف │
-│ [ رفع صورة ] │
-│ │
-│ حالة الكتاب │
-│ [ متاح للشراء ▼ ] │
-│ │
-│ [ حفظ الكتاب ] │
-└──────────────────────────────────────────────────────────────┘
-
-الكتاب
-│
-├── رقم كتاب من السيرفر
-├── الاسم
-├── الوصف
-├── الصف الدراسي
-├── السعر
-├── صورة الغلاف
-├── متاح للشراء / غير متاح للشراء
-├── عدد المشترين
-│
-├── إدارة الكتاب
-├── عرض الكتاب Preview
-├── عرض طلبات شراء هذا الكتاب
-├── تعديل
-└── حذف
-
-**الكتب والمذكرات ينتهي**
-
-**صلاحيات الدروس يبدأ**
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ صلاحيات الدروس │
-│ إدارة صلاحيات الطلاب للوصول إلى دروس محددة │
-│ │
-│ [ + إضافة صلاحية ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────┐ ┌──────────────────────────┐
-│ إجمالي الصلاحيات │ │ الطلاب أصحاب صلاحيات │
-│ │ │ خاصة │
-│ │ │ │
-│ 42 │ │ 31 │
-└──────────────────────────┘ └──────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ [ ابحث باسم الطالب أو اسم الدرس... ] │
-│ │
-│ الكورس [ الكل ▼ ] الصف الدراسي [ الكل ▼ ] │
-└──────────────────────────────────────────────────────────────────────┘
-
-                           الصلاحيات
-
-┌──────────────┬────────────────┬──────────────────┬──────────────┬──────────────┐
-│ الطالب │ الكورس │ الدرس │ تاريخ المنح │ الإجراءات │
-├──────────────┼────────────────┼──────────────────┼──────────────┼──────────────┤
-│ أحمد محمد │ التاريخ │ الدرس الثالث │ 10/09/2026 │ عرض / سحب │
-│ محمد علي │ الجغرافيا │ درس المناخ │ 10/09/2026 │ عرض / سحب │
-│ عمر حسن │ التاريخ │ الدرس الخامس │ 09/09/2026 │ عرض / سحب │
-│ محمود حسن │ التاريخ │ الدرس الأول │ 08/09/2026 │ عرض / سحب │
-└──────────────┴────────────────┴──────────────────┴──────────────┴──────────────┘
-
-                         [ < ] [ 1 ] [ 2 ] [ 3 ] [ > ]
-
-
-                     [ حذف جميع الصلاحيات ]
-
-
-                     ┌──────────────────────────────────────────────────────────────────────┐
-│                         إضافة صلاحية                                  │
-│                                                                      │
-│ الطالب                                                               │
-│ [ اختر الطالب ▼ ]                                                   │
-│                                                                      │
-│ الكورس                                                               │
-│ [ اختر الكورس ▼ ]                                                   │
-│                                                                      │
-│ الدروس                                                               │
-│                                                                      │
-│ ☑ الدرس الأول                                                        │
-│ ☑ الدرس الثاني                                                       │
-│ ☐ الدرس الثالث                                                       │
-│ ☐ الدرس الرابع                                                       │
-│ ☐ الدرس الخامس                                                       │
-│                                                                      │
-│ يمكن اختيار درس واحد أو عدة دروس                                     │
-│                                                                      │
-│ [ منح الصلاحية للدروس المحددة ]                    [ إلغاء ]        │
-└──────────────────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────┐
-│                  تفاصيل الصلاحية                     │
-│                                                      │
-│ الطالب: أحمد محمد                                   │
-│ الكورس: التاريخ                                     │
-│ الدرس: الوحدة الأولى - الدرس الثالث                 │
-│ تاريخ المنح: 10/09/2026                             │
-│                                                      │
-│                  [ سحب الصلاحية ]                    │
-└──────────────────────────────────────────────────────┘
-
-إذا لم يكن الطالب مشتركًا في الكورس:
-الصلاحية تُسحب → الطالب لا يستطيع فتح الدرس.
-
-إذا كان الطالب مشتركًا في الكورس:
-الصلاحية تُسحب → الطالب يظل قادرًا على فتح الدرس
-بسبب اشتراكه في الكورس.
-
-
-[ سحب صلاحية ]
-[ حذف جميع الصلاحيات ]
-
-صلاحية الدرس
-=
-طالب + كورس + درس
-
-**صلاحيات الدروس ينتهي**
-
-
-
-
-
-
-
-**الاعدادت يبدأ**
-
-┌──────────────────────────────────────────────────────────────────────┐
-│                            الإعدادات                                │
-│                 إدارة الحساب والدفع والبيانات                      │
-└──────────────────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────────────────────┐
-│                         حساب المستر                                  │
-│                                                                      │
-│ الاسم: ........................................................      │
-│ البريد الإلكتروني: ............................................      │
-│ رقم الهاتف: ...................................................      │
-│                                                                      │
-│ [ تعديل البيانات ]                [ تغيير كلمة المرور ]             │
-└──────────────────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────────────────────┐
-│                          طرق الدفع                                   │
-│                                                                      │
-│ Vodafone Cash                                                       │
-│                                                                      │
-│ رقم التحويل: 01115083459                                            │
-│ رقم الدعم: 01006254308                                              │
-│                                                                      │
-│ [ تعديل بيانات الدفع ]                                              │
-└──────────────────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────────────────────┐
-│                           Telegram                                   │
-│                                                                      │
-│                 وسيلة التواصل مع الطلاب                            │
-│                                                                      │
-│                        [ فتح Telegram ]                              │
-└──────────────────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────────────────────┐
-│                     إدارة البيانات والصيانة                         │
-│                                                                      │
-│ حذف جميع المحادثات                                                  │
-│                                                                      │
-│ سيتم حذف المحادثات والرسائل والمرفقات الخاصة بالدردشة فقط.          │
-│ ولن يتم حذف الطلاب أو الكورسات أو الامتحانات أو النتائج أو           │
-│ الاشتراكات أو الكتب.                                                │
-│                                                                      │
-│                    [ حذف جميع المحادثات ]                           │
-└──────────────────────────────────────────────────────────────────────┘
-
-
+الكتب والمذكرات
+صلاحيات الدروس
 الإعدادات
-│
-├── حساب المستر
-│   ├── تعديل البيانات
-│   └── تغيير كلمة المرور
-│
-├── طرق الدفع
-│   └── Vodafone Cash
-│       ├── رقم التحويل
-│       ├── رقم الدعم
-│       └── تعديل بيانات الدفع
-│
-├── Telegram
-│   └── فتح Telegram
-│
-└── إدارة البيانات والصيانة
-    └── حذف جميع المحادثات
+----------------
+تسجيل الخروج
+```
 
-**الاعدادت ينتهي**
+لا يوجد Teacher Chat. الطالب يكلم المستر من Chat الموقع، والمستر يتابع من **Telegram**.
 
+### Shared Components (بدون مبالغة في الـ abstraction)
 
+Page Header، Search، Filters، Stat Cards، Tables، Cards، Pagination، Empty States، Buttons، Status Badges، **ConfirmModal**. نشارك فقط اللي يستاهل.
 
+### ConfirmModal
 
+Component **واحد** مشترك لكل عمليات الحذف/التأكيد. بياخد: عنوان، رسالة، نوع العملية، أزرار تأكيد/إلغاء. الرسالة تختلف حسب المحذوف.
 
-## الشكل النهائي لصفحه الماستر داش بورد
+### قاعدة الحذف
 
-                  Master Dashboard
-┌──────────────────────────────────────────────────────────────┐
-│                         Master Topbar                         │
-├───────────────┬──────────────────────────────────────────────┤
-│               │                                              │
-│   Sidebar     │               الصفحة الحالية                 │
-│               │                                              │
-│ الرئيسية      │               <Outlet />                     │
-│ الطلاب        │                                              │
-│ الكورسات      │                                              │
-│ الامتحانات    │                                              │
-│ النتائج       │                                              │
-│ الاشتراكات    │                                              │
-│ طلبات الكتب   │                                              │
-│ الكتب         │                                              │
-│ الصلاحيات     │                                              │
-│ الإعدادات     │                                              │
-│               │                                              │
-│ تسجيل الخروج  │                                              │
-└───────────────┴──────────────────────────────────────────────┘
+كل صفحة مهمة تدعم حسب الحاجة **حذف عنصر واحد** و**حذف الكل**، مع Confirmation قوي والرسالة توضّح **ماذا سيُحذف وماذا لن يُحذف**.
 
+---
 
-┌──────────────────────────────────┐
-│ ☰   Master Topbar       Telegram │
-├──────────────────────────────────┤
-│                                  │
-│          الصفحة الحالية          │
-│                                  │
-│          <Outlet />              │
-│                                  │
-└──────────────────────────────────┘
+## 11. صفحات Master بالتفصيل
+
+### 11.1 الرئيسية (Home)
+
+```text
+Hero تاريخي: «مرحبًا بك يا مستر — لوحة التحكم الرئيسية لمنصة الغازي في التاريخ»
+   [ تواصل مع الطلاب على Telegram ]
+
+4 Stat Cards: عدد الطلاب | عدد الكورسات | الاشتراكات النشطة | تحتاج مراجعة
+
+الأشياء التي تحتاج إجراء:
+   طلبات الاشتراك الجديدة → مراجعة
+   طلبات شراء الكتب     → مراجعة
+   امتحانات تحتاج تصحيحًا → بدء التصحيح
+
+آخر 3 نتائج
+اختصارات سريعة: إضافة كورس | إضافة امتحان | إضافة كتاب | عرض الطلاب
+آخر النشاطات: آخر 5 فقط
+```
+
+لا يوجد: Charts، Analytics، جداول كاملة، قوائم طلاب كاملة، Chat Center، أزرار حذف، Footer.
+
+### 11.2 الطلاب
+
+- العنوان: «الطلاب — إدارة الطلاب وبياناتهم واشتراكاتهم».
+- 3 Info Cards: إجمالي الطلاب | الطلاب المشتركين | طلبات جديدة.
+- بحث: الاسم / البريد / الهاتف. فلاتر: الصف الدراسي، حالة الاشتراك.
+- جدول: الطالب، الصف، رقم الهاتف، الكورسات، حالة الاشتراك، إجراءات (عرض التفاصيل، حذف).
+- Pagination: 20 طالب في الصفحة.
+- **صفحة تفاصيل الطالب (كاملة):** الاسم، email، phone، parent phone، grade، governorate، الكورسات، حالات الاشتراك، النتائج، الطلبات، صلاحيات الدروس، تعديل الطالب، رجوع.
+- الحذف: طالب محدد + حذف كل الطلاب، مع تحذير للبيانات المرتبطة.
+
+### 11.3 الكورسات والمحتوى
+
+- العنوان: «الكورسات والمحتوى — إدارة الكورسات والدروس والمواد التعليمية». زر «+ إضافة كورس».
+- بحث «ابحث عن كورس…». فلاتر: الصف الدراسي، حالة الكورس (**منشور / غير منشور**).
+- Card الكورس: صورة، الاسم، الصف، عدد الدروس، عدد الامتحانات، عدد الطلاب المشتركين، الحالة، أزرار (إدارة المحتوى، تعديل، حذف).
+- **داخل إدارة الكورس:** تعديل بيانات الكورس، إضافة امتحان (ينقل لصفحة الامتحانات مع الكورس محدد)، العودة، Units وLessons (إضافة/تعديل/حذف)، ترتيب Units وLessons بـ ↑↓، مواد الدروس، حذف محدد وحذف الكل.
+- لا يوجد: Drag & Drop، Analytics، Video watch tracking، student performance، Comments.
+- عند التنفيذ اقرأ الحالي من `courses.jsx` و`lessons.jsx`.
+
+### 11.4 الامتحانات والأسئلة
+
+- العنوان: «الامتحانات والأسئلة — إدارة الامتحانات والأسئلة ومواعيدها ودرجاتها». زر «+ إضافة امتحان».
+- Stats: إجمالي الامتحانات، المنشورة، المنتهية، تحتاج تصحيحًا.
+- بحث باسم الامتحان. فلاتر: الكورس، الصف، حالة النشر (**منشور / غير منشور**).
+- **«قادم» ليس حالة يختارها المستر.** حالة الوقت **تُحسب تلقائيًا** من `startsAt` و`endsAt`: `لم يبدأ / متاح الآن / منتهي`.
+- Card الامتحان: الاسم، الكورس، الصف، عدد الأسئلة، الدرجة النهائية، المدة، البداية، النهاية، الحالة، (إدارة الامتحان، تعديل، حذف). Pagination + حذف الكل.
+- **داخل إدارة الامتحان:** بيانات الامتحان، الأسئلة (جدول: #، نص السؤال، النوع، الدرجة، إجراءات ↑ ↓ تعديل حذف)، «إضافة سؤال»، «استيراد JSON»، **10 أسئلة لكل صفحة** مع Pagination (عشان مفيش Scroll طويل لـ 50 سؤال).
+- **إضافة سؤال:** يدويًا أو استيراد JSON. يدعم الأنواع الحالية فقط: `multiple-choice / true-false / essay`.
+- **استيراد JSON:** رفع ملف أو لصق JSON ← Preview ← Validation ← Import. الأسئلة الخاطئة **لا تُستورد**، ويظهر خطأ واضح (مثال: «يوجد خطأ في السؤال رقم 8: الإجابة الصحيحة غير محددة»).
+- لا يوجد: Copy Exam، Charts، Exam Analytics، Chat، Complex Exam Settings.
+
+### 11.5 النتائج
+
+- العنوان: «النتائج — متابعة نتائج الطلاب وتصحيحها». زر «تصدير النتائج».
+- Stats: إجمالي النتائج، تحتاج تصحيحًا، مكتملة التصحيح، نتائج اليوم.
+- بحث باسم الطالب أو الامتحان. فلاتر: الطالب، الكورس، الامتحان، الصف، حالة التصحيح (**تحتاج تصحيحًا / مكتملة التصحيح**).
+- جدول: #، الطالب، الامتحان، الكورس، الدرجة، التاريخ، حالة التصحيح، إجراء (عرض النتيجة / بدء التصحيح).
+- **تفاصيل النتيجة:** بيانات الطالب، الصف، الامتحان، الكورس، التاريخ، الدرجة، النسبة، حالة التصحيح، إجابات الطالب بجانب الإجابة الصحيحة، Pagination للأسئلة، **Manual Grading** للمقالي، «حفظ الدرجة» مع **تحديث تلقائي للدرجة الكلية والنسبة**.
+- الحذف: نتيجة واحدة أو الكل. **لا يُحذف** الطالب ولا الامتحان ولا الأسئلة.
+- لا يوجد: Charts، Ranking، Best/Worst student، Advanced analytics، Student comparison، Chat.
+
+### 11.6 الاشتراكات وطلبات الاشتراك
+
+- صفحة واحدة بـ **تبويبين:** «الاشتراكات» و«طلبات الاشتراك».
+- Stats (3 كروت): الاشتراكات النشطة، المنتهية، تحتاج مراجعة.
+- بحث: اسم الطالب، رقم الطلب، رقم العملية. فلاتر: الصف، الكورس، حالة الطلب.
+- حالات الطلب: **قيد المراجعة / مقبول فقط** (لا يوجد مرفوض).
+- **طلبات الاشتراك:** رقم الطلب، الطالب، الكورس، المبلغ، التاريخ، رقم العملية، الحالة. تفاصيل الطلب: بيانات الطالب، بيانات الاشتراك (الكورس، الخطة، المبلغ، تاريخ الطلب، رقم العملية، طريقة الدفع)، وزر **«قبول الطلب»**.
+- **عند القبول → يتفعّل الاشتراك تلقائيًا.** لا توجد خطوة ثانية يدوية.
+- **الاشتراكات:** الطالب، الكورس، الخطة، البداية، النهاية، الحالة. الإجراءات: عرض، **تمديد الاشتراك**، **إنهاء الاشتراك**.
+- التمديد: أداة للمستر للتمديد المباشر/الاستثنائي (مثال: 30 يوم). أما الدفع لشهر جديد فيتم بـ **طلب اشتراك جديد**.
+- **لا يوجد:** تعديل حر للاشتراك، ولا حذف اشتراك كإجراء عادي (الاشتراك يُنهى ولا يُحذف).
+- حذف: طلب واحد / كل الطلبات.
+
+### 11.7 طلبات شراء الكتب
+
+- العنوان: «طلبات شراء الكتب — مراجعة طلبات شراء الكتب الخاصة بالطلاب».
+- Stats: إجمالي الطلبات، تحتاج مراجعة، الطلبات المقبولة.
+- **البحث (3 عناصر فقط):** اسم الطالب، رقم الطلب، رقم التحويل. فلاتر: الصف، الكتاب، حالة الطلب (**قيد المراجعة / مقبول**).
+- جدول: رقم الطلب، الطالب، الكتاب، رقم التحويل، المبلغ، تاريخ الطلب، إجراء.
+- تفاصيل الطلب: بيانات الطالب، بيانات الكتاب، بيانات الدفع (طريقة الدفع، رقم التحويل، المبلغ، التاريخ)، الحالة، زر **«قبول الطلب»**.
+- **عند القبول → الكتاب يصبح مشتراة للطالب.**
+- حذف: طلب واحد / الكل. **حذف الطلب المقبول لا يلغي حق الطالب في الكتاب.**
+- لا يوجد: سبب رفض، رفض، إثبات دفع كصورة.
+
+### 11.8 الكتب والمذكرات
+
+- العنوان: «الكتب والمذكرات — إدارة الكتب والمذكرات المتاحة للطلاب».
+- الأزرار: «+ إضافة كتاب» و«طلبات شراء الكتب».
+- Stats: إجمالي الكتب، متاحة للشراء، غير متاحة للشراء.
+- بحث: اسم الكتاب أو رقمه. فلاتر: الصف، حالة الكتاب.
+- Card: صورة الغلاف، الاسم، الرقم، الصف، السعر، **عدد المشترين**، الحالة، (إدارة الكتاب، عرض الكتاب، تعديل، حذف).
+- عرض طلبات شراء الكتاب ده، وعدد المشترين.
+- **Preview** للكتاب كما يظهر للطالب: مجرد Modal، مش صفحة جديدة.
+
+### 11.9 صلاحيات الدروس
+
+- العنوان: «صلاحيات الدروس — إدارة صلاحيات الطلاب للوصول إلى دروس محددة».
+- Stats: إجمالي الصلاحيات، الطلاب أصحاب صلاحيات خاصة.
+- بحث: اسم الطالب، اسم الدرس. فلاتر: الكورس، الصف.
+- جدول: الطالب، الكورس، الدرس، تاريخ المنح، الإجراءات (عرض، سحب).
+- **إضافة صلاحية:** اختر الطالب ← الكورس ← درسًا أو عدة دروس. النظام يمنع Duplicate.
+- تُبنى فوق `lessonAccess.jsx` و`lessonAccessService.jsx` الموجودين، بدون اختراع نظام جديد.
+
+### 11.10 الإعدادات
+
+- العنوان: «الإعدادات — إدارة الحساب والدفع والبيانات».
+- **حساب المستر:** الاسم، البريد، الهاتف، [تعديل البيانات]، [تغيير كلمة المرور]. (اتحذف: آخر تسجيل دخول.)
+- **بيانات Vodafone Cash فقط:** رقم التحويل، رقم الدعم، [تعديل بيانات الدفع]. مفيش «إضافة طريقة دفع».
+- **Telegram:** قسم بسيط «وسيلة التواصل مع الطلاب» + [فتح Telegram]. مش Chat Center.
+- **Data Management:** «حذف جميع المحادثات» مع Warning قوي. **يُحذف:** المحادثات، الرسائل، المرفقات. **لا يُحذف:** الطلاب، الكورسات، الامتحانات، النتائج، الاشتراكات، الكتب.
+- اتحذف نهائيًا: Dark/Light switch، Multi-language، Teacher management، Roles system، Analytics، Payment gateway معقد، Complex school settings.
+
+---
+
+## 12. قرارات نهائية وأفكار مُلغاة (لا تقترحها مرة ثانية)
+
+| الفكرة | القرار |
+|---|---|
+| Analytics / Charts / Ranking / Success Rate / Revenue / Course analytics | **ملغي.** المستر يريد Dashboard تشغيلية مش BI |
+| Teacher Chat / Message Center / Chat Inbox | **ملغي.** التواصل عبر Telegram |
+| Multi-Teacher / Roles / Permission matrix | **ملغي.** Master واحد فقط |
+| رفض طلب الاشتراك أو طلب الكتاب / سبب الرفض / زر الرفض / حالة `rejected` | **ملغي نهائيًا** (الحالتان فقط: قيد المراجعة، مقبول) |
+| Academic Year للكتب | **ملغي** |
+| صورة إثبات الدفع | **ملغي** (رقم التحويل + المبلغ يكفي) |
+| Reference إضافي ثالث | **ملغي** |
+| Copy Exam | **ملغي** |
+| حالة امتحان «قادم» يدوية | **ملغي** (تُحسب تلقائيًا من التواريخ) |
+| Drag & Drop للـ Units / Lessons / Questions | **ملغي**، البديل أزرار ↑ ↓ |
+| تعديل حر للاشتراك | **ملغي**، البديل: إنهاء + تمديد |
+| E-commerce كامل (Cart, Inventory, Shipping, Coupons…) | **ملغي** |
+| اشتراك بالحصة (Per-Lesson Subscription) | **ملغي**، البديل: صلاحية درس خاصة |
+| مدة على صلاحية الدرس | **ملغي** (تستمر حتى السحب) |
+| Payment Gateway / إضافة طرق دفع من الـ Dashboard | **ملغي** |
+| Dark/Light switch / Multi-language | **ملغي** |
+
+---
+
+## 13. اختلافات وتنظيف مطلوب في الكود الحالي
+
+اتراجعت على المشروع فعليًا، وده اللي لازم يتظبط أو يتقرر **قبل** الميزة المرتبطة به:
+
+**تنظيف (يتعمل عند الوصول للميزة):**
+
+1. **`rejected` لسه في الكود:** موجود في `src/Components/DashboardStudent/DashboardBookCard.jsx` (`isRejected`). لازم يتشال مع أي UI «إعادة طلب الشراء».
+2. **`accessType: "lesson"` في `subscriptionService.jsx`:** الـ Service بتدعم طلبات اشتراك بالحصة (`lessonId`) رغم إن القرار إلغاء اشتراك الحصة. مش مستخدمة في أي مكان حاليًا، يُنظَّف عند الوصول لصفحة الاشتراكات.
+3. **Reference الطلبات:** طلبات الكتب دلوقتي `MK-…` (نفس بادئة الاشتراك)، والمتفق عليه تمييز طلب الكتاب (`BK-…`) عن الكتاب نفسه (`BOOK-…`). (في الإنتاج الأرقام هتيجي من السيرفر.)
+4. **Book Availability** غير مطبّق في واجهة الطالب: الكتاب غير المتاح لا يظهر له «شراء» لكن يفضل مفتوح لمن اشتراه.
+
+**حقول ناقصة في الـ Mock Data (Master هيحتاجها):**
+
+| الكيان | الحقل الناقص |
+|---|---|
+| Student | `parentPhone` (مطلوب في صفحة تفاصيل الطالب)، ويفضّل `createdAt` |
+| Course | حالة النشر (`published`)، ويفضّل ربط الدروس/المشتركين بشكل صريح |
+| Exam | حالة النشر (`published`)، ولازم `totalQuestions` يتحسب من الأسئلة الفعلية |
+| Result | حالة التصحيح (`needs-grading / graded`)، وإجابات الطالب، ودرجات المقالي |
+| Book | `availability` (متاح/غير متاح) |
+| Enrollment/Subscription | `planId`، `startsAt`، `endsAt`، الحالة (`active/expired/ended`)، ومصدر الاشتراك (رقم الطلب) عشان التمديد والإنهاء |
+
+> أي تغيير في شكل الداتا يتعمل مع الميزة، مع تحديث الـ Student Dashboard لو تأثر.
+
+**نقاط تحتاج قرار من المستخدم (لم تُحسم):**
+
+- هوية Master البصرية: التوصية نفس هوية الموقع مع طابع Admin (القسم 4). لم تُثبَّت رسميًا.
+- بند «التصحيح المطلوب» في إدارة الامتحان (ظهر في التصميم القديم بصيغة «3 محاولات»): المعنى غير واضح، يُسأل عنه عند بناء الصفحة.
+- أسماء المسارات الفرعية لـ Master (القسم 6).
+
+---
+
+## 14. طريقة العمل مع المستخدم (مهم)
+
+- **اللغة:** عربي بأسلوب مصري بسيط ومباشر. الشرح عملي بدون مصطلحات معقدة. الكود والـ comments بالإنجليزية أو زي ما المشروع ماشي.
+- **Feature by Feature / Page by Page.** لا تقفز بين الملفات ولا تضيف حاجات من غير حاجة.
+- **اتفق على شكل ووظيفة الصفحة أولًا، وبعدها اكتب الكود.**
+- **اقرأ الملفات الحالية قبل أي كود مرتبط بـ data.** ممنوع الاعتماد على نسخة قديمة من الذاكرة أو على أمثلة مكتوبة في هذا الـ README.
+- ما تفترضش شكل الـ data. لو محتاج حقل جديد قول ده للمستخدم.
+- لو محتاج توضيح، **اسأل** بدل ما تفترض.
+- ما تبدأش كتابة أي كود قبل ما تلخص فهمك وتاخد تأكيد.
+- عند تسليم كود: اذكر اسم الملف ومساره بالضبط، وإن كان ملف جديد أو تعديل.
+- لو المشروع فيه Build/Lint، متقولش «اتحقق» إلا لو اتشغّل فعلًا (في مراجعة سابقة `npm run build` ما اتنفذش لأن الـ dependencies مكانتش متثبتة).
+
+---
+
+## 15. الخطوة الجاية
+
+```text
+1. MasterLayout  (تطويره: Sidebar + Topbar + Outlet، بدون Footer)
+2. MasterSidebar (10 صفحات + تسجيل الخروج، Hamburger للموبايل)
+3. MasterTopbar  (بسيط + زر Telegram)
+4. Master Routing (تحويل /dashboard-master لـ Nested Routes في App.jsx)
+5. Shared Components اللازمة فقط (PageHeader, StatCard, StatusBadge, ConfirmModal…)
+6. Master Home
+7. باقي الصفحات واحدة واحدة:
+   Students → Courses → Exams → Results → Subscriptions → Book Requests → Books → Lesson Access → Settings
+```
+
+**ما لم يُبنَ بعد ويُبنى لاحقًا:** JSON Questions Import (Parser + Validation + Preview + Error reporting)، تنظيف `rejected`، Book Availability في واجهة الطالب، الانتقال لـ Supabase.
+
+---
+
+## 16. خطة Backend (Supabase) لاحقًا
+
+- **الجداول المتوقعة:** Profiles, Courses, Units, Lessons, Exams, Questions, Results, Subscriptions, SubscriptionRequests, Books, BookPurchaseRequests, LessonAccess, PaymentSettings, Messages.
+- **Trigger:** إنشاء Profile تلقائي عند التسجيل.
+- **RLS Policies:** على كل الجداول (الطالب يقرأ بياناته فقط، المستر يعدّل ويحذف).
+- **Auth Context + Protected Routes** (طالب / مستر).
+- **الأمان:** جلسة واحدة (Single Session) لمنع مشاركة الحسابات، حماية الفيديوهات (منع right-click، إخفاء روابط YouTube، تحقق من الاشتراك أو الصلاحية قبل التشغيل)، نقل العمليات الحساسة لـ Edge Functions.
+- **النشر:** Cloudflare Pages + ربط الدومين + اختبار موبايل/كمبيوتر.
+- **ملاحظة:** الخطة القديمة كانت «أكواد تفعيل». **اتبدّلت** بنظام طلبات الاشتراك (Vodafone Cash + رقم عملية + قبول المستر)، فما تبنيش نظام Activation Codes.
