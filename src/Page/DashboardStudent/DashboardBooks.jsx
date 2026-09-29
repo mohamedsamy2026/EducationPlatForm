@@ -85,20 +85,20 @@ export default function DashboardBooks() {
   }
 
   return (
-    <main
-      dir="rtl"
-      className="min-h-screen bg-midnight px-5 py-24 text-white sm:px-8 lg:px-10"
-    >
-      <div className="mx-auto max-w-7xl">
-        <div className="my-12">
-          <div className="mb-4 flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold">
+    <section className="relative overflow-hidden border-b border-white/10 bg-[#091726] pt-20 lg:pt-24">
+      <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gold/10 blur-[100px]" />
+      <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-[#10243a]/55 blur-[110px]" />
+      <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-10 lg:py-7">
+        <div className="mb-5 ">
+          <div className="mb-4 gap-3">
+            <span className="mt-12 inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold mb-5">
               <FontAwesomeIcon icon={faBookOpen} />
+             الكتب الخاصه بك
             </span>
-
-            <div>
-              <p className="text-xs font-bold text-gold">الكتب الخاصة بك</p>
-
+            <div className="flex gap-2">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold">
+                <FontAwesomeIcon icon={faBookOpen} />
+              </span>
               <h1 className="mt-1 text-3xl font-black text-warm-white sm:text-4xl">
                 كتبي
               </h1>
@@ -106,7 +106,7 @@ export default function DashboardBooks() {
           </div>
 
           {student ? (
-            <div className="flex items-center gap-3 text-sm text-white/50">
+            <div className="flex items-center gap-3 text-sm text-white/50 mt-5">
               <span>{getGradeLabel(student.grade)}</span>
 
               <span className="text-white/20">•</span>
@@ -165,6 +165,6 @@ export default function DashboardBooks() {
           </div>
         )}
       </div>
-    </main>
+    </section>
   );
 }
