@@ -102,7 +102,7 @@ export default function Books() {
 
           <div className="mb-12 flex flex-wrap justify-center gap-3">
             {gradeFilters.map((grade) => {
-              const isActive = grade === selectedGrade;
+              const isActive = grade.id === selectedGrade;
 
               return (
                 <button
