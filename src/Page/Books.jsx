@@ -77,7 +77,7 @@ export default function Books() {
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <Link
               to="/"
-              className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-white/50 duration-200 hover:text-gold hover:gap-4"
+              className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-white/90 duration-200 hover:text-gold hover:gap-4"
             >
               <FontAwesomeIcon icon={faArrowRight} />
               <span>العودة للرئيسية</span>
