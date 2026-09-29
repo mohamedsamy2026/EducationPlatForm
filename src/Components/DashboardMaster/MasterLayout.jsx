@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import Sidebar from "./MasterSidebar";
 
 export default function MasterLayout() {
   return (
@@ -15,6 +16,7 @@ export default function MasterLayout() {
                 الغازي في التاريخ
               </p>
             </div>
+            <Sidebar/>
 
             <div className="flex-1" />
           </div>
