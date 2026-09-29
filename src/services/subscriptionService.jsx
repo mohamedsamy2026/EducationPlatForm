@@ -22,7 +22,8 @@ export async function getPendingSubscriptionRequest({
   lessonId,
 }) {
   return (
-    subscriptionRequests.find((request) => {
+    subscriptionRequests.find((request) => { 
+
       const sameStudent = String(request.studentId) === String(studentId);
 
       const sameCourse = String(request.courseId) === String(courseId);

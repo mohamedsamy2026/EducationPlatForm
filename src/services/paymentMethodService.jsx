@@ -5,6 +5,7 @@ export async function getActivePaymentMethods() {
 }
 
 export async function getPaymentMethodById(paymentMethodId) {
+  
   return (
     paymentMethods.find(
       (paymentMethod) =>
