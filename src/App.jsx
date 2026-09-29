@@ -21,6 +21,9 @@ import ExamInterface from "./Page/DashboardStudent/ExamInterface";
 import LessonPage from "./Page/DashboardStudent/LessonPage";
 import Subscription from "./Page/Subscription";
 
+// Master DashBoard
+import MasterLayout from "./Components/DashboardMaster/MasterLayout";
+
 import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
@@ -53,6 +56,8 @@ export default function App() {
           path="/subscription/:courseId/:planId"
           element={<Subscription />}
         />
+
+        <Route path="/dashboard-master" element={<MasterLayout />} />
 
         {/* Dashboard Student */}
         <Route path="/dashboard-student" element={<DashboardLayout />}>
