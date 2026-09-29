@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./MasterSidebar";
-
+import Topbar from "./MasterTopbar";
 export default function MasterLayout() {
   return (
     <div dir="rtl" className="min-h-screen bg-midnight text-white">

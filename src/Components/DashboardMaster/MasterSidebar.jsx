@@ -1,9 +1,7 @@
-import { useState, useCallback } from "react";
-
+import { useState } from "react";
+import { createPortal } from "react-dom";
 import { NavLink, useNavigate } from "react-router-dom";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import {
   faBars,
   faXmark,
@@ -22,100 +20,100 @@ import {
 
 import logoImg from "../../assets/Logo/transparent-Logo.png";
 
+const navItems = [
+  {
+    name: "الرئيسية",
+    path: "/dashboard-master",
+    icon: faHouse,
+  },
+  {
+    name: "الطلاب",
+    path: "/dashboard-master/students",
+    icon: faUsers,
+  },
+  {
+    name: "الكورسات والمحتوى",
+    path: "/dashboard-master/courses",
+    icon: faBookOpen,
+  },
+  {
+    name: "الامتحانات والأسئلة",
+    path: "/dashboard-master/exams",
+    icon: faClipboardCheck,
+  },
+  {
+    name: "النتائج",
+    path: "/dashboard-master/results",
+    icon: faChartLine,
+  },
+  {
+    name: "الاشتراكات وطلبات الاشتراك",
+    path: "/dashboard-master/subscriptions",
+    icon: faCreditCard,
+  },
+  {
+    name: "طلبات شراء الكتب",
+    path: "/dashboard-master/book-requests",
+    icon: faCartShopping,
+  },
+  {
+    name: "الكتب والمذكرات",
+    path: "/dashboard-master/books",
+    icon: faBook,
+  },
+  {
+    name: "صلاحيات الدروس",
+    path: "/dashboard-master/lesson-access",
+    icon: faKey,
+  },
+  {
+    name: "الإعدادات",
+    path: "/dashboard-master/settings",
+    icon: faGear,
+  },
+];
+
 export default function MasterSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const navItems = [
-    {
-      name: "الرئيسية",
-      path: "/dashboard-master",
-      icon: faHouse,
-    },
-    {
-      name: "الطلاب",
-      path: "/dashboard-master/students",
-      icon: faUsers,
-    },
-    {
-      name: "الكورسات والمحتوى",
-      path: "/dashboard-master/courses",
-      icon: faBookOpen,
-    },
-    {
-      name: "الامتحانات والأسئلة",
-      path: "/dashboard-master/exams",
-      icon: faClipboardCheck,
-    },
-    {
-      name: "النتائج",
-      path: "/dashboard-master/results",
-      icon: faChartLine,
-    },
-    {
-      name: "الاشتراكات وطلبات الاشتراك",
-      path: "/dashboard-master/subscriptions",
-      icon: faCreditCard,
-    },
-    {
-      name: "طلبات شراء الكتب",
-      path: "/dashboard-master/book-requests",
-      icon: faCartShopping,
-    },
-    {
-      name: "الكتب والمذكرات",
-      path: "/dashboard-master/books",
-      icon: faBook,
-    },
-    {
-      name: "صلاحيات الدروس",
-      path: "/dashboard-master/lesson-access",
-      icon: faKey,
-    },
-    {
-      name: "الإعدادات",
-      path: "/dashboard-master/settings",
-      icon: faGear,
-    },
-  ];
-
-  const handleNavClick = useCallback(() => {
-    if (isOpen) {
-      setIsOpen(false);
-    }
-  }, [isOpen]);
+  const handleNavClick = () => {
+    if (isOpen) setIsOpen(false);
+  };
 
   const handleLogout = () => {
     setIsOpen(false);
     navigate("/login");
   };
 
-  return (
-    <>
-      {/* زر فتح القائمة في الشاشات الصغيرة */}
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className="fixed right-5 top-5 z-[90] flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-gold/20 bg-[#071321]/95 text-lg text-gold shadow-[0_8px_25px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:bg-gold hover:text-midnight xl:hidden"
-        aria-label="فتح قائمة لوحة التحكم"
-      >
-        <FontAwesomeIcon icon={faBars} />
-      </button>
+  return createPortal(
+    <div dir="rtl">
+      {/* زر الهمبرجر في أقصى الشمال للشاشات الصغيرة */}
+      {!isOpen && (
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          className="fixed left-5 top-5 z-[800] flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-gold/20 bg-[#071321]/95 text-lg text-gold shadow-[0_8px_25px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:bg-gold hover:text-midnight lg:hidden"
+          aria-label="فتح قائمة لوحة التحكم"
+        >
+          <FontAwesomeIcon icon={faBars} />
+        </button>
+      )}
 
       {/* الخلفية عند فتح القائمة على الموبايل */}
       {isOpen && (
         <button
           type="button"
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 z-[80] cursor-pointer bg-black/60 backdrop-blur-[2px] xl:hidden"
+          className="fixed inset-0 z-[80] cursor-pointer bg-black/60 backdrop-blur-[2px] lg:hidden"
           aria-label="إغلاق القائمة"
         />
       )}
 
       <aside
-        className={`fixed right-0 top-0 z-[100] flex h-screen w-[290px] flex-col border-l border-white/10 bg-[#0A1828] shadow-[-10px_0_40px_rgba(0,0,0,0.18)] transition-transform duration-300 ease-in-out ${
+        className={`fixed right-0 top-0 z-[100] flex h-screen lg:w-[290px] flex-col border-l border-white/10 bg-[#0A1828] shadow-[-10px_0_40px_rgba(0,0,0,0.18)] transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
-        } xl:translate-x-0`}
+        } lg:translate-x-0`}
       >
         {/* رأس الـSidebar */}
         <div className="shrink-0 border-b border-white/10 px-5 py-5">
@@ -144,7 +142,7 @@ export default function MasterSidebar() {
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-white/5 text-white/55 transition-all duration-200 hover:bg-white/10 hover:text-white xl:hidden"
+              className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-white/5 text-white/55 transition-all duration-200 hover:bg-white/10 hover:text-white lg:hidden"
               aria-label="إغلاق القائمة"
             >
               <FontAwesomeIcon icon={faXmark} />
@@ -204,6 +202,7 @@ export default function MasterSidebar() {
           </button>
         </div>
       </aside>
-    </>
+    </div>,
+    document.body,
   );
 }
