@@ -48,7 +48,6 @@ export default function App() {
           path="/dashboard-student/exams/:examId"
           element={<ExamInterface />}
         />
-        {/* Lesson Page */}
         <Route
           path="/courses/:courseId/lessons/:lessonId"
           element={<LessonPage />}
@@ -63,7 +62,6 @@ export default function App() {
         <Route path="/dashboard-master" element={<MasterLayout />}>
           <Route index element={<MasterHome />} />
         </Route>
-          <Route path="*" element={<MasterPlaceholder />} />
 
         {/* Dashboard Student */}
         <Route path="/dashboard-student" element={<DashboardLayout />}>
@@ -75,6 +73,9 @@ export default function App() {
           <Route path="profile" element={<DashboardProfile />} />
           <Route path="support" element={<DashboardSupport />} />
         </Route>
+
+
+        <Route path="*" element={<MasterPlaceholder />} />
       </Routes>
     </>
   );
