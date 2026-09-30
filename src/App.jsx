@@ -23,6 +23,7 @@ import Subscription from "./Page/Subscription";
 
 // Master DashBoard
 import MasterLayout from "./Components/DashboardMaster/MasterLayout";
+import MasterHome from "./Page/DashboardMaster/MasterHome";
 
 import "./App.css";
 
@@ -57,7 +58,10 @@ export default function App() {
           element={<Subscription />}
         />
 
-        <Route path="/dashboard-master" element={<MasterLayout />} />
+        {/* Dashboard Master */}
+        <Route path="/dashboard-master" element={<MasterLayout />}>
+          <Route index element={<MasterHome />} />
+        </Route>
 
         {/* Dashboard Student */}
         <Route path="/dashboard-student" element={<DashboardLayout />}>

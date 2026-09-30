@@ -80,6 +80,10 @@ export default function MasterTopbar({
             <h1 className="mt-1 truncate text-xl font-black text-white sm:text-2xl">
               مرحبًا بك يا {masterName}
             </h1>
+            <p className="mt-4 max-w-xl text-sm font-bold leading-8 text-white/75 sm:text-base">
+              لوحة التحكم الرئيسية لمنصة الغازي في التاريخ لإدارة الطلاب
+              والكورسات والامتحانات والطلبات بسهولة.
+            </p>
           </div>
         </div>
 
