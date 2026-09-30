@@ -93,7 +93,7 @@ export default function MasterSidebar() {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="fixed left-5 top-5 z-[800] flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-gold/20 bg-[#071321]/95 text-lg text-gold shadow-[0_8px_25px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:bg-gold hover:text-midnight lg:hidden"
+          className="fixed left-5 top-5 z-[800] flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-gold/20 bg-[#071321]/95 text-lg text-gold shadow-[0_8px_25px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:bg-gold hover:text-midnight xl:hidden"
           aria-label="فتح قائمة لوحة التحكم"
         >
           <FontAwesomeIcon icon={faBars} />
@@ -105,15 +105,15 @@ export default function MasterSidebar() {
         <button
           type="button"
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 z-[80] cursor-pointer bg-black/60 backdrop-blur-[2px] lg:hidden"
+          className="fixed inset-0 z-[80] cursor-pointer bg-black/60 backdrop-blur-[2px] xl:hidden"
           aria-label="إغلاق القائمة"
         />
       )}
 
       <aside
-        className={`fixed right-0 top-0 z-[100] flex h-screen lg:w-[290px] flex-col border-l border-white/10 bg-[#0A1828] shadow-[-10px_0_40px_rgba(0,0,0,0.18)] transition-transform duration-300 ease-in-out ${
+        className={`fixed right-0 top-0 z-[100] flex h-screen xl:w-[290px] flex-col border-l border-white/10 bg-[#0A1828] shadow-[-10px_0_40px_rgba(0,0,0,0.18)] duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
-        } lg:translate-x-0`}
+        } xl:translate-x-0`}
       >
         {/* رأس الـSidebar */}
         <div className="shrink-0 border-b border-white/10 px-5 py-5">
@@ -142,7 +142,7 @@ export default function MasterSidebar() {
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-white/5 text-white/55 transition-all duration-200 hover:bg-white/10 hover:text-white lg:hidden"
+              className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-white/5 text-white/55 transition-all duration-200 hover:bg-white/10 hover:text-white xl:hidden"
               aria-label="إغلاق القائمة"
             >
               <FontAwesomeIcon icon={faXmark} />

@@ -199,7 +199,7 @@ export default function DashboardHome() {
         <div className="relative z-10 px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
           <div className="max-w-2xl">
             <span className="mb-5 mt-8 inline-flex rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-bold text-gold md:mt-0">
-              لوحة الطالب
+              لوحة تحكم الطالب 
             </span>
 
             <h1 className="text-3xl font-black leading-tight text-white sm:text-4xl lg:text-5xl">
