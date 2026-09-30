@@ -344,7 +344,7 @@ export default function MasterHome() {
                     </span>
 
                     <div>
-                      <p className="text-sm font-bold text-white/85">
+                      <p className="text-sm pb-1 font-bold text-white/85">
                         {activity.text}
                       </p>
 
@@ -417,6 +417,7 @@ function QuickLink({ to, icon, label }) {
     </Link>
   );
 }
+
 
 function EmptyHomeState({ text }) {
   return (
