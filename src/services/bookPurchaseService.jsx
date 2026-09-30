@@ -66,3 +66,50 @@ export async function createBookPurchaseRequest({
 
   return newRequest;
 }
+
+export async function getBookPurchaseRequests() {
+  return [...bookPurchaseRequests];
+}
+
+export async function getBookPurchaseRequestById(requestId) {
+  return (
+    bookPurchaseRequests.find(
+      (request) => String(request.id) === String(requestId),
+    ) ?? null
+  );
+}
+
+export async function approveBookPurchaseRequest(requestId) {
+  const request = await getBookPurchaseRequestById(requestId);
+
+  if (!request) {
+    throw new Error("الطلب غير موجود.");
+  }
+
+  if (request.status !== "pending") {
+    throw new Error("تمت مراجعة هذا الطلب من قبل.");
+  }
+
+  request.status = "approved";
+  request.reviewedAt = new Date().toISOString();
+
+  return request;
+}
+
+export async function rejectBookPurchaseRequest(requestId, reason = "") {
+  const request = await getBookPurchaseRequestById(requestId);
+
+  if (!request) {
+    throw new Error("الطلب غير موجود.");
+  }
+
+  if (request.status !== "pending") {
+    throw new Error("تمت مراجعة هذا الطلب من قبل.");
+  }
+
+  request.status = "rejected";
+  request.rejectionReason = String(reason ?? "").trim();
+  request.reviewedAt = new Date().toISOString();
+
+  return request;
+}

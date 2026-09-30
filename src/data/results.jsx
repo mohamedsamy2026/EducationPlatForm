@@ -1,10 +1,11 @@
-const latestResult = [
+const results = [
   {
     id: "result-1",
     studentId: "student-1",
     examId: "exam-2",
     score: 17,
     total: 20,
+    status: "graded",
     title: "امتحان علي الوحده الأولى",
     submittedAt: "2026-09-18T19:30:00+03:00",
   },
@@ -14,6 +15,7 @@ const latestResult = [
     examId: "exam-5",
     score: 13,
     total: 20,
+    status: "graded",
     submittedAt: "2026-09-21T15:00:00+03:00",
   },
   {
@@ -22,8 +24,9 @@ const latestResult = [
     examId: "exam-7",
     score: 15,
     total: 20,
+    status: "graded",
     submittedAt: "2026-09-21T15:00:00+03:00",
   },
 ];
 
-export default latestResult;
+export default results;

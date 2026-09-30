@@ -13,3 +13,7 @@ export async function getExamById(examId) {
     ) ?? null
   );
 }
+
+export async function getExams() {
+  return [...exams];
+}

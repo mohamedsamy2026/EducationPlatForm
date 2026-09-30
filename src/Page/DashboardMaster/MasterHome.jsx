@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -13,20 +14,7 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { faTelegram } from "@fortawesome/free-brands-svg-icons";
-
-import students from "../../data/students";
-import courses from "../../data/courses";
-import exams from "../../data/exams";
-import results from "../../data/results";
-import enrollments from "../../data/enrollments";
-import subscriptionRequests from "../../data/subscriptionRequests";
-import bookPurchaseRequests from "../../data/bookPurchaseRequests";
-
-import { getGradeLabel } from "../../utils/gradeUtils";
-
-import heroImg from "../../assets/Master/master 2.webp";
-import masterCutout from "../../assets/Master/master-home.png";
+import { getMasterDashboardSummary } from "../../services/masterDashboardService";
 
 function formatDate(value) {
   if (!value) return "غير محدد";
@@ -44,143 +32,68 @@ function formatDate(value) {
   }).format(date);
 }
 
-function getResultPercentage(result) {
-  if (!result || Number(result.total) <= 0) {
-    return 0;
+export default function MasterHome() {
+  const [summary, setSummary] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    async function loadSummary() {
+      try {
+        const data = await getMasterDashboardSummary();
+
+        if (!isCancelled) {
+          setSummary(data);
+        }
+      } catch {
+        if (!isCancelled) {
+          setError("تعذر تحميل بيانات لوحة التحكم.");
+        }
+      }
+    }
+
+    loadSummary();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
+  if (error) {
+    return (
+      <div className="bg-midnight px-5 py-10">
+        <EmptyHomeState text={error} />
+      </div>
+    );
   }
 
-  return Math.round(
-    (Number(result.score) / Number(result.total)) * 100,
-  );
-}
-
-function getCourseTitle(courseId) {
-  return (
-    courses.find(
-      (course) => String(course.id) === String(courseId),
-    )?.title ?? "غير محدد"
-  );
-}
-
-function getExamTitle(examId) {
-  return (
-    exams.find(
-      (exam) => String(exam.id) === String(examId),
-    )?.title ?? "غير محدد"
-  );
-}
-
-function getStudentName(studentId) {
-  return (
-    students.find(
-      (student) => String(student.id) === String(studentId),
-    )?.name ?? "غير محدد"
-  );
-}
-
-export default function MasterHome() {
-  // =========================================================
-  // Statistics
-  // =========================================================
-
-  const activeEnrollments = enrollments.filter(
-    (enrollment) => enrollment.status === "active",
-  );
-
-  const pendingSubscriptionRequests =
-    subscriptionRequests.filter(
-      (request) => request.status === "pending",
+  if (!summary) {
+    return (
+      <div className="bg-midnight px-5 py-10">
+        <EmptyHomeState text="جاري تحميل البيانات..." />
+      </div>
     );
+  }
 
-  const pendingBookRequests = bookPurchaseRequests.filter(
-    (request) => request.status === "pending",
-  );
-
-  // هتشتغل تلقائيًا لما نضيف status خاص بالتصحيح في الداتا لاحقًا.
-  const manualReviewResults = results.filter(
-    (result) =>
-      result.needsManualGrading === true ||
-      result.status === "needs_review",
-  );
-
-  const needsReviewCount =
-    pendingSubscriptionRequests.length +
-    pendingBookRequests.length +
-    manualReviewResults.length;
-
-  // =========================================================
-  // Latest Results
-  // =========================================================
-
-  const latestResults = [...results]
-    .sort(
-      (a, b) =>
-        new Date(b.submittedAt).getTime() -
-        new Date(a.submittedAt).getTime(),
-    )
-    .slice(0, 3);
-
-  // =========================================================
-  // Latest Activities
-  // =========================================================
-
-  const activityItems = [
-    ...results.map((result) => ({
-      id: `result-${result.id}`,
-      date: result.submittedAt,
-      text: `تم تسجيل نتيجة جديدة للطالب ${getStudentName(
-        result.studentId,
-      )}`,
-      meta: getExamTitle(result.examId),
-    })),
-
-    ...subscriptionRequests.map((request) => ({
-      id: `subscription-${request.id}`,
-      date: request.createdAt,
-      text: `تم إنشاء طلب اشتراك للطالب ${getStudentName(
-        request.studentId,
-      )}`,
-      meta: getCourseTitle(request.courseId),
-    })),
-
-    ...bookPurchaseRequests.map((request) => ({
-      id: `book-${request.id}`,
-      date: request.createdAt,
-      text: `تم إنشاء طلب شراء كتاب للطالب ${getStudentName(
-        request.studentId,
-      )}`,
-      meta:
-        request.referenceNumber ??
-        request.transactionId ??
-        "طلب شراء كتاب",
-    })),
-  ]
-    .filter((item) => item.date)
-    .sort(
-      (a, b) =>
-        new Date(b.date).getTime() -
-        new Date(a.date).getTime(),
-    )
-    .slice(0, 5);
+  const { stats, needsAction, latestResults, activities } = summary;
 
   const statCards = [
     {
       label: "عدد الطلاب",
-      value: students.length,
+      value: stats.studentsCount,
       icon: faUsers,
       to: "/dashboard-master/students",
     },
-
     {
       label: "عدد الكورسات",
-      value: courses.length,
+      value: stats.coursesCount,
       icon: faBookOpen,
       to: "/dashboard-master/courses",
     },
-
     {
       label: "الاشتراكات النشطة",
-      value: activeEnrollments.length,
+      value: stats.activeEnrollmentsCount,
       icon: faGraduationCap,
       to: "/dashboard-master/subscriptions",
     },
@@ -188,15 +101,8 @@ export default function MasterHome() {
 
   return (
     <div className="bg-midnight">
-
-
-
-
       <div className="mx-auto max-w-[1600px] px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
-        {/* =====================================================
-            Stats
-        ====================================================== */}
-
+        {/* Stats */}
         <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {statCards.map((card) => (
             <Link
@@ -228,12 +134,10 @@ export default function MasterHome() {
           >
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-bold text-white/50">
-                  تحتاج مراجعة
-                </p>
+                <p className="text-sm font-bold text-white/50">تحتاج مراجعة</p>
 
                 <p className="mt-3 text-3xl font-black text-white">
-                  {needsReviewCount}
+                  {needsAction.totalCount}
                 </p>
               </div>
 
@@ -244,15 +148,10 @@ export default function MasterHome() {
           </a>
         </section>
 
-        {/* =====================================================
-            Things Need Action
-        ====================================================== */}
-
+        {/* Things Need Action */}
         <section id="needs-action" className="mt-10 scroll-mt-24">
           <div className="mb-5">
-            <p className="text-xs font-extrabold text-gold">
-              المتابعة اليومية
-            </p>
+            <p className="text-xs font-extrabold text-gold">المتابعة اليومية</p>
 
             <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">
               الأشياء التي تحتاج إجراء
@@ -262,7 +161,7 @@ export default function MasterHome() {
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             <ActionCard
               title="طلبات الاشتراك الجديدة"
-              count={pendingSubscriptionRequests.length}
+              count={needsAction.pendingSubscriptionsCount}
               description="راجع الطلبات التي ما زالت في انتظار القرار."
               to="/dashboard-master/subscriptions"
               icon={faFileCircleCheck}
@@ -271,7 +170,7 @@ export default function MasterHome() {
 
             <ActionCard
               title="طلبات شراء الكتب"
-              count={pendingBookRequests.length}
+              count={needsAction.pendingBooksCount}
               description="راجع طلبات شراء الكتب التي ما زالت قيد المراجعة."
               to="/dashboard-master/book-requests"
               icon={faBoxesStacked}
@@ -280,7 +179,7 @@ export default function MasterHome() {
 
             <ActionCard
               title="امتحانات تحتاج تصحيحًا"
-              count={manualReviewResults.length}
+              count={needsAction.manualReviewCount}
               description="تابع النتائج التي تحتاج تصحيحًا يدويًا عند وجودها."
               to="/dashboard-master/results?filter=needs-review"
               icon={faClipboardCheck}
@@ -289,16 +188,11 @@ export default function MasterHome() {
           </div>
         </section>
 
-        {/* =====================================================
-            Latest Results
-        ====================================================== */}
-
+        {/* Latest Results */}
         <section className="mt-10">
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-extrabold text-gold">
-                النتائج الأخيرة
-              </p>
+              <p className="text-xs font-extrabold text-gold">النتائج الأخيرة</p>
 
               <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">
                 آخر 3 نتائج
@@ -310,7 +204,6 @@ export default function MasterHome() {
               className="hidden items-center gap-2 text-sm font-extrabold text-white/55 transition hover:text-gold sm:flex"
             >
               عرض النتائج
-
               <FontAwesomeIcon icon={faArrowLeft} />
             </Link>
           </div>
@@ -327,78 +220,60 @@ export default function MasterHome() {
               </div>
 
               <div className="divide-y divide-white/10">
-                {latestResults.map((result) => {
-                  const student = students.find(
-                    (item) =>
-                      String(item.id) === String(result.studentId),
-                  );
+                {latestResults.map((result) => (
+                  <div
+                    key={result.id}
+                    className="grid grid-cols-1 gap-3 px-5 py-5 lg:grid-cols-[1.1fr_1.4fr_1.1fr_0.8fr_0.8fr_0.7fr] lg:items-center lg:gap-4"
+                  >
+                    <div>
+                      <p className="text-sm font-black text-white">
+                        {result.studentName}
+                      </p>
 
-                  const exam = exams.find(
-                    (item) =>
-                      String(item.id) === String(result.examId),
-                  );
-
-                  const percentage =
-                    getResultPercentage(result);
-
-                  return (
-                    <div
-                      key={result.id}
-                      className="grid grid-cols-1 gap-3 px-5 py-5 lg:grid-cols-[1.1fr_1.4fr_1.1fr_0.8fr_0.8fr_0.7fr] lg:items-center lg:gap-4"
-                    >
-                      <div>
-                        <p className="text-sm font-black text-white">
-                          {student?.name ?? "غير محدد"}
-                        </p>
-
-                        <p className="mt-1 text-xs text-white/35">
-                          {getGradeLabel(student?.grade)}
-                        </p>
-                      </div>
-
-                      <div>
-                        <p className="text-sm font-bold text-white/85">
-                          {exam?.title ??
-                            result.title ??
-                            "غير محدد"}
-                        </p>
-
-                        <p className="mt-1 text-xs text-white/35">
-                          {exam?.sectionTitle ?? ""}
-                        </p>
-                      </div>
-
-                      <div className="text-sm font-bold text-white/70">
-                        {getCourseTitle(exam?.courseId)}
-                      </div>
-
-                      <div className="text-sm font-black text-white">
-                        {result.score} / {result.total}
-                      </div>
-
-                      <div>
-                        <span className="inline-flex rounded-lg bg-success/10 px-3 py-2 text-xs font-black text-success">
-                          {percentage}%
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between gap-3 lg:block">
-                        <span className="text-xs font-bold text-white/45">
-                          {formatDate(result.submittedAt)}
-                        </span>
-
-                        <Link
-                          to={`/dashboard-master/results/${result.id}`}
-                          className="inline-flex items-center gap-2 text-xs font-extrabold text-gold transition hover:text-gold-light"
-                        >
-                          عرض
-
-                          <FontAwesomeIcon icon={faArrowLeft} />
-                        </Link>
-                      </div>
+                      <p className="mt-1 text-xs text-white/35">
+                        {result.gradeLabel}
+                      </p>
                     </div>
-                  );
-                })}
+
+                    <div>
+                      <p className="text-sm font-bold text-white/85">
+                        {result.examTitle}
+                      </p>
+
+                      <p className="mt-1 text-xs text-white/35">
+                        {result.sectionTitle}
+                      </p>
+                    </div>
+
+                    <div className="text-sm font-bold text-white/70">
+                      {result.courseTitle}
+                    </div>
+
+                    <div className="text-sm font-black text-white">
+                      {result.score} / {result.total}
+                    </div>
+
+                    <div>
+                      <span className="inline-flex rounded-lg bg-success/10 px-3 py-2 text-xs font-black text-success">
+                        {result.percentage}%
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-3 lg:block">
+                      <span className="text-xs font-bold text-white/45">
+                        {formatDate(result.submittedAt)}
+                      </span>
+
+                      <Link
+                        to={`/dashboard-master/results/${result.id}`}
+                        className="inline-flex items-center gap-2 text-xs font-extrabold text-gold transition hover:text-gold-light"
+                      >
+                        عرض
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                      </Link>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ) : (
@@ -406,15 +281,10 @@ export default function MasterHome() {
           )}
         </section>
 
-        {/* =====================================================
-            Quick Shortcuts
-        ====================================================== */}
-
+        {/* Quick Shortcuts */}
         <section className="mt-10">
           <div className="mb-5">
-            <p className="text-xs font-extrabold text-gold">
-              أدوات سريعة
-            </p>
+            <p className="text-xs font-extrabold text-gold">أدوات سريعة</p>
 
             <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">
               اختصارات سريعة
@@ -448,24 +318,19 @@ export default function MasterHome() {
           </div>
         </section>
 
-        {/* =====================================================
-            Latest Activities
-        ====================================================== */}
-
+        {/* Latest Activities */}
         <section className="mt-10 pb-8">
           <div className="mb-5">
-            <p className="text-xs font-extrabold text-gold">
-              آخر ما تم
-            </p>
+            <p className="text-xs font-extrabold text-gold">آخر ما تم</p>
 
             <h2 className="mt-2 text-2xl font-black text-white sm:text-3xl">
               آخر النشاطات
             </h2>
           </div>
 
-          {activityItems.length > 0 ? (
+          {activities.length > 0 ? (
             <div className="rounded-2xl border border-white/10 bg-[#0c1a2b] p-2">
-              {activityItems.map((activity) => (
+              {activities.map((activity) => (
                 <div
                   key={activity.id}
                   className="flex flex-col gap-2 rounded-xl px-4 py-4 transition hover:bg-white/[0.025] sm:flex-row sm:items-center sm:justify-between"
@@ -504,14 +369,7 @@ export default function MasterHome() {
   );
 }
 
-function ActionCard({
-  title,
-  count,
-  description,
-  to,
-  icon,
-  buttonText,
-}) {
+function ActionCard({ title, count, description, to, icon, buttonText }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-[#0c1a2b] p-5 shadow-[0_15px_45px_rgba(0,0,0,0.12)]">
       <div className="flex items-start justify-between gap-4">
@@ -524,9 +382,7 @@ function ActionCard({
         </span>
       </div>
 
-      <h3 className="mt-5 text-lg font-black text-white">
-        {title}
-      </h3>
+      <h3 className="mt-5 text-lg font-black text-white">{title}</h3>
 
       <p className="mt-2 min-h-12 text-sm font-bold leading-7 text-white/45">
         {description}
@@ -537,7 +393,6 @@ function ActionCard({
         className="mt-5 inline-flex items-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-4 py-2.5 text-xs font-extrabold text-gold transition hover:bg-gold hover:text-midnight"
       >
         {buttonText}
-
         <FontAwesomeIcon icon={faArrowLeft} />
       </Link>
     </div>
@@ -558,10 +413,7 @@ function QuickLink({ to, icon, label }) {
         {label}
       </span>
 
-      <FontAwesomeIcon
-        icon={faArrowLeft}
-        className="text-white/30"
-      />
+      <FontAwesomeIcon icon={faArrowLeft} className="text-white/30" />
     </Link>
   );
 }

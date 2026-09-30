@@ -16,6 +16,8 @@ import { getCurrentStudent } from "../../services/studentService";
 
 import { isStudentEnrolled } from "../../services/enrollmentService";
 
+import { submitExamAttempt } from "../../services/resultService";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -164,13 +166,21 @@ export default function ExamInterface() {
     [examQuestions],
   );
 
+  const isSubmittingRef = useRef(false);
+
   const handleSubmit = useCallback(
-    (submittedAnswers = answersRef.current, automatic = false) => {
-      if (examQuestions.length === 0) {
+    async (submittedAnswers = answersRef.current, automatic = false) => {
+      if (examQuestions.length === 0 || isSubmittingRef.current) {
         return;
       }
 
+      isSubmittingRef.current = true;
+
       const autoScore = calculateAutoScore(submittedAnswers);
+
+      const essayTotal = examQuestions
+        .filter((question) => question.type === "essay")
+        .reduce((sum, question) => sum + (Number(question.score) || 0), 0);
 
       const submission = {
         examId,
@@ -187,9 +197,27 @@ export default function ExamInterface() {
         JSON.stringify(submission),
       );
 
+      // تسجيل النتيجة في results عشان تظهر عند المستر وفي صفحات الطالب
+      try {
+        const student = await getCurrentStudent();
+
+        if (student) {
+          await submitExamAttempt({
+            studentId: student.id,
+            examId,
+            answers: submittedAnswers,
+            ...autoScore,
+            essayTotal,
+            submittedAt: submission.submittedAt,
+          });
+        }
+      } catch (error) {
+        console.error("Failed to save exam result:", error);
+      }
+
       navigate(`/exam-result/${examId}`);
     },
-    [calculateAutoScore, examId, examQuestions.length, navigate],
+    [calculateAutoScore, examId, examQuestions, navigate],
   );
 
   const handleAutoSubmit = useCallback(() => {

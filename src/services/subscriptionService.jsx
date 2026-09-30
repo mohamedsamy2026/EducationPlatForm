@@ -2,6 +2,24 @@ import subscriptionRequests from "../data/subscriptionRequests";
 
 import { v4 as uuidv4 } from "uuid";
 
+import { createEnrollment } from "./enrollmentService";
+
+import { grantLessonAccess } from "./lessonAccessService";
+
+// مدة كل خطة بالأشهر (عدّلها لو مدة الترم مختلفة)
+const PLAN_DURATION_MONTHS = {
+  monthly: 1,
+  term: 4,
+};
+
+function addMonths(date, months) {
+  const result = new Date(date);
+
+  result.setMonth(result.getMonth() + months);
+
+  return result;
+}
+
 function generateReferenceNumber() {
   const uniquePart = uuidv4().slice(0, 8).toUpperCase();
 
@@ -112,4 +130,75 @@ export async function createSubscriptionRequest({
   subscriptionRequests.push(newRequest);
 
   return newRequest;
+}
+
+export async function getSubscriptionRequests() {
+  return [...subscriptionRequests];
+}
+
+export async function getSubscriptionRequestById(requestId) {
+  return (
+    subscriptionRequests.find(
+      (request) => String(request.id) === String(requestId),
+    ) ?? null
+  );
+}
+
+export async function approveSubscriptionRequest(requestId) {
+  const request = await getSubscriptionRequestById(requestId);
+
+  if (!request) {
+    throw new Error("الطلب غير موجود.");
+  }
+
+  if (request.status !== "pending") {
+    throw new Error("تمت مراجعة هذا الطلب من قبل.");
+  }
+
+  if (request.accessType === "lesson") {
+    await grantLessonAccess({
+      studentId: request.studentId,
+      courseId: request.courseId,
+      lessonId: request.lessonId,
+    });
+  } else {
+    const startsAt = new Date();
+
+    const endsAt = addMonths(
+      startsAt,
+      PLAN_DURATION_MONTHS[request.planId] ?? 1,
+    );
+
+    await createEnrollment({
+      studentId: request.studentId,
+      courseId: request.courseId,
+      planId: request.planId,
+      startsAt: startsAt.toISOString(),
+      endsAt: endsAt.toISOString(),
+      sourceRequestId: request.id,
+    });
+  }
+
+  request.status = "approved";
+  request.reviewedAt = new Date().toISOString();
+
+  return request;
+}
+
+export async function rejectSubscriptionRequest(requestId, reason = "") {
+  const request = await getSubscriptionRequestById(requestId);
+
+  if (!request) {
+    throw new Error("الطلب غير موجود.");
+  }
+
+  if (request.status !== "pending") {
+    throw new Error("تمت مراجعة هذا الطلب من قبل.");
+  }
+
+  request.status = "rejected";
+  request.rejectionReason = String(reason ?? "").trim();
+  request.reviewedAt = new Date().toISOString();
+
+  return request;
 }

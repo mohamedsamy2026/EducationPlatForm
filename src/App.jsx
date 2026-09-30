@@ -24,6 +24,7 @@ import Subscription from "./Page/Subscription";
 // Master DashBoard
 import MasterLayout from "./Components/DashboardMaster/MasterLayout";
 import MasterHome from "./Page/DashboardMaster/MasterHome";
+import MasterPlaceholder from "./Page/DashboardMaster/MasterPlaceholder";
 
 import "./App.css";
 
@@ -61,6 +62,8 @@ export default function App() {
         {/* Dashboard Master */}
         <Route path="/dashboard-master" element={<MasterLayout />}>
           <Route index element={<MasterHome />} />
+          {/* أي صفحة مستر لسه ما اتعملتش. لما تجهز صفحة حط الـ Route بتاعها فوق السطر ده */}
+          <Route path="*" element={<MasterPlaceholder />} />
         </Route>
 
         {/* Dashboard Student */}
