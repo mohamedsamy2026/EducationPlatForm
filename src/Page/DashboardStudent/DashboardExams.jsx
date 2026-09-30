@@ -254,7 +254,7 @@ export default function DashboardExams() {
               title="لا توجد اختبارات متاحة حاليًا."
               description="ستظهر هنا الاختبارات الخاصة بالكورسات التي اشتركت فيها."
               buttonText="استكشف الكورسات"
-              buttonTo="/dashboard-courses"
+              buttonTo="/dashboard-student/courses"
             />
           )}
         </div>

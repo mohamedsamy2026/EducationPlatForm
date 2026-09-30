@@ -9,12 +9,13 @@ export default function MasterLayout() {
             <div className="border-b border-white/10 px-6 py-6">
               <p className="text-xl font-black text-white">
                 لوحة المستر
-              </p>
+              </p>np
 
               <p className="mt-1 text-xs text-white/45">
                 الغازي في التاريخ
               </p>
             </div>
+            <Sidebar/>
 
             <div className="flex-1" />
           </div>
