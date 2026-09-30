@@ -62,9 +62,8 @@ export default function App() {
         {/* Dashboard Master */}
         <Route path="/dashboard-master" element={<MasterLayout />}>
           <Route index element={<MasterHome />} />
-          {/* أي صفحة مستر لسه ما اتعملتش. لما تجهز صفحة حط الـ Route بتاعها فوق السطر ده */}
-          <Route path="*" element={<MasterPlaceholder />} />
         </Route>
+          <Route path="*" element={<MasterPlaceholder />} />
 
         {/* Dashboard Student */}
         <Route path="/dashboard-student" element={<DashboardLayout />}>

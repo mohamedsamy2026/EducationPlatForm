@@ -73,6 +73,7 @@ export async function getMasterDashboardSummary() {
       result.needsManualGrading === true || result.status === "needs_review",
   ).length;
 
+
   // ---------- Latest Results ----------
   const latestResults = [...results]
     .sort((a, b) => toTime(b.submittedAt) - toTime(a.submittedAt))
@@ -94,6 +95,8 @@ export async function getMasterDashboardSummary() {
         submittedAt: result.submittedAt,
       };
     });
+
+    
 
   // ---------- Latest Activities ----------
   const activities = [
