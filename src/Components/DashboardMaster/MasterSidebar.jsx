@@ -151,7 +151,7 @@ export default function MasterSidebar() {
         </div>
 
         {/* روابط الـSidebar */}
-        <nav className="flex-1 overflow-y-auto px-4 py-5">
+        <nav className="flex-1 overflow-y-auto px-4 py-5 [scrollbar-width:thin] [scrollbar-color:rgba(212,175,55,0.3)_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gold/30 hover:[&::-webkit-scrollbar-thumb]:bg-gold/50">
           <div className="space-y-1.5">
             {navItems.map((item) => (
               <NavLink
