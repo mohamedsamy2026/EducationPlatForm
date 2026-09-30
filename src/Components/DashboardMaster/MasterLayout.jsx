@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./MasterSidebar";
+import Topbar from "./MasterTopbar";
 export default function MasterLayout() {
   return (
     <div dir="rtl" className="min-h-screen bg-midnight text-white">
@@ -22,7 +23,7 @@ export default function MasterLayout() {
         </aside>
 
         <div className="min-w-0 flex-1">
-          <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-white/10 bg-midnight/90 px-5 backdrop-blur-md lg:px-8">
+          <header className="sticky top-0 z-30 flex h-21 items-center justify-between border-b border-white/10 bg-midnight/90 px-5 backdrop-blur-md lg:px-8">
             <div>
               <p className="text-sm font-bold text-white/50">
                 لوحة التحكم
@@ -33,6 +34,7 @@ export default function MasterLayout() {
               </h1>
             </div>
           </header>
+          <Topbar/>
 
           <main className="min-w-0">
             <Outlet />
