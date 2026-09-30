@@ -113,3 +113,14 @@ export async function rejectBookPurchaseRequest(requestId, reason = "") {
 
   return request;
 }
+
+export async function deleteBookPurchaseRequestsByStudentId(studentId) {
+  let deletedCount = 0;
+  for (let index = bookPurchaseRequests.length - 1; index >= 0; index -= 1) {
+    if (String(bookPurchaseRequests[index].studentId) === String(studentId)) {
+      bookPurchaseRequests.splice(index, 1);
+      deletedCount += 1;
+    }
+  }
+  return deletedCount;
+}

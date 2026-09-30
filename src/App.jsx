@@ -21,10 +21,12 @@ import ExamInterface from "./Page/DashboardStudent/ExamInterface";
 import LessonPage from "./Page/DashboardStudent/LessonPage";
 import Subscription from "./Page/Subscription";
 
-// Master DashBoard
+// Master Dashboard
 import MasterLayout from "./Components/DashboardMaster/MasterLayout";
 import MasterHome from "./Page/DashboardMaster/MasterHome";
 import MasterPlaceholder from "./Page/DashboardMaster/MasterPlaceholder";
+import MasterStudents from "./Page/DashboardMaster/MasterStudents";
+import MasterStudentDetails from "./Page/DashboardMaster/MasterStudentDetails";
 
 import "./App.css";
 
@@ -44,26 +46,20 @@ export default function App() {
         <Route path="/books/:bookId/purchase" element={<BookPurchase />} />
         <Route path="/exam-result/:examId" element={<ExamResult />} />
 
-        <Route
-          path="/dashboard-student/exams/:examId"
-          element={<ExamInterface />}
-        />
-        <Route
-          path="/courses/:courseId/lessons/:lessonId"
-          element={<LessonPage />}
-        />
+        <Route path="/dashboard-student/exams/:examId" element={<ExamInterface />} />
+        <Route path="/courses/:courseId/lessons/:lessonId" element={<LessonPage />} />
+        <Route path="/subscription/:courseId/:planId" element={<Subscription />} />
 
-        <Route
-          path="/subscription/:courseId/:planId"
-          element={<Subscription />}
-        />
-
-        {/* Dashboard Master */}
+        {/* Master Dashboard */}
         <Route path="/dashboard-master" element={<MasterLayout />}>
           <Route index element={<MasterHome />} />
+          <Route path="students" element={<MasterStudents />} />
+          <Route path="students/:studentId" element={<MasterStudentDetails />} />
+          {/* Keep the fallback after all implemented Master routes. */}
+          <Route path="*" element={<MasterPlaceholder />} />
         </Route>
 
-        {/* Dashboard Student */}
+        {/* Student Dashboard */}
         <Route path="/dashboard-student" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
           <Route path="courses" element={<DashboardCourses />} />
@@ -73,9 +69,6 @@ export default function App() {
           <Route path="profile" element={<DashboardProfile />} />
           <Route path="support" element={<DashboardSupport />} />
         </Route>
-
-
-        <Route path="*" element={<MasterPlaceholder />} />
       </Routes>
     </>
   );

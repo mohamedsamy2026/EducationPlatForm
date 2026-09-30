@@ -202,3 +202,14 @@ export async function rejectSubscriptionRequest(requestId, reason = "") {
 
   return request;
 }
+
+export async function deleteSubscriptionRequestsByStudentId(studentId) {
+  let deletedCount = 0;
+  for (let index = subscriptionRequests.length - 1; index >= 0; index -= 1) {
+    if (String(subscriptionRequests[index].studentId) === String(studentId)) {
+      subscriptionRequests.splice(index, 1);
+      deletedCount += 1;
+    }
+  }
+  return deletedCount;
+}

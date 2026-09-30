@@ -54,3 +54,14 @@ export async function grantLessonAccess({ studentId, courseId, lessonId }) {
 
   return newAccess;
 }
+
+export async function deleteLessonAccessByStudentId(studentId) {
+  let deletedCount = 0;
+  for (let index = lessonAccess.length - 1; index >= 0; index -= 1) {
+    if (String(lessonAccess[index].studentId) === String(studentId)) {
+      lessonAccess.splice(index, 1);
+      deletedCount += 1;
+    }
+  }
+  return deletedCount;
+}

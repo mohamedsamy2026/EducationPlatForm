@@ -67,3 +67,14 @@ export async function createEnrollment({
 
   return newEnrollment;
 }
+
+export async function deleteEnrollmentsByStudentId(studentId) {
+  let deletedCount = 0;
+  for (let index = enrollments.length - 1; index >= 0; index -= 1) {
+    if (String(enrollments[index].studentId) === String(studentId)) {
+      enrollments.splice(index, 1);
+      deletedCount += 1;
+    }
+  }
+  return deletedCount;
+}

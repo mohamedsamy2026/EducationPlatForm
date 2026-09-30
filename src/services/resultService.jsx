@@ -78,3 +78,14 @@ export async function submitExamAttempt({
 
   return newResult;
 }
+
+export async function deleteResultsByStudentId(studentId) {
+  let deletedCount = 0;
+  for (let index = results.length - 1; index >= 0; index -= 1) {
+    if (String(results[index].studentId) === String(studentId)) {
+      results.splice(index, 1);
+      deletedCount += 1;
+    }
+  }
+  return deletedCount;
+}
