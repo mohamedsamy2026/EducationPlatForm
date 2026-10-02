@@ -10,6 +10,10 @@ const lessons = [
         duration: "15 دقيقة",
         description:
           "نظرة عامة على مادة الدراسات الاجتماعية، وأهميتها، والأدوات الأساسية المستطاعة لدراستها.",
+        videoUrl:
+          "https://www.youtube.com/watch?v=Qq7igm8WmX0&pp=ygUN2LTYsditINi52YTZhQ%3D%3D",
+        materialUrl:
+          "https://drive.google.com/file/d/1kTskQwo8hevRYot9cxd4FgLIlppQbWeV/view?usp=drive_link",
       },
       {
         id: "ss-prep-lesson-2",

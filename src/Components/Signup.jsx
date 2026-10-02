@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // FontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,7 +21,7 @@ import SignupHome from "../assets/Background/signup.jpg";
 import Master from "../assets/Master/master.webp";
 
 // Data
-import grades from "../data/grades";
+import { getGrades } from "../services/gradeService";
 
 // React Router
 import { Link } from "react-router-dom";
@@ -41,7 +41,7 @@ const EGYPTIAN_MOBILE_REGEX = /^01[0125][0-9]{8}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NAME_REGEX = /^[\u0600-\u06FFa-zA-Z\s]+$/;
 
-function validateSignupForm(formData) {
+function validateSignupForm(formData, grades) {
   const errors = {};
 
   const normalizedName = formData.fullName.trim();
@@ -107,6 +107,23 @@ export default function Signup() {
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [grades, setGrades] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadGrades() {
+      const allGrades = await getGrades();
+
+      if (!cancelled) setGrades(allGrades);
+    }
+
+    loadGrades();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const fields = [
     {
@@ -224,7 +241,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validationErrors = validateSignupForm(formData);
+    const validationErrors = validateSignupForm(formData, grades);
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);

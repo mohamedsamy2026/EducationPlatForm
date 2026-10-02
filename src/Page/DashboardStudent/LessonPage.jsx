@@ -31,12 +31,6 @@ import {
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 
-const DEMO_YOUTUBE_URL =
-  "https://www.youtube.com/watch?v=Qq7igm8WmX0&pp=ygUN2LTYsditINi52YTZhQ%3D%3D";
-
-const DEMO_DRIVE_URL =
-  "https://drive.google.com/file/d/1kTskQwo8hevRYot9cxd4FgLIlppQbWeV/view?usp=drive_link";
-
 export default function LessonPage() {
   const { courseId, lessonId } = useParams();
 
@@ -169,13 +163,10 @@ export default function LessonPage() {
     );
   }, [currentUnit, exams]);
 
-  const isDemoLesson = String(currentLesson?.id) === "ss-prep-lesson-1";
+  // روابط الفيديو والملزمة بتيجي من بيانات الدرس نفسها (الداتا/الخدمة)
+  const videoUrl = currentLesson?.videoUrl ?? null;
 
-  const videoUrl =
-    currentLesson?.videoUrl ?? (isDemoLesson ? DEMO_YOUTUBE_URL : null);
-
-  const materialUrl =
-    currentLesson?.materialUrl ?? (isDemoLesson ? DEMO_DRIVE_URL : null);
+  const materialUrl = currentLesson?.materialUrl ?? null;
 
   // Loading
 

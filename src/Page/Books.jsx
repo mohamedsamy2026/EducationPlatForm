@@ -7,21 +7,11 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import BookCard from "../Components/Books/BookCard";
 import { getBooks } from "../services/bookService";
-import grades from "../data/grades";
-
-const gradeFilters = [
-   { 
-    id: "all",
-    label: "الكل" 
-    },
-    ...grades.map((grade) => ({
-    id: grade.id,
-    label: grade.label,
-  })),
-];
+import { getGrades } from "../services/gradeService";
 
 export default function Books() {
   const [books, setBooks] = useState(null);
+  const [grades, setGrades] = useState([]);
   const [selectedGrade, setSelectedGrade] = useState("all");
 
   useEffect(() => {
@@ -29,11 +19,15 @@ export default function Books() {
 
     async function loadBooks() {
       try {
-        const allBooks = await getBooks();
+        const [allBooks, allGrades] = await Promise.all([
+          getBooks(),
+          getGrades(),
+        ]);
 
         if (cancelled) return;
 
         setBooks(allBooks);
+        setGrades(allGrades);
       } catch {
         if (cancelled) return;
 
@@ -47,6 +41,14 @@ export default function Books() {
       cancelled = true;
     };
   }, []);
+
+  const gradeFilters = [
+    { id: "all", label: "الكل" },
+    ...grades.map((grade) => ({
+      id: grade.id,
+      label: grade.label,
+    })),
+  ];
 
   const filteredBooks = useMemo(() => {
     if (!books) return [];
