@@ -9,6 +9,7 @@ import { getCurrentStudent } from "../../services/studentService";
 import { getBooksByStudentGrade } from "../../services/bookService";
 
 import { getBookPurchaseRequestsByStudentId } from "../../services/bookPurchaseService";
+import { getPurchasedBookIdsByStudentId } from "../../services/bookPurchasesService";
 
 import DashboardBookCard from "../../Components/DashboardStudent/DashboardBookCard";
 import { getGradeLabel } from "../../utils/gradeUtils";
@@ -19,6 +20,7 @@ export default function DashboardBooks() {
   const [books, setBooks] = useState([]);
 
   const [purchaseRequests, setPurchaseRequests] = useState([]);
+  const [ownedBookIds, setOwnedBookIds] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -40,9 +42,10 @@ export default function DashboardBooks() {
           return;
         }
 
-        const [studentBooks, requests] = await Promise.all([
+        const [studentBooks, requests, ownedIds] = await Promise.all([
           getBooksByStudentGrade(currentStudent.grade),
           getBookPurchaseRequestsByStudentId(currentStudent.id),
+          getPurchasedBookIdsByStudentId(currentStudent.id),
         ]);
 
         if (cancelled) return;
@@ -50,6 +53,7 @@ export default function DashboardBooks() {
         setStudent(currentStudent);
         setBooks(studentBooks);
         setPurchaseRequests(requests);
+        setOwnedBookIds(ownedIds);
       } catch {
         if (cancelled) return;
 
@@ -142,8 +146,11 @@ export default function DashboardBooks() {
                   key={book.id}
                   book={book}
                   purchaseStatus={
-                    purchaseStatusByBookId.get(String(book.id)) ?? null
+                    ownedBookIds.includes(String(book.id))
+                      ? "approved"
+                      : (purchaseStatusByBookId.get(String(book.id)) ?? null)
                   }
+                  isUnavailable={book.availability === "unavailable"}
                 />
               ))}
             </div>

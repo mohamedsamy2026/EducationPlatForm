@@ -13,6 +13,9 @@ import {
 
 import { faTelegram } from "@fortawesome/free-brands-svg-icons";
 
+import useAsyncData from "../../hooks/useAsyncData";
+import { getMasterProfile } from "../../services/masterProfileService";
+
 // اسم كل قسم يظهر في الشريط الرفيع حسب أول جزء بعد /dashboard-master
 const PAGE_TITLES = {
   students: "الطلاب",
@@ -27,10 +30,15 @@ const PAGE_TITLES = {
 };
 
 export default function MasterTopbar({
-  masterName = "مستر محمد خالد",
-  telegramUrl = "https://t.me/mohamed25721",
+  masterName: defaultName = "مستر محمد خالد",
+  telegramUrl: defaultTelegramUrl = "https://t.me/mohamed25721",
 }) {
   const { pathname } = useLocation();
+
+  // الاسم ورابط Telegram بيتقروا من إعدادات المستر (والقيم الافتراضية لحد ما توصل)
+  const { data: profile } = useAsyncData(() => getMasterProfile(), [pathname]);
+  const masterName = profile?.name || defaultName;
+  const telegramUrl = profile?.telegramUrl || defaultTelegramUrl;
 
   // الرئيسية فقط: /dashboard-master أو /dashboard-master/
   const isHome = pathname.replace(/\/+$/, "") === "/dashboard-master";

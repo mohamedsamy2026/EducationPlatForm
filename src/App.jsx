@@ -27,6 +27,20 @@ import MasterHome from "./Page/DashboardMaster/MasterHome";
 import MasterPlaceholder from "./Page/DashboardMaster/MasterPlaceholder";
 import MasterStudents from "./Page/DashboardMaster/MasterStudents";
 import MasterStudentDetails from "./Page/DashboardMaster/MasterStudentDetails";
+import MasterCourses from "./Page/DashboardMaster/MasterCourses";
+import MasterCourseForm from "./Page/DashboardMaster/MasterCourseForm";
+import MasterCourseContent from "./Page/DashboardMaster/MasterCourseContent";
+import MasterExams from "./Page/DashboardMaster/MasterExams";
+import MasterExamForm from "./Page/DashboardMaster/MasterExamForm";
+import MasterExamManage from "./Page/DashboardMaster/MasterExamManage";
+import MasterResults from "./Page/DashboardMaster/MasterResults";
+import MasterResultDetails from "./Page/DashboardMaster/MasterResultDetails";
+import MasterSubscriptions from "./Page/DashboardMaster/MasterSubscriptions";
+import MasterBookRequests from "./Page/DashboardMaster/MasterBookRequests";
+import MasterBooks from "./Page/DashboardMaster/MasterBooks";
+import MasterBookForm from "./Page/DashboardMaster/MasterBookForm";
+import MasterLessonAccess from "./Page/DashboardMaster/MasterLessonAccess";
+import MasterSettings from "./Page/DashboardMaster/MasterSettings";
 
 import "./App.css";
 
@@ -55,6 +69,23 @@ export default function App() {
           <Route index element={<MasterHome />} />
           <Route path="students" element={<MasterStudents />} />
           <Route path="students/:studentId" element={<MasterStudentDetails />} />
+          <Route path="courses" element={<MasterCourses />} />
+          <Route path="courses/new" element={<MasterCourseForm />} />
+          <Route path="courses/:courseId" element={<MasterCourseContent />} />
+          <Route path="courses/:courseId/edit" element={<MasterCourseForm />} />
+          <Route path="exams" element={<MasterExams />} />
+          <Route path="exams/new" element={<MasterExamForm />} />
+          <Route path="exams/:examId" element={<MasterExamManage />} />
+          <Route path="exams/:examId/edit" element={<MasterExamForm />} />
+          <Route path="results" element={<MasterResults />} />
+          <Route path="results/:resultId" element={<MasterResultDetails />} />
+          <Route path="subscriptions" element={<MasterSubscriptions />} />
+          <Route path="book-requests" element={<MasterBookRequests />} />
+          <Route path="books" element={<MasterBooks />} />
+          <Route path="books/new" element={<MasterBookForm />} />
+          <Route path="books/:bookId/edit" element={<MasterBookForm />} />
+          <Route path="lesson-access" element={<MasterLessonAccess />} />
+          <Route path="settings" element={<MasterSettings />} />
           {/* Keep the fallback after all implemented Master routes. */}
           <Route path="*" element={<MasterPlaceholder />} />
         </Route>

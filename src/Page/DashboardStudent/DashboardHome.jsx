@@ -5,7 +5,10 @@ import { getGradeLabel } from "../../utils/gradeUtils";
 // SERVICES
 import { getCurrentStudent } from "../../services/studentService";
 import { getCourses } from "../../services/courseService";
-import { getEnrollmentsByStudentId } from "../../services/enrollmentService";
+import {
+  getEnrollmentsByStudentId,
+  isEnrollmentActive,
+} from "../../services/enrollmentService";
 import { getExamsByCourseId } from "../../services/examService";
 import { getResultsByStudentId } from "../../services/resultService";
 
@@ -64,7 +67,7 @@ export default function DashboardHome() {
 
         // الكورسات المشترك فيها الطالب حاليًا
         const activeEnrollments = studentEnrollments.filter(
-          (enrollment) => enrollment.status === "active",
+          (enrollment) => isEnrollmentActive(enrollment),
         );
 
         const activeCourseIds = activeEnrollments.map(
@@ -109,7 +112,7 @@ export default function DashboardHome() {
     .filter(
       (enrollment) =>
         enrollment.studentId === currentStudent?.id &&
-        enrollment.status === "active",
+        isEnrollmentActive(enrollment),
     )
     .map((enrollment) => enrollment.courseId);
 

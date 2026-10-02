@@ -7,7 +7,10 @@ import { getGradeLabel } from "../../utils/gradeUtils";
 
 import { getCurrentStudent } from "../../services/studentService";
 import { getCourses } from "../../services/courseService";
-import { getEnrollmentsByStudentId } from "../../services/enrollmentService";
+import {
+  getEnrollmentsByStudentId,
+  isEnrollmentActive,
+} from "../../services/enrollmentService";
 
 // ICONS
 
@@ -124,7 +127,7 @@ export default function DashboardCourses() {
                     (enrollment) =>
                       enrollment.studentId === student.id &&
                       enrollment.courseId === course.id &&
-                      enrollment.status === "active",
+                      isEnrollmentActive(enrollment),
                   );
 
                   return (

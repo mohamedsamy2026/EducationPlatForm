@@ -6,12 +6,7 @@ export async function getMessages() {
   return [...mockMessages];
 }
 
-export async function sendMessage({
-  conversationId,
-  senderRole,
-  type = "text",
-  text = "",
-}) {
+export async function sendMessage({ conversationId, senderRole, type = "text", text = "" }) {
   const newMessage = {
     id: `msg-${Date.now()}`,
     conversationId,
@@ -27,4 +22,13 @@ export async function sendMessage({
   mockMessages.push(newMessage);
 
   return newMessage;
+}
+
+// خدمات لوحة المستر
+export async function deleteAllMessages() {
+  const count = mockMessages.length;
+
+  mockMessages = [];
+
+  return count;
 }

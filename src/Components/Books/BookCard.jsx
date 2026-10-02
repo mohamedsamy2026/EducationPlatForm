@@ -60,13 +60,19 @@ export default function BookCard({ book }) {
           </div>
         </div>
 
-        <Link
-          to={`/books/${book.id}/purchase`}
-          className="mt-auto flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-5 py-3.5 text-sm font-extrabold text-midnight shadow-[0_8px_25px_rgba(212,175,55,0.10)] transition-all duration-300 hover:gap-5 hover:bg-gold-light hover:shadow-[0_12px_30px_rgba(212,175,55,0.20)]"
-        >
-          <span>شراء الكتاب</span>
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </Link>
+        {book.availability === "unavailable" ? (
+          <div className="mt-auto flex w-full items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3.5 text-sm font-extrabold text-white/45">
+            غير متاح للشراء حاليًا
+          </div>
+        ) : (
+          <Link
+            to={`/books/${book.id}/purchase`}
+            className="mt-auto flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-5 py-3.5 text-sm font-extrabold text-midnight shadow-[0_8px_25px_rgba(212,175,55,0.10)] transition-all duration-300 hover:gap-5 hover:bg-gold-light hover:shadow-[0_12px_30px_rgba(212,175,55,0.20)]"
+          >
+            <span>شراء الكتاب</span>
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </Link>
+        )}
       </div>
 
       <div className="absolute bottom-0 left-1/2 h-px w-0 -translate-x-1/2 bg-gold transition-all duration-500 group-hover:w-1/2" />

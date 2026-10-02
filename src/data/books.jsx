@@ -13,6 +13,7 @@ const books = [
     description:
       "مراجعة منظمة تساعدك على فهم أهم موضوعات الدراسات الاجتماعية بطريقة واضحة.",
     price: 150,
+    availability: "available",
     image: book1,
   },
   {
@@ -23,6 +24,7 @@ const books = [
     description:
       "محتوى مرتب ومركز على أهم النقاط والأسئلة التي تحتاجها أثناء المذاكرة.",
     price: 200,
+    availability: "available",
     image: book2,
   },
   {
@@ -33,6 +35,7 @@ const books = [
     description:
       "مراجعة شاملة بأسلوب بسيط تساعدك على تثبيت المعلومات والاستعداد للامتحان.",
     price: 250,
+    availability: "available",
     image: book3,
   },
   {
@@ -43,6 +46,7 @@ const books = [
     description:
       "شرح ومراجعة لأهم موضوعات التاريخ مع تنظيم يساعدك على الربط والفهم.",
     price: 250,
+    availability: "available",
     image: book4,
   },
   {
@@ -53,6 +57,7 @@ const books = [
     description:
       "مراجعة مركزة تساعدك على ترتيب المعلومات وفهم أهم الأحداث والنقاط الأساسية.",
     price: 280,
+    availability: "available",
     image: book5,
   },
   {
@@ -63,6 +68,7 @@ const books = [
     description:
       "محتوى مراجعة منظم يركز على الفهم والربط والاستعداد الجيد للاختبارات.",
     price: 320,
+    availability: "available",
     image: book6,
   },
 ];

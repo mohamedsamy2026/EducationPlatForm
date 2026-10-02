@@ -19,7 +19,11 @@ function formatPrice(price) {
   return `${new Intl.NumberFormat("ar-EG").format(price)} جنيه`;
 }
 
-export default function DashboardBookCard({ book, purchaseStatus = null }) {
+export default function DashboardBookCard({
+  book,
+  purchaseStatus = null,
+  isUnavailable = false,
+}) {
   const isPending = purchaseStatus === "pending";
   const isApproved = purchaseStatus === "approved";
   const isRejected = purchaseStatus === "rejected";
@@ -71,6 +75,10 @@ export default function DashboardBookCard({ book, purchaseStatus = null }) {
           <div className="mt-auto flex w-full items-center justify-center gap-2 rounded-xl border border-gold/20 bg-gold/10 px-5 py-3.5 text-sm font-extrabold text-gold">
             <FontAwesomeIcon icon={faClock} />
             الطلب قيد المراجعة
+          </div>
+        ) : isUnavailable ? (
+          <div className="mt-auto flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3.5 text-sm font-extrabold text-white/45">
+            غير متاح للشراء حاليًا
           </div>
         ) : isRejected ? (
           <Link

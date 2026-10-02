@@ -27,9 +27,7 @@ function generateReferenceNumber() {
 }
 
 export async function getSubscriptionRequestsByStudentId(studentId) {
-  return subscriptionRequests.filter(
-    (request) => String(request.studentId) === String(studentId),
-  );
+  return subscriptionRequests.filter((request) => String(request.studentId) === String(studentId));
 }
 
 export async function getPendingSubscriptionRequest({
@@ -40,8 +38,7 @@ export async function getPendingSubscriptionRequest({
   lessonId,
 }) {
   return (
-    subscriptionRequests.find((request) => { 
-
+    subscriptionRequests.find((request) => {
       const sameStudent = String(request.studentId) === String(studentId);
 
       const sameCourse = String(request.courseId) === String(courseId);
@@ -53,16 +50,10 @@ export async function getPendingSubscriptionRequest({
       }
 
       if (accessType === "lesson") {
-        return (
-          String(request.lessonId) === String(lessonId) &&
-          request.status === "pending"
-        );
+        return String(request.lessonId) === String(lessonId) && request.status === "pending";
       }
 
-      return (
-        String(request.planId) === String(planId) &&
-        request.status === "pending"
-      );
+      return String(request.planId) === String(planId) && request.status === "pending";
     }) ?? null
   );
 }
@@ -137,11 +128,7 @@ export async function getSubscriptionRequests() {
 }
 
 export async function getSubscriptionRequestById(requestId) {
-  return (
-    subscriptionRequests.find(
-      (request) => String(request.id) === String(requestId),
-    ) ?? null
-  );
+  return subscriptionRequests.find((request) => String(request.id) === String(requestId)) ?? null;
 }
 
 export async function approveSubscriptionRequest(requestId) {
@@ -164,10 +151,7 @@ export async function approveSubscriptionRequest(requestId) {
   } else {
     const startsAt = new Date();
 
-    const endsAt = addMonths(
-      startsAt,
-      PLAN_DURATION_MONTHS[request.planId] ?? 1,
-    );
+    const endsAt = addMonths(startsAt, PLAN_DURATION_MONTHS[request.planId] ?? 1);
 
     await createEnrollment({
       studentId: request.studentId,
@@ -185,7 +169,7 @@ export async function approveSubscriptionRequest(requestId) {
   return request;
 }
 
-export async function rejectSubscriptionRequest(requestId, reason = "") {
+export async function rejectSubscriptionRequest(requestId) {
   const request = await getSubscriptionRequestById(requestId);
 
   if (!request) {
@@ -197,7 +181,6 @@ export async function rejectSubscriptionRequest(requestId, reason = "") {
   }
 
   request.status = "rejected";
-  request.rejectionReason = String(reason ?? "").trim();
   request.reviewedAt = new Date().toISOString();
 
   return request;
@@ -212,4 +195,37 @@ export async function deleteSubscriptionRequestsByStudentId(studentId) {
     }
   }
   return deletedCount;
+}
+
+export async function deleteSubscriptionRequest(requestId) {
+  const index = subscriptionRequests.findIndex(
+    (request) => String(request.id) === String(requestId),
+  );
+
+  if (index === -1) return false;
+
+  subscriptionRequests.splice(index, 1);
+
+  return true;
+}
+
+export async function deleteAllSubscriptionRequests() {
+  const count = subscriptionRequests.length;
+
+  subscriptionRequests.splice(0, subscriptionRequests.length);
+
+  return count;
+}
+
+export async function deleteSubscriptionRequestsByCourseId(courseId) {
+  let count = 0;
+
+  for (let index = subscriptionRequests.length - 1; index >= 0; index -= 1) {
+    if (String(subscriptionRequests[index].courseId) === String(courseId)) {
+      subscriptionRequests.splice(index, 1);
+      count += 1;
+    }
+  }
+
+  return count;
 }

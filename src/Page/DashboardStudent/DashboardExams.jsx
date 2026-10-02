@@ -12,7 +12,10 @@ import { getExamsByCourseId } from "../../services/examService";
 
 import { getResultsByStudentId } from "../../services/resultService";
 
-import { getEnrollmentsByStudentId } from "../../services/enrollmentService";
+import {
+  getEnrollmentsByStudentId,
+  isEnrollmentActive,
+} from "../../services/enrollmentService";
 
 import { getCourses } from "../../services/courseService";
 
@@ -57,7 +60,7 @@ export default function DashboardExams() {
           .filter(
             (enrollment) =>
               enrollment.studentId === student.id &&
-              enrollment.status === "active",
+              isEnrollmentActive(enrollment),
           )
           .map((enrollment) => enrollment.courseId);
 

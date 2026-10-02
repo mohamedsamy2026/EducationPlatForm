@@ -4,6 +4,7 @@ const exams = [
     unitId: "social-studies-preparatory-unit-1", // 👈 إضافة unitId الصريح
     title: "اختبار الوحدة الأولى",
     courseId: "social-studies-preparatory",
+    published: true,
     sectionTitle: "الوحدة الأولى",
     durationMinutes: 1,
     totalQuestions: 20,
@@ -15,6 +16,7 @@ const exams = [
     unitId: "social-studies-preparatory-unit-1",
     title: "اختبار الدرس الثالث",
     courseId: "social-studies-preparatory",
+    published: true,
     sectionTitle: "الوحدة الأولى",
     durationMinutes: 25,
     totalQuestions: 20,
@@ -26,6 +28,7 @@ const exams = [
     unitId: null, // مراجعة عامة لا تتبع وحدة محددة
     title: "اختبار المراجعة السابقة",
     courseId: "social-studies-preparatory",
+    published: true,
     sectionTitle: "مراجعة عامة",
     durationMinutes: 20,
     totalQuestions: 10,
@@ -37,6 +40,7 @@ const exams = [
     unitId: null,
     title: "اختبار المراجعة السابقة",
     courseId: "social-studies-preparatory",
+    published: true,
     sectionTitle: "مراجعة عامة",
     durationMinutes: 20,
     totalQuestions: 10,
@@ -48,6 +52,7 @@ const exams = [
     unitId: null,
     title: "اختبار المراجعة السابقة",
     courseId: "social-studies-preparatory",
+    published: true,
     sectionTitle: "مراجعة عامة",
     durationMinutes: 20,
     totalQuestions: 10,
@@ -59,6 +64,7 @@ const exams = [
     unitId: "social-studies-preparatory-unit-1", // تصحيح الربط بالوحدة الأولى
     title: "اختبار علي الوحده الاولي",
     courseId: "social-studies-preparatory",
+    published: true,
     sectionTitle: "الوحدة الأولى",
     durationMinutes: 20,
     totalQuestions: 10,

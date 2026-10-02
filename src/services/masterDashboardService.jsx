@@ -1,14 +1,13 @@
 import { getStudents } from "./studentService";
-import { getCourses } from "./courseService";
+import { getAllCourses } from "./courseService";
 import { getExams } from "./examService";
 import { getResults } from "./resultService";
-import { getEnrollments } from "./enrollmentService";
+import { getEnrollments, isEnrollmentActive } from "./enrollmentService";
 import { getSubscriptionRequests } from "./subscriptionService";
 import { getBookPurchaseRequests } from "./bookPurchaseService";
 
 import { getGradeLabel } from "../utils/gradeUtils";
-
-const UNKNOWN = "غير محدد";
+import { UNKNOWN_LABEL as UNKNOWN } from "../constants/statusLabels";
 
 function toTime(value) {
   return new Date(value).getTime();
@@ -38,7 +37,7 @@ export async function getMasterDashboardSummary() {
     bookPurchaseRequests,
   ] = await Promise.all([
     getStudents(),
-    getCourses(),
+    getAllCourses(),
     getExams(),
     getResults(),
     getEnrollments(),
@@ -55,8 +54,8 @@ export async function getMasterDashboardSummary() {
   const examTitle = (id) => examsById.get(String(id))?.title ?? UNKNOWN;
 
   // ---------- Stats ----------
-  const activeEnrollmentsCount = enrollments.filter(
-    (enrollment) => enrollment.status === "active",
+  const activeEnrollmentsCount = enrollments.filter((enrollment) =>
+    isEnrollmentActive(enrollment),
   ).length;
 
   const pendingSubscriptionsCount = subscriptionRequests.filter(
@@ -69,10 +68,8 @@ export async function getMasterDashboardSummary() {
 
   // هتشتغل تلقائيًا لما نضيف status خاص بالتصحيح في الداتا لاحقًا.
   const manualReviewCount = results.filter(
-    (result) =>
-      result.needsManualGrading === true || result.status === "needs_review",
+    (result) => result.needsManualGrading === true || result.status === "needs_review",
   ).length;
-
 
   // ---------- Latest Results ----------
   const latestResults = [...results]
@@ -96,8 +93,6 @@ export async function getMasterDashboardSummary() {
       };
     });
 
-    
-
   // ---------- Latest Activities ----------
   const activities = [
     ...results.map((result) => ({
@@ -118,10 +113,7 @@ export async function getMasterDashboardSummary() {
       id: `book-${request.id}`,
       date: request.createdAt,
       text: `تم إنشاء طلب شراء كتاب للطالب ${studentName(request.studentId)}`,
-      meta:
-        request.referenceNumber ??
-        request.transactionId ??
-        "طلب شراء كتاب",
+      meta: request.referenceNumber ?? request.transactionId ?? "طلب شراء كتاب",
     })),
   ]
     .filter((item) => item.date)
@@ -138,8 +130,7 @@ export async function getMasterDashboardSummary() {
       pendingSubscriptionsCount,
       pendingBooksCount,
       manualReviewCount,
-      totalCount:
-        pendingSubscriptionsCount + pendingBooksCount + manualReviewCount,
+      totalCount: pendingSubscriptionsCount + pendingBooksCount + manualReviewCount,
     },
     latestResults,
     activities,

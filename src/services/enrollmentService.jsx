@@ -7,10 +7,18 @@ export async function getEnrollments() {
 }
 
 export async function getEnrollmentsByStudentId(studentId) {
-  return enrollments.filter(
-    (enrollment) =>
-      String(enrollment.studentId) === String(studentId),
-  );
+  return enrollments.filter((enrollment) => String(enrollment.studentId) === String(studentId));
+}
+
+// المصدر الوحيد لتعريف "الاشتراك النشط": الحالة active ولم ينتهِ تاريخه.
+// أي مكان يحتاج يعرف هل الاشتراك نشط يستخدم هذه الدالة بدل فحص status بنفسه.
+export function isEnrollmentActive(enrollment, now = Date.now()) {
+  if (!enrollment || enrollment.status !== "active") return false;
+  if (!enrollment.endsAt) return true;
+
+  const end = new Date(enrollment.endsAt).getTime();
+
+  return Number.isNaN(end) || end >= now;
 }
 
 export async function isStudentEnrolled(studentId, courseId) {
@@ -18,11 +26,12 @@ export async function isStudentEnrolled(studentId, courseId) {
     (enrollment) =>
       String(enrollment.studentId) === String(studentId) &&
       String(enrollment.courseId) === String(courseId) &&
-      enrollment.status === "active",
+      isEnrollmentActive(enrollment),
   );
 }
 
-// يُستخدم عند قبول طلب اشتراك من لوحة المستر
+// يُستخدم عند قبول طلب اشتراك من لوحة المستر.
+// التجديد يمدّ السجل القائم (status = active) حتى لو انتهى تاريخه، فلا يتكرر السجل.
 export async function createEnrollment({
   studentId,
   courseId,
@@ -77,4 +86,40 @@ export async function deleteEnrollmentsByStudentId(studentId) {
     }
   }
   return deletedCount;
+}
+
+// حالة الاشتراك الفعلية: active / expired (انتهى تاريخه) / ended (أنهاه المستر)
+export function getEnrollmentState(enrollment, now = Date.now()) {
+  if (enrollment.status === "ended") return "ended";
+
+  return isEnrollmentActive(enrollment, now) ? "active" : "expired";
+}
+
+export async function getEnrollmentById(enrollmentId) {
+  const enrollment = enrollments.find((item) => String(item.id) === String(enrollmentId));
+
+  return enrollment ? { ...enrollment } : null;
+}
+
+export async function updateEnrollment(enrollmentId, patch) {
+  const enrollment = enrollments.find((item) => String(item.id) === String(enrollmentId));
+
+  if (!enrollment) throw new Error("الاشتراك غير موجود.");
+
+  Object.assign(enrollment, patch);
+
+  return { ...enrollment };
+}
+
+export async function deleteEnrollmentsByCourseId(courseId) {
+  let count = 0;
+
+  for (let index = enrollments.length - 1; index >= 0; index -= 1) {
+    if (String(enrollments[index].courseId) === String(courseId)) {
+      enrollments.splice(index, 1);
+      count += 1;
+    }
+  }
+
+  return count;
 }

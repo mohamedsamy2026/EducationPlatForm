@@ -9,6 +9,7 @@ const courses = [
     description:
       "شرح مبسط ومنظم يساعدك على فهم الدروس وربط الأحداث بطريقة سهلة وشيقة.",
     grade: "second-preparatory",
+    published: true,
     duration: "كورس شامل",
     image: Master1,
     lessonsCount: "غير محدد",
@@ -34,6 +35,7 @@ const courses = [
     description:
       "شرح التاريخ بطريقة واضحة مع التركيز على أهم الأحداث والنقاط التي تحتاجها في دراستك.",
     grade: "third-secondary",
+    published: true,
     duration: "كورس شامل",
     image: Master2,
     lessonsCount: "غير محدد",
@@ -59,6 +61,7 @@ const courses = [
     description:
       "محتوى تعليمي منظم يساعدك على تثبيت المعلومات وفهم التاريخ بصورة أعمق.",
     grade: "second-secondary",
+    published: true,
     duration: "دروس متكاملة",
     image: Master3,
     lessonsCount: "غير محدد",

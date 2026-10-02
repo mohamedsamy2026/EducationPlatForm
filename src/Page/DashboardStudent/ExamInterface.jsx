@@ -16,7 +16,10 @@ import { getCurrentStudent } from "../../services/studentService";
 
 import { isStudentEnrolled } from "../../services/enrollmentService";
 
-import { submitExamAttempt } from "../../services/resultService";
+import {
+  hasSubmittedExam,
+  submitExamAttempt,
+} from "../../services/resultService";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -85,6 +88,19 @@ export default function ExamInterface() {
 
         if (cancelled) return;
 
+        // الامتحان مسموح مرة واحدة فقط: لو اتسلّم قبل كده نوديه للنتيجة
+        const alreadySubmitted = await hasSubmittedExam(
+          currentStudent.id,
+          currentExam.id,
+        );
+
+        if (cancelled) return;
+
+        if (alreadySubmitted) {
+          setAccessStatus("submitted");
+          return;
+        }
+
         const now = new Date();
 
         const startDate = new Date(currentExam.startsAt);
@@ -117,7 +133,11 @@ export default function ExamInterface() {
         replace: true,
       });
     }
-  }, [accessStatus, navigate]);
+
+    if (accessStatus === "submitted") {
+      navigate(`/exam-result/${examId}`, { replace: true });
+    }
+  }, [accessStatus, examId, navigate]);
 
   const currentQuestion = examQuestions[currentIndex] || null;
 
@@ -255,7 +275,11 @@ export default function ExamInterface() {
 
   // Loading
 
-  if (exam === undefined || accessStatus === "loading") {
+  if (
+    exam === undefined ||
+    accessStatus === "loading" ||
+    accessStatus === "submitted"
+  ) {
     return null;
   }
 
