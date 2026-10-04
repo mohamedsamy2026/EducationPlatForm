@@ -91,8 +91,12 @@ else {
   if (need(secrets, "CLOUDINARY_API_SECRET", ".env.secrets")) secrets.CLOUDINARY_API_SECRET.length < 20 ? warn("CLOUDINARY_API_SECRET قصير: اتأكد إنك نسخته كامل") : ok("CLOUDINARY_API_SECRET موجود");
   const g = ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_REFRESH_TOKEN"];
   const have = g.filter((k) => secrets[k]);
+  const missingGoogle = g.filter((k) => !secrets[k]);
   if (have.length === 0) warn("مفاتيح Google مش موجودة (اختيارية: لعداد مساحة Drive، وتتعمل آخر مرحلة)");
-  else if (have.length < 3) err(`مفاتيح Google ناقصة: ${g.filter((k) => !secrets[k]).join(", ")}`);
+  else if (missingGoogle.length === 1 && missingGoogle[0] === "GOOGLE_REFRESH_TOKEN") {
+    secrets.GOOGLE_CLIENT_ID.endsWith(".apps.googleusercontent.com") ? ok("GOOGLE_CLIENT_ID شكله سليم") : warn("GOOGLE_CLIENT_ID مش بينتهي بـ .apps.googleusercontent.com");
+    warn("GOOGLE_REFRESH_TOKEN لسه فاضي: ده طبيعي، بيتعمل آخر مرحلة (عداد Drive) بموافقة منك في المتصفح");
+  } else if (missingGoogle.length > 0) err(`مفاتيح Google ناقصة: ${missingGoogle.join(", ")}`);
   else {
     secrets.GOOGLE_CLIENT_ID.endsWith(".apps.googleusercontent.com") ? ok("GOOGLE_CLIENT_ID شكله سليم") : warn("GOOGLE_CLIENT_ID مش بينتهي بـ .apps.googleusercontent.com");
     ok("GOOGLE_CLIENT_SECRET وGOOGLE_REFRESH_TOKEN موجودين");
