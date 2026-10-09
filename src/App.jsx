@@ -1,6 +1,7 @@
 // COMPONENTS
 import Home from "./Page/Home";
 
+// صفحات عامه
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import CourseDetails from "./Components/CourseDetails";
@@ -10,6 +11,7 @@ import BookPurchase from "./Page/BookPurchase";
 import ScrollToTop from "./Components/ScrollToTop";
 import DashboardLayout from "./Components/DashboardStudent/DashboardLayout";
 
+// Student Dashboard
 import DashboardHome from "./Page/DashboardStudent/DashboardHome";
 import DashboardCourses from "./Page/DashboardStudent/DashboardCourses";
 import DashboardBooks from "./Page/DashboardStudent/DashboardBooks";

@@ -1,4 +1,4 @@
-import Master1 from "../assets/Master/master 1.webp";
+import Master1 from "../assets/Master/master 5.webp";
 import Master2 from "../assets/Master/master 2.webp";
 import Master3 from "../assets/Master/master 3.webp";
 
