@@ -35,7 +35,7 @@
 | Student Dashboard كامل (Home, Courses, Lesson, Exams, Exam, Result, Books, Profile, Support) | موجود |
 | **Master Dashboard (الـ 10 صفحات)** | **مبني بالكامل على Mock Data**: الرئيسية، الطلاب، الكورسات، الامتحانات، النتائج، الاشتراكات، طلبات الكتب، الكتب، صلاحيات الدروس، الإعدادات (مع صفحات النماذج والتفاصيل) |
 | بنية الكود | 3 طبقات: `data` (Mock) ← `services` (المنطق، async) ← الصفحات (عرض فقط). كل صفحة مستر لها `master<Page>Service` |
-| `npm run build` | ينجح. وأخطاء الـ lint الموجودة 6 ملفات قديمة (Chat, ChatMessage, CourseDetails, ExamTimer, DashboardResults, LessonPage) |
+| `npm run build` | ينجح. `npm run lint` نضيف (اتصلحت أخطاء الـ lint اللي كانت في 6 ملفات: Chat, ChatMessage, CourseDetails, ExamTimer, DashboardResults, LessonPage) |
 | Backend / Supabase | **لا يوجد بعد.** كل الداتا Mock. خطته الكاملة في القسم 16 |
 | Auth حقيقي / حماية Routes | **لا يوجد** (`getCurrentStudent()` بترجع أول طالب Mock، والـ Login والـ Signup بيتحققوا من المدخلات فقط) |
 | الصور | مؤقتة في الذاكرة (تضيع مع الـ refresh) لحد ما نربط Cloudinary |
